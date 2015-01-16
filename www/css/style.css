@@ -1,1 +1,21 @@
-/* Empty. Add your own CSS if you like */
+ion-content h1 {
+  padding-left: 10px;
+}
+
+.prayer {
+  padding: 17px;
+}
+
+.prayer .body {
+  font-size: 20px;
+  line-height: 25px;
+}
+
+.prayer .author {
+  font-style: italic;
+  font-size: 24px;
+  font-family: serif;
+  display: block;
+  text-align: right;
+  padding: 18px 25px;
+}
