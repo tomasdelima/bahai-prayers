@@ -13,5 +13,13 @@ controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersServic
 
 controllers.controller('PrayerCtrl', ['$scope', '$stateParams', 'PrayersService', function($scope, $stateParams, PrayersService) {
   $scope.prayer = PrayersService.filter(function(a) { return a.id == $stateParams.prayerId })[0]
+  author = $scope.prayer.author.toLowerCase() || ''
+  $scope.getAuthorFirstLetter = function () {
+    if(author.search("báb")>=0 || author.search("bahá'u'lláh")>=0){
+      return 'b'
+    } else {
+      return 'a'
+    }
+  }
 }])
 

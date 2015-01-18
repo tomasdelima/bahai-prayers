@@ -1,3 +1,25 @@
+ @font-face { font-family: Ruritania; src: url('Ruritania.ttf'); } 
+bg {
+  font-family: Ruritania;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 129px;
+  line-height: 350%;
+  color: rgba(1,1,1,0.2);
+}
+
+bg.b:after {
+  content: "B";
+}
+
+bg.a:after {
+  content: "A";
+}
+
 ion-content h1 {
   padding-left: 10px;
 }
