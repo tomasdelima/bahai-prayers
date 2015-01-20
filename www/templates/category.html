@@ -1,4 +1,4 @@
-<ion-view view-title="Categoria" class="category">
+<ion-view view-title="{{category.title}}" class="category">
   <ion-content>
     <ion-item ng-repeat="prayer in prayers" href="#/app/prayer/{{prayer.id}}">
       {{prayer.body}}
