@@ -1,7 +1,7 @@
 <ion-view view-title="Categoria" class="category">
   <ion-content>
     <ion-item ng-repeat="prayer in prayers" href="#/app/prayer/{{prayer.id}}">
-      {{prayer.title}}
+      {{prayer.body}}
       <span class="prayer-details">
         <span class="word-count">{{letterCount(prayer)}} palavras</span>
         <div> | </div>
