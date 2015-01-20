@@ -2,11 +2,13 @@ var services = angular.module('services', [])
 
 services.service('PrayersService', function(){
   var files = [],
+      i = 1,
       filenames = listFiles('/www/json_prayers/')
 
   filenames.forEach(function(filename){
     var file = readFile('/www/json_prayers/'+filename)
-    files.push({id: file.id, categoryId: file.categoryId, author: file.author, body: file.body})
+    files.push({id: i, categoryId: file.categoryId, author: file.author, body: file.body})
+    i += 1
   })
   return files
 })
@@ -31,11 +33,11 @@ function readFile (file) {
 
 
 function listFiles (dir) {
-  var rawFile = new XMLHttpRequest();
-  rawFile.open("GET", dir, false);
-  rawFile.onreadystatechange = function () {
-    allText = rawFile.responseText.split(/[\<\>]/).filter(function(d){return d.substr(-4)=='json'})
+  var rawFilesList = new XMLHttpRequest();
+  rawFilesList.open("GET", dir, false);
+  rawFilesList.onreadystatechange = function () {
+    jsonFiles = rawFilesList.responseText.split(/[\<\>]/).filter(function(d){return d.substr(-4)=='json'})
   }
-  rawFile.send();
-  return allText
+  rawFilesList.send();
+  return jsonFiles
 }
