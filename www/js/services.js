@@ -2,7 +2,7 @@ var services = angular.module('services', [])
 
 services.service('PrayersService', function(){
   var files = [],
-      filenames = ['prayer1.json','prayer2.json','prayer3.json','prayer4.json','prayer5.json',]
+      filenames = listFiles('/www/json_prayers/')
 
   filenames.forEach(function(filename){
     var file = readFile('/www/json_prayers/'+filename)
@@ -24,6 +24,17 @@ function readFile (file) {
   rawFile.open("GET", file, false);
   rawFile.onreadystatechange = function () {
     allText = JSON.parse(rawFile.responseText)
+  }
+  rawFile.send();
+  return allText
+}
+
+
+function listFiles (dir) {
+  var rawFile = new XMLHttpRequest();
+  rawFile.open("GET", dir, false);
+  rawFile.onreadystatechange = function () {
+    allText = rawFile.responseText.split(/[\<\>]/).filter(function(d){return d.substr(-4)=='json'})
   }
   rawFile.send();
   return allText
