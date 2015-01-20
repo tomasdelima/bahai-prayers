@@ -1,4 +1,5 @@
- @font-face { font-family: Ruritania; src: url('Ruritania.ttf'); } 
+@font-face { font-family: Ruritania; src: url('Ruritania.ttf'); } 
+
 bg {
   font-family: Ruritania;
   position: fixed;
@@ -9,7 +10,7 @@ bg {
   text-align: center;
   font-size: 129px;
   line-height: 350%;
-  color: rgba(1,1,1,0.2);
+  color: rgba(1,1,1,0.15);
 }
 
 bg.b:after {
@@ -22,6 +23,19 @@ bg.a:after {
 
 ion-content h1 {
   padding-left: 10px;
+}
+
+.category .prayer-details {
+  display: flex;
+  font-size: 12px;
+  color: #888;
+}
+
+.category .prayer-details span { width: 70px; }
+.category .prayer-details .word-count { text-align: right; }
+.category .prayer-details div {
+  text-align: center;
+  width: 10px;
 }
 
 .prayer {

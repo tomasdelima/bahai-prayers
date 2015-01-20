@@ -9,6 +9,13 @@ controllers.controller('CategoriesCtrl', function($scope, $stateParams, Categori
 
 controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersService', function($scope, $stateParams, PrayersService) {
   $scope.prayers = PrayersService
+  $scope.letterCount = function (prayer) {
+    s = prayer.body
+    s = s.replace(/(^\s*)|(\s*$)/gi,"")
+    s = s.replace(/[ ]{2,}/gi," ")
+    s = s.replace(/\n /,"\n").split(" ")
+    return s.length
+  }
 }])
 
 controllers.controller('PrayerCtrl', ['$scope', '$stateParams', 'PrayersService', function($scope, $stateParams, PrayersService) {
