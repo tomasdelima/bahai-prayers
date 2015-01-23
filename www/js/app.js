@@ -42,7 +42,7 @@ angular.module('prayer', ['ionic', 'controllers', 'services'])
   })
 
   .state('app.prayer', {
-    url: "/prayer/:prayerId",
+    url: "/categories/:categoryId/prayers/:prayerId",
     views: {
       'menuContent': {
         templateUrl: "templates/prayer.html",

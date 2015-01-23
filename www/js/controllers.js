@@ -4,12 +4,19 @@ controllers.controller('AppCtrl', function($scope, $ionicModal) {
 })
 
 controllers.controller('CategoriesCtrl', function($scope, $stateParams, CategoriesService) {
-  $scope.categories = CategoriesService
+  CategoriesService.load().success( function(data){
+    $scope.categories = data
+  })
 })
 
 controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersService', 'CategoriesService', function($scope, $stateParams, PrayersService, CategoriesService) {
-  $scope.prayers = PrayersService.filter(function(a) { return a.categoryId == $stateParams.categoryId })
-  $scope.category = CategoriesService.filter(function(a) { return a.id == $stateParams.categoryId })[0]
+  PrayersService.load($stateParams.categoryId).success( function(data){
+    $scope.prayers = data
+  })
+  CategoriesService.load().success(function(data){
+    $scope.category = data.filter(function(a) { return a.id == $stateParams.categoryId })[0]
+  })
+
   $scope.letterCount = function (prayer) {
     s = prayer.body
     s = s.replace(/(^\s*)|(\s*$)/gi,"")
@@ -20,15 +27,19 @@ controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersServic
 }])
 
 controllers.controller('PrayerCtrl', ['$scope', '$stateParams', 'PrayersService', 'CategoriesService', function($scope, $stateParams, PrayersService, CategoriesService) {
-  $scope.prayer = PrayersService.filter(function(a) { return a.id == $stateParams.prayerId })[0]
-  author = $scope.prayer.author.toLowerCase() || ''
-  $scope.getAuthorFirstLetter = function () {
-    if(author.search("báb")>=0 || author.search("bahá'u'lláh")>=0){
-      return 'b'
-    } else {
-      return 'a'
+  PrayersService.load($stateParams.categoryId).success(function(data){
+    $scope.prayer = data.filter(function(a) { return a.id == $stateParams.prayerId })[0]
+    
+    author = $scope.prayer.author.toLowerCase() || ''
+    $scope.getAuthorFirstLetter = function () {
+      if(author.search("báb")>=0 || author.search("bahá'u'lláh")>=0){
+        return 'b'
+      } else {
+        return 'a'
+      }
     }
-  }
+  })
+  
 }])
 
 controllers.controller('ConfigCtrl', function() {
