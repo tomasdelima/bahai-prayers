@@ -31,3 +31,6 @@ controllers.controller('PrayerCtrl', ['$scope', '$stateParams', 'PrayersService'
   }
 }])
 
+controllers.controller('ConfigCtrl', function() {
+})
+
