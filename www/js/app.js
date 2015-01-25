@@ -8,6 +8,12 @@ angular.module('prayer', ['ionic', 'controllers', 'services'])
     if (window.StatusBar) {
       StatusBar.styleDefault()
     }
+
+    angular.db = openDatabase('bahai-prayers', '1.0', 'bahai-prayers-db', 2 * 1024 * 1024),
+    angular.db.transaction(function (tx) {
+      tx.executeSql('CREATE TABLE IF NOT EXISTS prayers_table (id integer primary key, categoryId integer, body text, author text)');
+    })
+    // console.log(angular)
   })
 })
 

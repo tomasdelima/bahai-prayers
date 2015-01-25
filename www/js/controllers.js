@@ -4,15 +4,17 @@ controllers.controller('AppCtrl', function($scope, $ionicModal) {
 })
 
 controllers.controller('CategoriesCtrl', function($scope, $stateParams, CategoriesService) {
+  
   CategoriesService.load().success( function(data){
     $scope.categories = data
   })
 })
 
 controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersService', 'CategoriesService', function($scope, $stateParams, PrayersService, CategoriesService) {
-  PrayersService.load($stateParams.categoryId).success( function(data){
-    $scope.prayers = data
-  })
+  console.log(PrayersService.load())
+  // PrayersService.load($stateParams.categoryId).success( function(data){
+  //   $scope.prayers = data
+  // })
   CategoriesService.load().success(function(data){
     $scope.category = data.filter(function(a) { return a.id == $stateParams.categoryId })[0]
   })
