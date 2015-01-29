@@ -1,6 +1,6 @@
 <ion-view view-title="Oração" id="prayer-view">
   <ion-content class="prayer">
-    <bg class="{{getAuthorFirstLetter()}}"></bg>
+    <bg class="{{prayer.author.slice(2,4)}}"></bg>
     <p class="body">{{prayer.body}}</p>
     <p class="author"> &mdash; {{prayer.author}}</p>
   </ion-content>

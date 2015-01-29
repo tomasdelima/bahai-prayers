@@ -1,58 +1,58 @@
-var services = angular.module('services', [])
+var services = angular.module('services', []),
+    host = 'http://bahai-prayers-server.herokuapp.com'
 
 services.service('PrayersService', function($http) {
   var self = this
   self.prayers = []
 
   return {
-    load: function(categoryId) {
-      // make request
-      url = 'http://localhost:8100/categories/'+categoryId+'/prayers'
-      // url = 'http://bahai-prayers-server.herokuapp.com/categories/'+categoryId+'/prayers'
-      $http.get(url).success(function(data) {
-        data.forEach(function(d) {
-          // insert new songs
-          angular.db.transaction(function (tx) {
-            tx.executeSql('insert into prayers_table (id, categoryId, body, author) values (?,?,?,?)',
-              [d.id, d.category_id, d.body, d.author],
-              function(tx, results) {
-                console.log('Insert success:',results)
-                self.prayers.push(d)
-              },
-              function(tx, error) {
-                console.log('Insert error:',tx,error)
-              }
-            )
-          })
-        })
-      })
+    load: function(prayerId) {
+      var sqlString = 'select * from prayers_table' + (prayerId ? ' where id = "' + prayerId + '"' : '')
+      console.log('Executing query: '+sqlString)
 
-      // select prayers from sqlite
       angular.db.transaction(function(tx) {
-        tx.executeSql('select * from prayers_table',[],
+        tx.executeSql(sqlString, [],
           function(tx, results) {
-            var i
-            for (i=0; i<results.rows.length; i++) {
+            for (var i=0; i<results.rows.length; i++) {
               self.prayers.push(results.rows.item(i))
-              console.log(self.prayers)
             }
+            console.log('Query executed successfully')
+          },
+          function(tx, error) {
+            console.log(tx, error)
           }
         )
       })
+      return self.prayers
     },
+    prayers: self.prayers
   }
 })
 
 services.service('CategoriesService', function($http) {
   var self = this
+  self.categories = []
+
   return {
-    load: function() {
-      return $http.get('http://bahai-prayers-server.herokuapp.com/categories').success(function(data) {
-        self.categories = data
+    load: function(categoryId){
+      var sqlString = 'select * from categories_table' + (categoryId ? " where id = '" + categoryId + "'" : '')
+      console.log('Executing query: '+sqlString)
+
+      angular.db.transaction(function(tx) {
+        tx.executeSql(sqlString,[],
+          function(tx, results) {
+            for (var i=0; i<results.rows.length; i++) {
+              self.categories.push(results.rows.item(i))
+            }
+            console.log('Query executed successfully')
+          },
+          function(tx, error) {
+            console.log(tx, error)
+          }
+        )
       })
-    }
+      return self.categories
+    },
+    categories: self.categories
   }
 })
-
-
-

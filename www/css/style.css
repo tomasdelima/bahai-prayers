@@ -17,7 +17,11 @@ bg.b:after {
   content: "B";
 }
 
-bg.a:after {
+bg.há:after {
+  content: "B";
+}
+
+bg.bd:after {
   content: "A";
 }
 
