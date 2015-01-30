@@ -29,15 +29,15 @@ ion-content h1 {
   padding-left: 10px;
 }
 
-.category .prayer-details {
+.prayers .prayer-details {
   display: flex;
   font-size: 12px;
   color: #888;
 }
 
-.category .prayer-details span { width: 70px; }
-.category .prayer-details .word-count { text-align: right; }
-.category .prayer-details div {
+.prayers .prayer-details span { width: 70px; }
+.prayers .prayer-details .word-count { text-align: right; }
+.prayers .prayer-details div {
   text-align: center;
   width: 10px;
 }

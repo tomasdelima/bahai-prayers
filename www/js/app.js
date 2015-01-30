@@ -8,12 +8,6 @@ angular.module('prayer', ['ionic', 'controllers', 'services'])
     if (window.StatusBar) {
       StatusBar.styleDefault()
     }
-
-    angular.db = openDatabase('bahai-prayers', '1.0', 'bahai-prayers-db', 2 * 1024 * 1024),
-    angular.db.transaction(function (tx) {
-      tx.executeSql('CREATE TABLE IF NOT EXISTS prayers_table (id integer primary key, categoryId integer, body text, author text)');
-      tx.executeSql('CREATE TABLE IF NOT EXISTS categories_table (id integer primary key, title text)');
-    })
   })
 })
 
@@ -41,14 +35,24 @@ angular.module('prayer', ['ionic', 'controllers', 'services'])
     url: "/categories/:categoryId",
     views: {
       'menuContent': {
-        templateUrl: "templates/category.html",
+        templateUrl: "templates/prayers.html",
         controller: 'CategoryCtrl'
       }
     }
   })
 
+  .state('app.prayers', {
+    url: "/prayers",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/prayers.html",
+        controller: 'PrayersCtrl'
+      }
+    }
+  })
+
   .state('app.prayer', {
-    url: "/categories/:categoryId/prayers/:prayerId",
+    url: "/prayers/:prayerId",
     views: {
       'menuContent': {
         templateUrl: "templates/prayer.html",
