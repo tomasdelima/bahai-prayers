@@ -1,5 +1,4 @@
-var services = angular.module('services', []),
-    host = 'http://bahai-prayers-server.herokuapp.com'
+var services = angular.module('services', [])
 
 services.service('CategoriesService', function($http, DBService) {
   var self = this
@@ -9,7 +8,15 @@ services.service('CategoriesService', function($http, DBService) {
     load: function(categoryId) {
       return DBService.select('categories_table', self.categories, categoryId)
     },
-    categories: self.categories
+    categories: self.categories || [],
+    loadFromRemoteServer: function(url) {
+      DBService.loadFromRemoteServer(url+'/categories', self.categories, 'lastUpdatedCategoriesAt', function(data){
+        data.forEach(function(d){
+          DBService.insert('categories_table', ['id', 'title'], [d.id, d.title])
+          self.categories.push(d)
+        })
+      })
+    }
   }
 })
 
@@ -21,11 +28,23 @@ services.service('PrayersService', function($http, DBService) {
     load: function(prayerId) {
       return DBService.select('prayers_table', self.prayers, prayerId)
     },
-    prayers: self.prayers
+    prayers: self.prayers || [],
+    loadFromRemoteServer: function(url) {
+      DBService.loadFromRemoteServer(url+'/prayers', self.categories, 'lastUpdatedPrayersAt', function(data){
+        data.forEach(function(d){
+          d.categoryId = d.category_id
+          DBService.insert('prayers_table', ['id', 'body', 'author', 'categoryId'], [d.id, d.body, d.author, d.category_id])
+          self.prayers.push(d)
+        })
+      })
+    },
+    letterCount: function (str) {
+      return str.replace(/(^\s*)|(\s*$)/gi,"").replace(/[ ]{2,}/gi," ").replace(/\n /,"\n").split(" ").length
+    }
   }
 })
 
-services.service('DBService', function(){
+services.service('DBService', function($http){
   return {
     load: function() {
       console.log('Preparing DB')
@@ -34,6 +53,18 @@ services.service('DBService', function(){
         tx.executeSql('CREATE TABLE IF NOT EXISTS prayers_table (id integer primary key, categoryId integer, body text, author text)')
         tx.executeSql('CREATE TABLE IF NOT EXISTS categories_table (id integer primary key, title text)')
       })
+    },
+    loadFromRemoteServer: function(url, collection, lastUpdatedVariable, callBack) {
+      var self = this,
+          errors = 0,
+          sufix = localStorage[lastUpdatedVariable] ? '?last_updated_at=' + localStorage[lastUpdatedVariable] : ''
+
+      console.log('Getting categories from: ' + url + sufix)
+      $http.get( url + sufix)
+        .success(function(data){callBack(data)})
+        .error(function(){errors+=1})
+
+      if(!errors) { localStorage[lastUpdatedVariable] = Date.now() }
     },
     select: function(table, collection, id){
       var sqlString = 'select * from ' + table + (id ? " where id = '" + id + "'" : '')
@@ -48,8 +79,8 @@ services.service('DBService', function(){
       var sqlString = 'insert into ' + table + ' (' + fields.join(',') + ') values ("' + values.join('","') + '")'
       this.execute(sqlString)
     },
-    clean: function(table) {
-      var sqlString = 'delete from ' + table
+    delete: function(table, ids) {
+      var sqlString = 'delete from ' + table + (ids ? ' where id in (' + ids + ')' : '')
       this.execute(sqlString)
     },
     execute: function(sqlString, callBack) {

@@ -1,9 +1,16 @@
-var controllers = angular.module('controllers', [])
+var controllers = angular.module('controllers', []),
+    remoteHost = 'http://bahai-prayers-server.herokuapp.com'
 
-controllers.controller('AppCtrl', function($scope, DBService, PrayersService, CategoriesService) {
+controllers.controller('AppCtrl', function($scope, $http, DBService, PrayersService, CategoriesService) {
   DBService.load()
+  
   CategoriesService.load()
   PrayersService.load()
+
+  if(navigator.onLine) {
+    CategoriesService.loadFromRemoteServer(remoteHost)
+    PrayersService.loadFromRemoteServer(remoteHost)
+  }
 })
 
 controllers.controller('CategoriesCtrl', function($scope, $stateParams, CategoriesService) {
@@ -15,26 +22,12 @@ controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersServic
     .filter(function(a){return a.categoryId == $stateParams.categoryId})
   $scope.category = CategoriesService.categories
     .filter(function(a){return a.id == $stateParams.categoryId})[0]
-
-  $scope.letterCount = function (prayer) {
-    s = prayer.body
-    s = s.replace(/(^\s*)|(\s*$)/gi,"")
-    s = s.replace(/[ ]{2,}/gi," ")
-    s = s.replace(/\n /,"\n").split(" ")
-    return s.length
-  }
+  $scope.letterCount = PrayersService.letterCount
 }])
 
 controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'PrayersService', function($scope, $stateParams, PrayersService) {
   $scope.prayers = PrayersService.prayers
-
-  $scope.letterCount = function (prayer) {
-    s = prayer.body
-    s = s.replace(/(^\s*)|(\s*$)/gi,"")
-    s = s.replace(/[ ]{2,}/gi," ")
-    s = s.replace(/\n /,"\n").split(" ")
-    return s.length
-  }
+  $scope.letterCount = PrayersService.letterCount
 }])
 
 controllers.controller('PrayerCtrl', ['$scope', '$stateParams', 'PrayersService', 'CategoriesService', function($scope, $stateParams, PrayersService, CategoriesService) {

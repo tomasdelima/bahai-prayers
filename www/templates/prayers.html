@@ -3,7 +3,7 @@
     <ion-item ng-repeat="prayer in prayers" href="#/app/prayers/{{prayer.id}}">
       {{prayer.body}}
       <span class="prayer-details">
-        <span class="word-count">{{letterCount(prayer)}} palavras</span>
+        <span class="word-count">{{letterCount(prayer.body)}} palavras</span>
         <div> | </div>
         <span>{{prayer.author}}</span>
       </span>
