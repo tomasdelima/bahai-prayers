@@ -10,7 +10,15 @@ bg {
   text-align: center;
   font-size: 129px;
   line-height: 350%;
-  color: rgba(1,1,1,0.15);
+  color: rgba(0,0,0,0.15);
+}
+
+bg.counter {
+  color: rgba(0,0,0,0.5);
+}
+
+bg.counter.done {
+  color: rgba(140,0,0,0.8);
 }
 
 bg.b:after {
@@ -58,4 +66,13 @@ ion-content h1 {
   display: block;
   text-align: right;
   padding: 18px 25px;
+}
+
+.restart .bar-footer {
+  height: 74px;
+}
+
+.restart .bar-footer .title {
+  height: 74px;
+  line-height: 74px;
 }

@@ -3,7 +3,7 @@ var controllers = angular.module('controllers', []),
 
 controllers.controller('AppCtrl', function($scope, $http, DBService, PrayersService, CategoriesService) {
   DBService.load()
-  
+
   CategoriesService.load()
   PrayersService.load()
 
@@ -34,6 +34,23 @@ controllers.controller('PrayerCtrl', ['$scope', '$stateParams', 'PrayersService'
   $scope.prayer = PrayersService.prayers
     .filter(function(a){return a.id == $stateParams.prayerId})[0]
 }])
+
+controllers.controller('AllahuabhasCtrl', function($scope) {
+  $scope.counter = 0
+  $scope.tap = function() {
+    $scope.counter += 1
+    if( $scope.counter >= 95 ) {
+      $scope.cssClass = 'done'
+      navigator.notification.vibrate(60)
+    } else {
+      navigator.notification.vibrate(11)
+    }
+  }
+  $scope.restart = function(){
+    $scope.counter = 0
+    $scope.cssClass = ''
+  }
+})
 
 controllers.controller('ConfigCtrl', function() {
 })

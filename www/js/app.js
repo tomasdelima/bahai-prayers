@@ -71,5 +71,15 @@ angular.module('prayer', ['ionic', 'controllers', 'services'])
     }
   })
 
+  .state('app.95allahuabhas', {
+    url: "/95allahuabhas",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/95allahuabhas.html",
+        controller: 'AllahuabhasCtrl'
+      }
+    }
+  })
+
   $urlRouterProvider.otherwise('/app/categories')
 })
