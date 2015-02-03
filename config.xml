@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.prayers254063" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>prayers</name>
+<widget id="com.ionicframework.prayers254063" version="1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>Oracoes Bahais</name>
   <description>
-        An Ionic Framework and Cordova project.
-    </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Ionic Framework Team
-    </author>
+    Aplicativo desenvolvido para leitura de orações bahais.
+    Inclui contador de 95 Alláh-u-Abhás.
+
+    Em caso de dúvidas ou sugestões, entre em contato por email com o desenvolvedor:
+      tomasdelima@gmail.com
+  </description>
+  <author email="tomasdelima@gmail.com">
+    Tomás D. J. de Lima
+  </author>
   <content src="index.html"/>
   <access origin="*"/>
   <preference name="webviewbounce" value="false"/>

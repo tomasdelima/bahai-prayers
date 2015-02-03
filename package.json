@@ -1,7 +1,7 @@
 {
   "name": "prayers",
-  "version": "1.0.0",
-  "description": "prayers: An Ionic project",
+  "version": "1.0",
+  "description": "Aplicativo desenvolvido para leitura de orações bahais.",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^0.7.1",
