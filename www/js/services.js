@@ -10,10 +10,21 @@ services.service('CategoriesService', function($http, DBService) {
     },
     categories: self.categories || [],
     loadFromRemoteServer: function(url) {
-      DBService.loadFromRemoteServer(url+'/categories', self.categories, 'lastUpdatedCategoriesAt', function(data){
-        data.forEach(function(d){
-          DBService.insert('categories_table', ['id', 'title'], [d.id, d.title])
-          self.categories.push(d)
+      var existingIds = []
+      DBService.execute('select id from categories_table', function(results) {
+        for (var i=0; i<results.rows.length; i++) {
+          existingIds.push(results.rows.item(i).id)
+        }
+
+        DBService.loadFromRemoteServer(url+'/categories', self.categories, 'lastUpdatedCategoriesAt', function(data){
+          data.forEach(function(d){
+            if(existingIds.indexOf(Number(d.id)) == -1) {
+              DBService.insert('categories_table', ['id', 'title'], [d.id, d.title])
+              self.categories.push(d)
+            } else {
+              DBService.update('categories_table', ['title'], [d.title], d.id)
+            }
+          })
         })
       })
     }
@@ -30,11 +41,21 @@ services.service('PrayersService', function($http, DBService) {
     },
     prayers: self.prayers || [],
     loadFromRemoteServer: function(url) {
-      DBService.loadFromRemoteServer(url+'/prayers', self.categories, 'lastUpdatedPrayersAt', function(data){
-        data.forEach(function(d){
-          d.categoryId = d.category_id
-          DBService.insert('prayers_table', ['id', 'body', 'author', 'categoryId'], [d.id, d.body, d.author, d.category_id])
-          self.prayers.push(d)
+      var existingIds = []
+      DBService.execute('select id from prayers_table', function(results) {
+        for (var i=0; i<results.rows.length; i++) {
+          existingIds.push(results.rows.item(i).id)
+        }
+
+        DBService.loadFromRemoteServer(url+'/prayers', self.categories, 'lastUpdatedPrayersAt', function(data){
+          data.forEach(function(d){
+            if(existingIds.indexOf(Number(d.id)) == -1) {
+              DBService.insert('prayers_table', ['id', 'body', 'author', 'categoryId'], [d.id, d.body, d.author, d.category_id])
+              self.prayers.push(d)
+            } else {
+              DBService.update('prayers_table', ['body', 'author', 'categoryId'], [d.body, d.author, d.category_id], d.id)
+            }
+          })
         })
       })
     },
@@ -59,7 +80,7 @@ services.service('DBService', function($http){
           errors = 0,
           sufix = localStorage[lastUpdatedVariable] ? '?last_updated_at=' + localStorage[lastUpdatedVariable] : ''
 
-      console.log('Getting categories from: ' + url + sufix)
+      console.log('Fetching data from: ' + url + sufix)
       $http.get( url + sufix)
         .success(function(data){callBack(data)})
         .error(function(){errors+=1})
@@ -67,7 +88,7 @@ services.service('DBService', function($http){
       if(!errors) { localStorage[lastUpdatedVariable] = Date.now() }
     },
     select: function(table, collection, id){
-      var sqlString = 'select * from ' + table + (id ? " where id = '" + id + "'" : '')
+      var sqlString = 'select * from ' + table + (id ? ' where id = "' + id + '"' : '')
       this.execute(sqlString, function(results) {
         for (var i=0; i<results.rows.length; i++) {
           collection.push(results.rows.item(i))
@@ -77,6 +98,14 @@ services.service('DBService', function($http){
     },
     insert: function(table, fields, values) {
       var sqlString = 'insert into ' + table + ' (' + fields.join(',') + ') values ("' + values.join('","') + '")'
+      this.execute(sqlString)
+    },
+    update: function(table, fields, values, id) {
+      var sqlString = 'update ' + table + ' set '
+      fields.forEach(function(field, index){
+        sqlString += field + ' = "' + values[index] + '"' + (index + 1 == fields.length ? ' ' : ', ')
+      })
+      sqlString += 'where id = "' + id + '"'
       this.execute(sqlString)
     },
     delete: function(table, ids) {
