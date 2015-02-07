@@ -78,7 +78,7 @@ services.service('DBService', function($http){
     loadFromRemoteServer: function(url, collection, lastUpdatedVariable, callBack) {
       var self = this,
           errors = 0,
-          sufix = localStorage[lastUpdatedVariable] ? '?last_updated_at=' + localStorage[lastUpdatedVariable] : ''
+          sufix =  '.json' + (localStorage[lastUpdatedVariable] ? '?last_updated_at=' + localStorage[lastUpdatedVariable] : '')
 
       console.log('Fetching data from: ' + url + sufix)
       $http.get( url + sufix)
