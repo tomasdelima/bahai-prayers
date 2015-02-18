@@ -113,19 +113,26 @@ services.service('DBService', function($http){
       this.execute(sqlString)
     },
     execute: function(sqlString, callBack) {
-      console.log('Executing query: ' + sqlString)
+      log('Executing query: ' + sqlString)
 
       angular.db.transaction(function(tx) {
         tx.executeSql(sqlString,[],
           function(tx, results) {
-            console.log('Query executed successfully: ' + sqlString)
+            log('Query executed successfully: ' + sqlString)
             if(callBack){callBack(results)}
           },
           function(tx, error) {
-            console.log(tx, error)
+            log(tx, error)
           }
         )
       })
+    },
+    resetDB: function(){
+      this.delete('categories_table')
+      this.delete('prayers_table')
+      localStorage.lastUpdatedCategoriesAt = 0
+      localStorage.lastUpdatedPrayersAt = 0
+      localStorage.lastUpdatedDBSchemaAt = 0
     }
   }
 })

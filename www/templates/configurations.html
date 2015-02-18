@@ -1,6 +1,12 @@
 <ion-view view-title="Configurações">
-  <ion-content>
+  <ion-content class="configurations">
     <ion-item>
+      Tamanho a fonte:
+      <span class="right">
+        <span class="increase font" ng-click="changeFontSize(-1)">-</span>
+        <span class="font-size">{{ fontSize }}</span>
+        <span class="decrease font" ng-click="changeFontSize(+1)">+</span>
+      </span>
     </ion-item>
   </ion-content>
 </ion-view>

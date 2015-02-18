@@ -33,6 +33,8 @@ controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'PrayersService
 controllers.controller('PrayerCtrl', ['$scope', '$stateParams', 'PrayersService', 'CategoriesService', function($scope, $stateParams, PrayersService, CategoriesService) {
   $scope.prayer = PrayersService.prayers
     .filter(function(a){return a.id == $stateParams.prayerId})[0]
+  $scope.fontSize = PrayersService.loadConfig('fontSize')
+  $scope.deHtmlize = PrayersService.deHtmlize
 }])
 
 controllers.controller('AllahuabhasCtrl', function($scope) {
@@ -52,5 +54,10 @@ controllers.controller('AllahuabhasCtrl', function($scope) {
   }
 })
 
-controllers.controller('ConfigCtrl', function() {
+controllers.controller('ConfigCtrl', function($scope) {
+  $scope.fontSize = localStorage.fontSize || '10'
+  $scope.changeFontSize = function(n) {
+    $scope.fontSize = Number(localStorage.fontSize) + n
+    localStorage.fontSize = $scope.fontSize
+  }
 })
