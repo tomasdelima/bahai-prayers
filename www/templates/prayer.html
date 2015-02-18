@@ -1,7 +1,8 @@
 <ion-view view-title="Oração" id="prayer-view">
   <ion-content class="prayer">
     <bg class="{{prayer.author.slice(2,4)}}"></bg>
-    <p class="body">{{prayer.body}}</p>
+    <p class="preamble" ng-show="{{prayer.preamble}}">{{prayer.preamble}}</p>
+    <p class="body" ng-bind-html="prayer.body"></p>
     <p class="author"> &mdash; {{prayer.author}}</p>
   </ion-content>
 </ion-view>

@@ -23,11 +23,13 @@ controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersServic
   $scope.category = CategoriesService.categories
     .filter(function(a){return a.id == $stateParams.categoryId})[0]
   $scope.letterCount = PrayersService.letterCount
+  $scope.deHtmlize = PrayersService.deHtmlize
 }])
 
 controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'PrayersService', function($scope, $stateParams, PrayersService) {
   $scope.prayers = PrayersService.prayers
   $scope.letterCount = PrayersService.letterCount
+  $scope.deHtmlize = PrayersService.deHtmlize
 }])
 
 controllers.controller('PrayerCtrl', ['$scope', '$stateParams', 'PrayersService', 'CategoriesService', function($scope, $stateParams, PrayersService, CategoriesService) {

@@ -50,10 +50,10 @@ services.service('PrayersService', function($http, DBService) {
         DBService.loadFromRemoteServer(url+'/prayers', self.categories, 'lastUpdatedPrayersAt', function(data){
           data.forEach(function(d){
             if(existingIds.indexOf(Number(d.id)) == -1) {
-              DBService.insert('prayers_table', ['id', 'body', 'author', 'categoryId'], [d.id, d.body, d.author, d.category_id])
+              DBService.insert('prayers_table', ['id', 'preamble', 'body', 'author', 'categoryId'], [d.id, d.preamble, d.body, d.author, d.category_id])
               self.prayers.push(d)
             } else {
-              DBService.update('prayers_table', ['body', 'author', 'categoryId'], [d.body, d.author, d.category_id], d.id)
+              DBService.update('prayers_table', ['preamble', 'body', 'author', 'categoryId'], [d.preamble, d.body, d.author, d.category_id], d.id)
             }
           })
         })
@@ -61,29 +61,43 @@ services.service('PrayersService', function($http, DBService) {
     },
     letterCount: function (str) {
       return str.replace(/(^\s*)|(\s*$)/gi,"").replace(/[ ]{2,}/gi," ").replace(/\n /,"\n").split(" ").length
-    }
+    },
+    loadConfig: function (attr) {
+      return localStorage[attr]
+    },
+    deHtmlize: function (string) { return string.replace(/<br>/g, ' ') }
   }
 })
 
 services.service('DBService', function($http){
   return {
     load: function() {
-      console.log('Preparing DB')
+      log('Preparing DB')
       angular.db = openDatabase('bahai-prayers', '1.0', 'bahai-prayers-db', 2 * 1024 * 1024)
       angular.db.transaction(function (tx) {
         tx.executeSql('CREATE TABLE IF NOT EXISTS prayers_table (id integer primary key, categoryId integer, body text, author text)')
         tx.executeSql('CREATE TABLE IF NOT EXISTS categories_table (id integer primary key, title text)')
+        if(localStorage.lastUpdatedDBSchemaAt < 1423793771617) {
+          tx.executeSql('ALTER TABLE prayers_table ADD COLUMN preamble text')
+        }
       })
+      localStorage.lastUpdatedDBSchemaAt = Date.now()
     },
     loadFromRemoteServer: function(url, collection, lastUpdatedVariable, callBack) {
       var self = this,
           errors = 0,
           sufix =  '.json' + (localStorage[lastUpdatedVariable] ? '?last_updated_at=' + localStorage[lastUpdatedVariable] : '')
 
-      console.log('Fetching data from: ' + url + sufix)
+      log('Fetching data from: ' + url + sufix)
       $http.get( url + sufix)
-        .success(function(data){callBack(data)})
-        .error(function(){errors+=1})
+        .success(function(data){
+          callBack(data)
+          log('Fetched data from: ' + url + sufix)
+        })
+        .error(function(error){
+          log('Error fetching data: ' + error)
+          errors += 1
+        })
 
       if(!errors) { localStorage[lastUpdatedVariable] = Date.now() }
     },
@@ -136,3 +150,5 @@ services.service('DBService', function($http){
     }
   }
 })
+
+function log(message1, message2, message3) {console.log(message1, message2 || '', message3 || '')}
