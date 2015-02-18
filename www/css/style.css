@@ -1,4 +1,5 @@
-@font-face { font-family: Ruritania; src: url('Ruritania.ttf'); } 
+@import url("font-awesome.css");
+@font-face { font-family: Ruritania; src: url('../fonts/Ruritania.ttf'); } 
 
 bg {
   font-family: Ruritania;
