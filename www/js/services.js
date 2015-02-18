@@ -1,4 +1,5 @@
-var services = angular.module('services', [])
+var services = angular.module('services', []),
+    verbose = true 
 
 services.service('CategoriesService', function($http, DBService) {
   var self = this
@@ -77,8 +78,9 @@ services.service('DBService', function($http){
       angular.db.transaction(function (tx) {
         tx.executeSql('CREATE TABLE IF NOT EXISTS prayers_table (id integer primary key, categoryId integer, body text, author text)')
         tx.executeSql('CREATE TABLE IF NOT EXISTS categories_table (id integer primary key, title text)')
-        if(localStorage.lastUpdatedDBSchemaAt < 1423793771617) {
+        if(localStorage.lastUpdatedDBSchemaAt < 14242959922100 ) {
           tx.executeSql('ALTER TABLE prayers_table ADD COLUMN preamble text')
+          log('Added new column to prayers_table: preamble')
         }
       })
       localStorage.lastUpdatedDBSchemaAt = Date.now()

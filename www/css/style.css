@@ -95,24 +95,25 @@ ion-content h1 {
 
 .configurations .font {
   display: inline-block;
-  width: 30px;
-  height: 20px;
-  background: #ccc;
+  top: -11px;
+  position: relative;
   text-align: center;
-  color: white;
   font-weight: 900;
+  font-size: 44px;
 }
 
 .configurations .decrease {
-  background: rgba(140,0,0,0.8);
+  color: rgba(140,0,0,0.8);
 }
 
 .configurations .increase {
-  background: rgba(0,130,70,0.8);
+  color: rgba(0,130,70,0.8);
 }
 
 .configurations .font-size {
   display: inline-block;
   width: 55px;
   text-align: center;
+  top: -20px;
+  position: relative;
 }
