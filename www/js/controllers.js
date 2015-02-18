@@ -57,7 +57,10 @@ controllers.controller('AllahuabhasCtrl', function($scope) {
 })
 
 controllers.controller('ConfigCtrl', function($scope) {
-  $scope.fontSize = localStorage.fontSize || '10'
+  if(!localStorage.fontSize) {
+    localStorage.fontSize = 20
+  }
+  $scope.fontSize = localStorage.fontSize
   $scope.changeFontSize = function(n) {
     $scope.fontSize = Number(localStorage.fontSize) + n
     localStorage.fontSize = $scope.fontSize

@@ -127,16 +127,16 @@ services.service('DBService', function($http){
       this.execute(sqlString)
     },
     execute: function(sqlString, callBack) {
-      log('Executing query: ' + sqlString)
+      log('Executing query' + (verbose ? ': ' + sqlString : ''))
 
       angular.db.transaction(function(tx) {
         tx.executeSql(sqlString,[],
           function(tx, results) {
-            log('Query executed successfully: ' + sqlString)
+            log('Query executed successfully' + (verbose ? ': ' + sqlString : ''))
             if(callBack){callBack(results)}
           },
           function(tx, error) {
-            log(tx, error)
+            log('Error executing query' + (verbose ? ': ' + error.message : ''))
           }
         )
       })
