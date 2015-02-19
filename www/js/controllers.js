@@ -56,7 +56,7 @@ controllers.controller('AllahuabhasCtrl', function($scope) {
   }
 })
 
-controllers.controller('SearchCtrl', function($scope, $filter, PrayersService){
+controllers.controller('SearchCtrl', function($scope, PrayersService){
   $scope.prayers = PrayersService.prayers
   $scope.letterCount = PrayersService.letterCount
   $scope.htmlize = PrayersService.htmlize

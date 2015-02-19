@@ -4,10 +4,10 @@
 bg {
   font-family: Ruritania;
   position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
   text-align: center;
   font-size: 129px;
   line-height: 350%;
@@ -125,9 +125,17 @@ ion-content h1 {
 #search-input {
   display: block;
   width: 80%;
+  height: 50px;
   margin: 20px auto;
+  font-size: 30px;
+  padding: 0 12px;
+}
+
+#search-input:focus {
+  border: 1px solid #77e;
 }
 
 .search h3 {
+  padding: 20px 40px;
   text-align: center;
 }
