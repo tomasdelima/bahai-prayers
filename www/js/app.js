@@ -81,5 +81,15 @@ angular.module('prayer', ['ionic', 'controllers', 'services'])
     }
   })
 
+  .state('app.search', {
+    url: "/search",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/search.html",
+        controller: 'SearchCtrl'
+      }
+    }
+  })
+
   $urlRouterProvider.otherwise('/app/categories')
 })

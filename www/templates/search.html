@@ -1,5 +1,22 @@
-<ion-view view-title="Search">
+<ion-view view-title="Busca" class="prayers search">
   <ion-content>
-    <h1>Search</h1>
+    <input class='search' ng-model='search' id="search-input" autofocus='true'>
+    <h3 class="search-results" ng-hide="search.length">
+      Faça uma busca
+    </h3>
+    <h3 class="search-results" ng-hide="filtered.length < 20 || !search.length">
+      Muitos resultados
+    </h3>
+    <div class="search-results" ng-show="filtered.length < 20">
+      <h3 ng-filter="search">Resultado: {{filtered.length}}</h3>
+      <ion-item ng-repeat="prayer in filtered = (prayers | filter:search | limitTo:20)" href="#/app/prayers/{{prayer.id}}">
+        {{ htmlize(prayer.body) }}
+        <span class="prayer-details">
+          <span class="word-count">{{ letterCount(prayer.body) }} palavras</span>
+          <div> | </div>
+          <span>{{ prayer.author }}</span>
+        </span>
+      </ion-item>
+    </div>
   </ion-content>
 </ion-view>

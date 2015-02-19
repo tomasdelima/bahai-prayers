@@ -117,3 +117,17 @@ ion-content h1 {
   top: -20px;
   position: relative;
 }
+
+#search:before {
+  font-size: 25px;
+}
+
+#search-input {
+  display: block;
+  width: 80%;
+  margin: 20px auto;
+}
+
+.search h3 {
+  text-align: center;
+}

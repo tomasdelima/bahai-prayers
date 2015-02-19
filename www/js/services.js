@@ -66,7 +66,7 @@ services.service('PrayersService', function($http, DBService) {
     loadConfig: function (attr) {
       return localStorage[attr]
     },
-    deHtmlize: function (string) { return string.replace(/<br>/g, ' ') }
+    htmlize: function (string) { return string.replace(/<br>/g, ' ') }
   }
 })
 
