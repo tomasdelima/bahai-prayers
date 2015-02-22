@@ -56,7 +56,7 @@ angular.module('prayer', ['ionic', 'controllers', 'services'])
     views: {
       'menuContent': {
         templateUrl: "templates/prayer.html",
-        controller: 'PrayerCtrl'
+        controller: 'PrayersCtrl'
       }
     }
   })

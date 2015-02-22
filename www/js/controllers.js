@@ -27,16 +27,9 @@ controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersServic
   $scope.deHtmlize = deHtmlize
 }])
 
-controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'PrayersService', function($scope, $stateParams, PrayersService) {
-  $scope.prayers = PrayersService.prayers
+controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'DBService', function($scope, $stateParams, DBService) {
+  DBService.select('prayers_table', $scope.prayers = [], $stateParams.prayerId)
   $scope.letterCount = letterCount
-  $scope.deHtmlize = deHtmlize
-}])
-
-controllers.controller('PrayerCtrl', ['$scope', '$stateParams', 'PrayersService', 'CategoriesService', function($scope, $stateParams, PrayersService, CategoriesService) {
-  $scope.prayer = PrayersService.prayers
-    .filter(function(a){return a.id == $stateParams.prayerId})[0]
-  $scope.fontSize = PrayersService.loadConfig('fontSize')
   $scope.deHtmlize = deHtmlize
 }])
 

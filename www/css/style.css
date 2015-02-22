@@ -8,6 +8,7 @@ bg {
   bottom: 0px;
   left: 0px;
   right: 0px;
+  z-index: -1;
   text-align: center;
   font-size: 129px;
   line-height: 350%;

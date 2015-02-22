@@ -149,4 +149,4 @@ services.service('DBService', function($http){
   }
 })
 
-function log(message1, message2, message3) {console.log(message1, message2 || '', message3 || '')}
+log = console.log
