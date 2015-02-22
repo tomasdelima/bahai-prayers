@@ -7,7 +7,7 @@
     <div class="search-results" ng-show="filtered.length < 20">
       <h3 ng-filter="search">{{filtered.length}} resultado{{filtered.length > 1 ? 's':''}}</h3>
       <ion-item ng-repeat="prayer in filtered = (prayers | filter:search | limitTo:20)" href="#/app/prayers/{{prayer.id}}">
-        {{ htmlize(prayer.body) }}
+        {{ deHtmlize(prayer.body) }}
         <span class="prayer-details">
           <span class="word-count">{{ letterCount(prayer.body) }} palavras</span>
           <div> | </div>

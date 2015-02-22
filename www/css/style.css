@@ -73,8 +73,13 @@ ion-content h1 {
 .prayer .body {
   font-size: 20px;
   line-height: 25px;
+  padding-top: 30px;
 }
-
+.prayer .body::first-letter { 
+    font-size: 200%;
+    color: #777;
+    font-family: Ruritania;
+}
 .prayer .author {
   font-style: italic;
   font-size: 24px;
@@ -95,10 +100,9 @@ ion-content h1 {
 
 .configurations .font {
   display: inline-block;
-  top: -11px;
+  top: -12px;
   position: relative;
   text-align: center;
-  font-weight: 900;
   font-size: 44px;
 }
 
@@ -114,7 +118,7 @@ ion-content h1 {
   display: inline-block;
   width: 55px;
   text-align: center;
-  top: -20px;
+  top: -22px;
   position: relative;
 }
 

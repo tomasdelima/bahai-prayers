@@ -1,5 +1,5 @@
 var services = angular.module('services', []),
-    verbose = true 
+    verbose = false 
 
 services.service('CategoriesService', function($http, DBService) {
   var self = this
@@ -60,13 +60,9 @@ services.service('PrayersService', function($http, DBService) {
         })
       })
     },
-    letterCount: function (str) {
-      return str.replace(/(^\s*)|(\s*$)/gi,"").replace(/[ ]{2,}/gi," ").replace(/\n /,"\n").split(" ").length
-    },
     loadConfig: function (attr) {
       return localStorage[attr]
-    },
-    htmlize: function (string) { return string.replace(/<br>/g, ' ') }
+    }
   }
 })
 

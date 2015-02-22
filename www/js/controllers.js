@@ -18,25 +18,26 @@ controllers.controller('CategoriesCtrl', function($scope, $stateParams, Categori
 })
 
 controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersService', 'CategoriesService', function($scope, $stateParams, PrayersService, CategoriesService) {
+  preambles = {}
   $scope.prayers = PrayersService.prayers
     .filter(function(a){return a.categoryId == $stateParams.categoryId})
   $scope.category = CategoriesService.categories
     .filter(function(a){return a.id == $stateParams.categoryId})[0]
-  $scope.letterCount = PrayersService.letterCount
-  $scope.htmlize = PrayersService.htmlize
+  $scope.letterCount = letterCount
+  $scope.deHtmlize = deHtmlize
 }])
 
 controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'PrayersService', function($scope, $stateParams, PrayersService) {
   $scope.prayers = PrayersService.prayers
-  $scope.letterCount = PrayersService.letterCount
-  $scope.htmlize = PrayersService.htmlize
+  $scope.letterCount = letterCount
+  $scope.deHtmlize = deHtmlize
 }])
 
 controllers.controller('PrayerCtrl', ['$scope', '$stateParams', 'PrayersService', 'CategoriesService', function($scope, $stateParams, PrayersService, CategoriesService) {
   $scope.prayer = PrayersService.prayers
     .filter(function(a){return a.id == $stateParams.prayerId})[0]
   $scope.fontSize = PrayersService.loadConfig('fontSize')
-  $scope.htmlize = PrayersService.htmlize
+  $scope.deHtmlize = deHtmlize
 }])
 
 controllers.controller('AllahuabhasCtrl', function($scope) {
@@ -58,8 +59,8 @@ controllers.controller('AllahuabhasCtrl', function($scope) {
 
 controllers.controller('SearchCtrl', function($scope, PrayersService){
   $scope.prayers = PrayersService.prayers
-  $scope.letterCount = PrayersService.letterCount
-  $scope.htmlize = PrayersService.htmlize
+  $scope.letterCount = letterCount
+  $scope.deHtmlize = deHtmlize
 })
 
 controllers.controller('ConfigCtrl', function($scope) {
@@ -72,3 +73,6 @@ controllers.controller('ConfigCtrl', function($scope) {
     localStorage.fontSize = $scope.fontSize
   }
 })
+
+function letterCount(str) { return str.replace(/(^\s*)|(\s*$)/gi,"").replace(/[ ]{2,}/gi," ").replace(/\n /,"\n").split(" ").length }
+function deHtmlize(string) { return string.replace(/<br>/g, ' ') }
