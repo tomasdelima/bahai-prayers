@@ -7,7 +7,8 @@ controllers.controller('AppCtrl', function($scope, $http, DBService, PrayersServ
   CategoriesService.load()
   PrayersService.load()
 
-  if(navigator.onLine) {
+  var daysSinceLastUpdate = ((new Date).getTime() - Number(localStorage.lastUpdatedCategoriesAt))/(1000*60*60*24)
+  if(navigator.onLine &&  daysSinceLastUpdate > 7) {
     CategoriesService.loadFromRemoteServer(remoteHost)
     PrayersService.loadFromRemoteServer(remoteHost)
   }

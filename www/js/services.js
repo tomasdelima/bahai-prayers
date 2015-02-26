@@ -134,7 +134,7 @@ services.service('DBService', function($http){
             if(callBack){callBack(results)}
           },
           function(tx, error) {
-            log('Error executing query' + (verbose ? ': ' + error.message : ''))
+            log('Error executing query' + error.message)
           }
         )
       })
@@ -149,4 +149,4 @@ services.service('DBService', function($http){
   }
 })
 
-log = console.log
+log = function() { return console.log.apply(console, arguments); };
