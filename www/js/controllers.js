@@ -1,7 +1,7 @@
 var controllers = angular.module('controllers', []),
     remoteHost = 'http://bahai-prayers-server.herokuapp.com'
 
-controllers.controller('AppCtrl', function($scope, $http, DBService, PrayersService, CategoriesService) {
+controllers.controller('AppCtrl', function($scope, $stateParams, DBService, PrayersService, CategoriesService) {
   DBService.load()
 
   CategoriesService.load()
@@ -12,10 +12,15 @@ controllers.controller('AppCtrl', function($scope, $http, DBService, PrayersServ
     CategoriesService.loadFromRemoteServer(remoteHost)
     PrayersService.loadFromRemoteServer(remoteHost)
   }
+
+  $scope.changeFontSize = changeFontSize
+  $scope.fontSize = localStorage.fontSize
+  $scope.showChangeFontButtons = showChangeFontButtons
 })
 
 controllers.controller('CategoriesCtrl', function($scope, $stateParams, CategoriesService) {
   $scope.categories = CategoriesService.categories
+  $scope.showChangeFontButtons = showChangeFontButtons
 })
 
 controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersService', 'CategoriesService', function($scope, $stateParams, PrayersService, CategoriesService) {
@@ -26,12 +31,14 @@ controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersServic
     .filter(function(a){return a.id == $stateParams.categoryId})[0]
   $scope.letterCount = letterCount
   $scope.deHtmlize = deHtmlize
+  $scope.showChangeFontButtons = showChangeFontButtons
 }])
 
 controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'DBService', function($scope, $stateParams, DBService) {
   DBService.select('prayers_table', $scope.prayers = [], $stateParams.prayerId)
   $scope.letterCount = letterCount
   $scope.deHtmlize = deHtmlize
+  $scope.showChangeFontButtons = showChangeFontButtons
 }])
 
 controllers.controller('AllahuabhasCtrl', function($scope) {
@@ -55,18 +62,19 @@ controllers.controller('SearchCtrl', function($scope, PrayersService){
   $scope.prayers = PrayersService.prayers
   $scope.letterCount = letterCount
   $scope.deHtmlize = deHtmlize
+  $scope.showChangeFontButtons = showChangeFontButtons
 })
 
 controllers.controller('ConfigCtrl', function($scope) {
-  if(!localStorage.fontSize) {
-    localStorage.fontSize = 20
-  }
-  $scope.fontSize = localStorage.fontSize
-  $scope.changeFontSize = function(n) {
-    $scope.fontSize = Number(localStorage.fontSize) + n
-    localStorage.fontSize = $scope.fontSize
-  }
 })
 
 function letterCount(str) { return str.replace(/(^\s*)|(\s*$)/gi,"").replace(/[ ]{2,}/gi," ").replace(/\n /,"\n").split(" ").length }
 function deHtmlize(string) { return string.replace(/<br>/g, ' ') }
+function showChangeFontButtons() { return (location.hash.indexOf('/prayers/') > 0) ? '' : 'hidden'}
+function changeFontSize(n, scope) {
+  if(isNaN(localStorage.fontSize)) { localStorage.fontSize = 10 }
+  scope.fontSize = Number(localStorage.fontSize)
+  if(scope.fontSize + n <= 40 && scope.fontSize + n >= 10) { scope.fontSize += n }
+  localStorage.fontSize = scope.fontSize
+  window.plugins.toast.showShortBottom(scope.fontSize + ' pts')
+}

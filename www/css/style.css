@@ -1,5 +1,5 @@
 @import url("font-awesome.css");
-@font-face { font-family: Ruritania; src: url('../fonts/Ruritania.ttf'); } 
+@font-face { font-family: Ruritania; src: url('../fonts/Ruritania.ttf'); }
 
 bg {
   font-family: Ruritania;
@@ -76,7 +76,7 @@ ion-content h1 {
   line-height: 25px;
   padding-top: 30px;
 }
-.prayer .body::first-letter { 
+.prayer .body::first-letter {
     font-size: 200%;
     color: #777;
     font-family: Ruritania;
@@ -99,32 +99,30 @@ ion-content h1 {
   line-height: 74px;
 }
 
-.configurations .font {
+.font {
   display: inline-block;
-  top: -12px;
+  top: -1px;
   position: relative;
   text-align: center;
-  font-size: 44px;
+  font-size: 40px;
+  margin-right: 9px;
 }
 
-.configurations .decrease {
+.decrease.font {
   color: rgba(140,0,0,0.8);
 }
 
-.configurations .increase {
+.increase.font {
   color: rgba(0,130,70,0.8);
 }
 
-.configurations .font-size {
-  display: inline-block;
-  width: 55px;
-  text-align: center;
-  top: -22px;
-  position: relative;
+#search {
+  padding: 0;
 }
 
 #search:before {
-  font-size: 25px;
+  padding: 0;
+  font-size: 35px;
 }
 
 #search-input {
@@ -143,4 +141,8 @@ ion-content h1 {
 .search h3 {
   padding: 20px 40px;
   text-align: center;
+}
+
+.hidden {
+  visibility: hidden !important;
 }
