@@ -76,5 +76,4 @@ function changeFontSize(n, scope) {
   scope.fontSize = Number(localStorage.fontSize)
   if(scope.fontSize + n <= 40 && scope.fontSize + n >= 10) { scope.fontSize += n }
   localStorage.fontSize = scope.fontSize
-  window.plugins.toast.showShortBottom(scope.fontSize + ' pts')
 }
