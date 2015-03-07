@@ -51,7 +51,7 @@ ion-content h1 {
 }
 
 .prayer {
-  padding: 17px;
+  padding: 17px 0;
 }
 .prayer .preamble {
   font-style: italic;
@@ -62,6 +62,7 @@ ion-content h1 {
 .prayer .body {
   font-size: 20px;
   line-height: 25px;
+  padding: 0 17px;
  }
 .prayer .body::first-letter {
   font-size: 200%;

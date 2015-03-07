@@ -24,14 +24,16 @@ controllers.controller('CategoriesCtrl', function($scope, $stateParams, Categori
   $scope.currentView = currentView
 })
 
-controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersService', 'CategoriesService', function($scope, $stateParams, PrayersService, CategoriesService) {
-  preambles = {}
-  $scope.prayers = PrayersService.prayers
-    .filter(function(a){return a.categoryId == $stateParams.categoryId})
-  $scope.category = CategoriesService.categories
-    .filter(function(a){return a.id == $stateParams.categoryId})[0]
+controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersService', 'CategoriesService', 'DBService', function($scope, $stateParams, PrayersService, CategoriesService, DBService) {
+  DBService.execute('select * from prayers_table where categoryId = "' + $stateParams.categoryId + '"', function(results) {
+    $scope.prayers = []
+    for(i=0; i<results.rows.length; i++) {
+      $scope.prayers.push(results.rows.item(i))
+    }
+    $scope.deHtmlize = deHtmlize
+  })
+  DBService.select('categories_table', $scope.categories = [], $stateParams.categoryId)
   $scope.letterCount = letterCount
-  $scope.deHtmlize = deHtmlize
   $scope.currentView = currentView
 }])
 
@@ -87,7 +89,7 @@ controllers.controller('ConfigCtrl', ["$scope", function($scope) {
 }])
 
 function letterCount(str) { return str.replace(/(^\s*)|(\s*$)/gi,"").replace(/[ ]{2,}/gi," ").replace(/\n /,"\n").split(" ").length }
-function deHtmlize(string) { return string.replace(/<br>/g, ' ') }
+function deHtmlize(str) { return str.replace(/<br>/g, ' ') }
 function currentView() { return (location.hash.indexOf('/prayers/') > 0) ? 'prayer-view' : ''}
 function changeFontSize(n, scope) {
   if (isNaN(localStorage.fontSize)) { localStorage.fontSize = 10 }
