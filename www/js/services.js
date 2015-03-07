@@ -1,5 +1,6 @@
 services = angular.module('services', [])
 versionDate = Number(new Date(2015, 3-1, 5))
+localVersionDate = localStorage.lastUpdatedDBSchemaAt || 0
 verbose = false
 // verbose = true
 
@@ -14,12 +15,12 @@ services.service('CategoriesService', function($http, DBService) {
     categories: self.categories || [],
     loadFromRemoteServer: function(url) {
       var existingIds = []
-      DBService.execute('select id from categories_table', function(results) {
-        for (var i=0; i<results.rows.length; i++) {
-          existingIds.push(results.rows.item(i).id)
-        }
+      DBService.loadFromRemoteServer(url+'/categories', self.categories, 'lastUpdatedCategoriesAt', function(data){
+        DBService.execute('select id from categories_table', function(results) {
+          for (var i=0; i<results.rows.length; i++) {
+            existingIds.push(results.rows.item(i).id)
+          }
 
-        DBService.loadFromRemoteServer(url+'/categories', self.categories, 'lastUpdatedCategoriesAt', function(data){
           data.forEach(function(d){
             if (existingIds.indexOf(Number(d.id)) == -1) {
               DBService.insert('categories_table', [ 'id', 'title', 'active'],
@@ -47,12 +48,12 @@ services.service('PrayersService', function($http, DBService) {
     prayers: self.prayers || [],
     loadFromRemoteServer: function(url) {
       var existingIds = []
-      DBService.execute('select id from prayers_table', function(results) {
-        for (var i=0; i<results.rows.length; i++) {
-          existingIds.push(results.rows.item(i).id)
-        }
+      DBService.loadFromRemoteServer(url+'/prayers', self.categories, 'lastUpdatedPrayersAt', function(data){
+        DBService.execute('select id from prayers_table', function(results) {
+          for (var i=0; i<results.rows.length; i++) {
+            existingIds.push(results.rows.item(i).id)
+          }
 
-        DBService.loadFromRemoteServer(url+'/prayers', self.categories, 'lastUpdatedPrayersAt', function(data){
           data.forEach(function(d){
             if (existingIds.indexOf(Number(d.id)) == -1) {
               DBService.insert('prayers_table', [ 'id', 'preamble', 'body', 'author', 'categoryId',  'active'],
@@ -72,14 +73,17 @@ services.service('PrayersService', function($http, DBService) {
   }
 })
 
-services.service('DBService', function($http){
+services.service('DBService', function($http, $state) {
   return {
     load: function() {
       db = this
-      log('>> Preparing DB')
+      log('\n>> Preparing DB')
       angular.db = openDatabase('bahai-prayers', '1.0', 'bahai-prayers-db', 2 * 1024 * 1024)
-      if (localStorage.lastUpdatedDBSchemaAt < versionDate) {
+      db.execute('CREATE TABLE IF NOT EXISTS prayers_table ( id integer primary key, categoryId integer, body text, author text, preamble text, favorite boolean, active boolean )')
+      db.execute('CREATE TABLE IF NOT EXISTS categories_table ( id integer primary key, title text, active boolean )')
+      if (localVersionDate < versionDate) {
         db.recreateDB()
+        $state.reload()
       }
     },
     loadFromRemoteServer: function(url, collection, lastUpdatedVariable, callBack) {
@@ -94,7 +98,7 @@ services.service('DBService', function($http){
           log('Fetched data from: ' + url + sufix)
         })
         .error(function(error){
-          log('Error fetching data: ' + error)
+          log('\n!!! Error fetching data: ' + error)
           errors += 1
         })
 
@@ -131,11 +135,12 @@ services.service('DBService', function($http){
       angular.db.transaction(function(tx) {
         tx.executeSql(sqlString,[],
           function(tx, results) {
-            log('Query executed successfully' + (verbose ? ': ' + sqlString : ''))
+            var lines = (results.rowsAffected ? results.rowsAffected + ' affected' : results.rows.length) + ' lines'
+            log('Query executed successfully (' + lines + ')' + (verbose ? ': ' + sqlString : ''))
             if (callBack){callBack(results)}
           },
           function(tx, error) {
-            log('Error executing query: ' + error.message)
+            log('\n!!! Error executing query: ' + error.message)
           }
         )
       })
@@ -150,14 +155,16 @@ services.service('DBService', function($http){
       localStorage.lastUpdatedPrayersAt = 0
     },
     recreateDB: function() {
-      log('>>>> Recreating DB')
+      log('\n>>>> Recreating DB')
       db.execute('DROP TABLE prayers_table', function(){
-        db.execute('CREATE TABLE prayers_table ( id integer primary key, categoryId integer, body text, author text, preamble text, favorite boolean, active boolean )')
+        db.execute('CREATE TABLE prayers_table ( id integer primary key, categoryId integer, body text, author text, preamble text, favorite boolean, active boolean )', function() {
+          db.execute('DROP TABLE categories_table', function(){
+            db.execute('CREATE TABLE categories_table ( id integer primary key, title text, active boolean )', function() {
+              log('\n>>>> DB recreated successfully')
+            })
+          })
+        })
       })
-      db.execute('DROP TABLE categories_table', function(){
-        db.execute('CREATE TABLE categories_table ( id integer primary key, title text, active boolean )')
-      })
-      log('>>>> DB recreated successfully')
 
       localStorage.lastUpdatedCategoriesAt = 0
       localStorage.lastUpdatedPrayersAt = 0
