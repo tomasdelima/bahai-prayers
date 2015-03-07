@@ -1,6 +1,11 @@
 <ion-view view-title="Configurações">
   <ion-content class="configurations">
     <ion-item>
+      Fonte:
+      <select ng-options="fontFamily for fontFamily in fontFamilies" ng-model="selected" ng-change="setFontFamily(selected)"></select>
+      <style type="text/css">
+        body { font-family: {{selected}}; }
+      </style>
     </ion-item>
   </ion-content>
 </ion-view>

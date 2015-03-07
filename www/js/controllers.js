@@ -1,5 +1,5 @@
-var controllers = angular.module('controllers', []),
-    remoteHost = 'http://bahai-prayers-server.herokuapp.com'
+controllers = angular.module('controllers', [])
+remoteHost = 'http://bahai-prayers-server.herokuapp.com'
 
 controllers.controller('AppCtrl', function($scope, $stateParams, DBService, PrayersService, CategoriesService) {
   DBService.load()
@@ -8,19 +8,20 @@ controllers.controller('AppCtrl', function($scope, $stateParams, DBService, Pray
   PrayersService.load()
 
   var daysSinceLastUpdate = ((new Date).getTime() - Number(localStorage.lastUpdatedCategoriesAt))/(1000*60*60*24)
-  if (navigator.onLine &&  daysSinceLastUpdate > 7) {
+  if (navigator.onLine &&  daysSinceLastUpdate > 3) {
     CategoriesService.loadFromRemoteServer(remoteHost)
     PrayersService.loadFromRemoteServer(remoteHost)
   }
 
   $scope.changeFontSize = changeFontSize
-  $scope.fontSize = localStorage.fontSize
-  $scope.showChangeFontButtons = showChangeFontButtons
+  $scope.fontSize = localStorage.fontSize || 10
+  $scope.fontFamily = localStorage.fontFamily
+  $scope.currentView = currentView
 })
 
 controllers.controller('CategoriesCtrl', function($scope, $stateParams, CategoriesService) {
   $scope.categories = CategoriesService.categories
-  $scope.showChangeFontButtons = showChangeFontButtons
+  $scope.currentView = currentView
 })
 
 controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersService', 'CategoriesService', function($scope, $stateParams, PrayersService, CategoriesService) {
@@ -31,14 +32,14 @@ controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersServic
     .filter(function(a){return a.id == $stateParams.categoryId})[0]
   $scope.letterCount = letterCount
   $scope.deHtmlize = deHtmlize
-  $scope.showChangeFontButtons = showChangeFontButtons
+  $scope.currentView = currentView
 }])
 
 controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'DBService', function($scope, $stateParams, DBService) {
   DBService.select('prayers_table', $scope.prayers = [], $stateParams.prayerId)
   $scope.letterCount = letterCount
   $scope.deHtmlize = deHtmlize
-  $scope.showChangeFontButtons = showChangeFontButtons
+  $scope.currentView = currentView
   $scope.presentPrayer = function(prayerBody) {
     if (prayerBody) {
       var accent = '<span class="accent">&acute</span>'
@@ -69,15 +70,25 @@ controllers.controller('SearchCtrl', function($scope, PrayersService){
   $scope.prayers = PrayersService.prayers
   $scope.letterCount = letterCount
   $scope.deHtmlize = deHtmlize
-  $scope.showChangeFontButtons = showChangeFontButtons
+  $scope.currentView = currentView
 })
 
-controllers.controller('ConfigCtrl', function($scope) {
-})
+controllers.controller('ConfigCtrl', ["$scope", function($scope) {
+  $scope.fontFamilies = [
+    'Alegreya',
+    'Artifika',
+    'Cardo',
+    'Timeless',
+  ]
+  $scope.selected = localStorage.fontFamily || 'Cardo'
+  $scope.setFontFamily = function(newFontFamily) {
+    localStorage.fontFamily = newFontFamily
+  }
+}])
 
 function letterCount(str) { return str.replace(/(^\s*)|(\s*$)/gi,"").replace(/[ ]{2,}/gi," ").replace(/\n /,"\n").split(" ").length }
 function deHtmlize(string) { return string.replace(/<br>/g, ' ') }
-function showChangeFontButtons() { return (location.hash.indexOf('/prayers/') > 0) ? '' : 'hidden'}
+function currentView() { return (location.hash.indexOf('/prayers/') > 0) ? 'prayer-view' : ''}
 function changeFontSize(n, scope) {
   if (isNaN(localStorage.fontSize)) { localStorage.fontSize = 10 }
   scope.fontSize = Number(localStorage.fontSize)

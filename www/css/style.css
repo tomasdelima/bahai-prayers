@@ -1,5 +1,9 @@
 @import url("font-awesome.css");
+@font-face { font-family: Alegreya; src: url('../fonts/Alegreya-Regular.otf'); }
+@font-face { font-family: Artifika; src: url('../fonts/Artifika-Regular.ttf'); }
+@font-face { font-family: Cambo; src: url('../fonts/Cambo.otf'); }
 @font-face { font-family: Ruritania; src: url('../fonts/Ruritania.ttf'); }
+@font-face { font-family: Timeless; src: url('../fonts/Timeless.ttf'); }
 
 bg {
   font-family: Ruritania;
@@ -14,26 +18,11 @@ bg {
   line-height: 350%;
   color: rgba(0,0,0,0.15);
 }
-
-bg.counter {
-  color: rgba(0,0,0,0.5);
-}
-
-bg.counter.done {
-  color: rgba(140,0,0,0.8);
-}
-
-bg.Bá:after {
-  content: "B";
-}
-
-bg.há:after {
-  content: "B";
-}
-
-bg.bd:after {
-  content: "A";
-}
+bg.counter { color: rgba(0,0,0,0.5); }
+bg.counter.done { color: rgba(140,0,0,0.8); }
+bg.Bá:after { content: "B"; }
+bg.há:after { content: "B"; }
+bg.bd:after { content: "A"; }
 
 ion-content h1 {
   padding-left: 10px;
@@ -66,14 +55,14 @@ ion-content h1 {
 }
 .prayer .preamble {
   font-style: italic;
-  margin-bottom: 10px;
   text-align: center;
+  color: #444;
+  padding: 0 10px;
 }
 .prayer .body {
   font-size: 20px;
   line-height: 25px;
-  padding-top: 50px;
-}
+ }
 .prayer .body::first-letter {
   font-size: 200%;
   color: #777;
@@ -104,32 +93,54 @@ ion-content h1 {
   line-height: 74px;
 }
 
+
 .menu-custom-buttoms {
-  width: 130px;
+  min-width: 130px;
 }
-.font {
-  display: inline-block;
-  top: -1px;
-  position: relative;
+.menu-custom-buttoms a {
+  float: right;
+  width: 30px;
+  height: 34px;
+}
+.menu-custom-buttoms #search {
+  margin-right: 8px;
+}
+.menu-custom-buttoms #search:before {
+  font-size: 29px;
+}
+.menu-custom-buttoms.prayer-view .font {
+  display: inherit;
+}
+.menu-custom-buttoms.prayer-view #search {
+  display: none;
+}
+.menu-custom-buttoms .font {
+  display: none;
   text-align: center;
   font-size: 40px;
-  margin-right: 9px;
+  line-height: 35px;
 }
-.decrease.font {
+.menu-custom-buttoms .decrease.font {
   color: rgba(140,0,0,0.8);
 }
-.increase.font {
+.menu-custom-buttoms .increase.font {
   color: rgba(0,130,70,0.8);
 }
 
 
-#search {
-  padding: 0;
+.configurations .item {
+  line-height: 26px;
 }
-#search:before {
-  padding: 0;
-  font-size: 35px;
+.configurations select {
+  background: white;
+  height: 31px;
+  width: 150px;
+  float: right;
+  padding-left: 10px;
+  border: 1px solid #ccc;
 }
+
+
 #search-input {
   display: block;
   width: 80%;
@@ -149,4 +160,5 @@ ion-content h1 {
 
 .hidden {
   visibility: hidden !important;
+  display: none;
 }
