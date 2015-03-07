@@ -8,7 +8,7 @@ controllers.controller('AppCtrl', function($scope, $stateParams, DBService, Pray
   PrayersService.load()
 
   var daysSinceLastUpdate = ((new Date).getTime() - Number(localStorage.lastUpdatedCategoriesAt))/(1000*60*60*24)
-  if(navigator.onLine &&  daysSinceLastUpdate > 7) {
+  if (navigator.onLine &&  daysSinceLastUpdate > 7) {
     CategoriesService.loadFromRemoteServer(remoteHost)
     PrayersService.loadFromRemoteServer(remoteHost)
   }
@@ -39,13 +39,20 @@ controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'DBService', fu
   $scope.letterCount = letterCount
   $scope.deHtmlize = deHtmlize
   $scope.showChangeFontButtons = showChangeFontButtons
+  $scope.presentPrayer = function(prayerBody) {
+    if (prayerBody) {
+      var accent = '<span class="accent">&acute</span>'
+      var firstLetter = prayerBody[0].replace('Ó', 'O' + accent).replace('É', 'E' + accent)
+      return firstLetter + prayerBody.slice(1)
+    }
+  }
 }])
 
 controllers.controller('AllahuabhasCtrl', function($scope) {
   $scope.counter = 0
   $scope.tap = function() {
     $scope.counter += 1
-    if( $scope.counter >= 95 ) {
+    if ($scope.counter >= 95) {
       $scope.cssClass = 'done'
       navigator.notification.vibrate(60)
     } else {
@@ -72,8 +79,8 @@ function letterCount(str) { return str.replace(/(^\s*)|(\s*$)/gi,"").replace(/[ 
 function deHtmlize(string) { return string.replace(/<br>/g, ' ') }
 function showChangeFontButtons() { return (location.hash.indexOf('/prayers/') > 0) ? '' : 'hidden'}
 function changeFontSize(n, scope) {
-  if(isNaN(localStorage.fontSize)) { localStorage.fontSize = 10 }
+  if (isNaN(localStorage.fontSize)) { localStorage.fontSize = 10 }
   scope.fontSize = Number(localStorage.fontSize)
-  if(scope.fontSize + n <= 40 && scope.fontSize + n >= 10) { scope.fontSize += n }
+  if (scope.fontSize + n <= 40 && scope.fontSize + n >= 10) { scope.fontSize += n }
   localStorage.fontSize = scope.fontSize
 }

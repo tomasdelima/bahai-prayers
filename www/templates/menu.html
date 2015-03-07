@@ -13,9 +13,9 @@
         <span class="menu-custom-buttoms">
 
           <i class="decrease font fa fa-minus {{showChangeFontButtons()}}"
-                ng-click="changeFontSize(-1, this)"></i>
+                ng-click="changeFontSize(-5, this)"></i>
           <i class="increase font fa fa-plus {{showChangeFontButtons()}}"
-                ng-click="changeFontSize(+1, this)"></i>
+                ng-click="changeFontSize(+5, this)"></i>
           <a ng-href="#/app/search" class="button button-icon button-clear fa fa-search" id="search"></a>
         </span>
 
@@ -23,6 +23,12 @@
           #prayer-view .preamble, #prayer-view .body, #prayer-view .author {
             font-size: {{fontSize}}px;
             line-height: {{fontSize*1.5}}px;
+          }
+          .accent {
+            font-size: {{fontSize*3}}px;
+            height: {{fontSize*3}}px;
+            right: {{fontSize*0.6}}px;
+            top: {{1 - fontSize*0.1}}px;
           }
         </style>
 

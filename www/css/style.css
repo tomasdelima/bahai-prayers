@@ -75,9 +75,16 @@ ion-content h1 {
   padding-top: 50px;
 }
 .prayer .body::first-letter {
-    font-size: 200%;
-    color: #777;
-    font-family: Ruritania;
+  font-size: 200%;
+  color: #777;
+  font-family: Ruritania;
+}
+.prayer .body .accent {
+  position: relative;
+  display: inline-block;
+  color: #777;
+  width: 0px;
+  height: 0px;
 }
 .prayer .author {
   font-style: italic;
