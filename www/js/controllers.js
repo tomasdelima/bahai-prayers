@@ -55,11 +55,12 @@ controllers.controller('AllahuabhasCtrl', function($scope) {
   $scope.counter = 0
   $scope.tap = function() {
     $scope.counter += 1
+    var vibrationIntensity = Number(localStorage.vibrationIntensity)
     if ($scope.counter >= 95) {
       $scope.cssClass = 'done'
-      navigator.notification.vibrate(60)
+      navigator.notification.vibrate(vibrationIntensity * 5)
     } else {
-      navigator.notification.vibrate(11)
+      navigator.notification.vibrate(vibrationIntensity)
     }
   }
   $scope.restart = function(){
@@ -82,9 +83,14 @@ controllers.controller('ConfigCtrl', ["$scope", function($scope) {
     'Cardo',
     'Timeless',
   ]
-  $scope.selected = localStorage.fontFamily || 'Cardo'
-  $scope.setFontFamily = function(newFontFamily) {
-    localStorage.fontFamily = newFontFamily
+  $scope.fontFamily = localStorage.fontFamily || 'Cardo'
+  $scope.setFontFamily = function(newFontFamily) {localStorage.fontFamily = newFontFamily}
+  $scope.vibrationIntensity = Number(localStorage.vibrationIntensity)
+  $scope.setVibration = function(increase) {
+    $scope.vibrationIntensity = Number(localStorage.vibrationIntensity) + increase
+    if($scope.vibrationIntensity < 0) { $scope.vibrationIntensity = 0 }
+    localStorage.vibrationIntensity = $scope.vibrationIntensity
+    navigator.notification.vibrate($scope.vibrationIntensity)
   }
 }])
 

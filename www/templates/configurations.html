@@ -1,11 +1,16 @@
 <ion-view view-title="Configurações">
   <ion-content class="configurations">
     <ion-item>
-      Fonte:
-      <select ng-options="fontFamily for fontFamily in fontFamilies" ng-model="selected" ng-change="setFontFamily(selected)"></select>
+      Fonte: <select ng-options="fontFamily for fontFamily in fontFamilies" ng-model="fontFamily" ng-change="setFontFamily(fontFamily)"></select>
       <style type="text/css">
-        body { font-family: {{selected}}; }
+        body { font-family: {{fontFamily}}; }
       </style>
+    </ion-item>
+    <ion-item class="vibration">
+      Intensidade da vibração:
+      <a ng-click="setVibration(+1)" class="fa fa-plus"></a>
+      <a>{{vibrationIntensity}}</a>
+      <a ng-click="setVibration(-1)" class="fa fa-minus"></a>
     </ion-item>
   </ion-content>
 </ion-view>

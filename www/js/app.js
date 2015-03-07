@@ -8,6 +8,12 @@ angular.module('prayer', ['ionic', 'controllers', 'services'])
     if (window.StatusBar) {
       StatusBar.styleDefault()
     }
+    if(!localStorage.configured) {
+      localStorage.fontFamily = 'Cardo'
+      localStorage.fontSize = '20'
+      localStorage.vibrationIntensity = '10'
+      localStorage.configured = true
+    }
   })
 })
 
