@@ -1,8 +1,8 @@
 services = angular.module('services', [])
-versionDate = Number(new Date(2015, 3-1, 5))
+versionDate = Number(new Date(2015, 3-1, 9))
 localVersionDate = localStorage.lastUpdatedDBSchemaAt || 0
-verbose = false
-// verbose = true
+// verbose = false
+verbose = true
 
 services.service('CategoriesService', function($http, DBService) {
   var self = this
@@ -82,8 +82,7 @@ services.service('DBService', function($http, $state) {
       db.execute('CREATE TABLE IF NOT EXISTS prayers_table ( id integer primary key, categoryId integer, body text, author text, preamble text, favorite boolean, active boolean )')
       db.execute('CREATE TABLE IF NOT EXISTS categories_table ( id integer primary key, title text, active boolean )')
       if (localVersionDate < versionDate) {
-        db.recreateDB()
-        $state.reload()
+        db.recreateDB($state.reload)
       }
     },
     loadFromRemoteServer: function(url, collection, lastUpdatedVariable, callBack) {
@@ -98,11 +97,21 @@ services.service('DBService', function($http, $state) {
           log('Fetched data from: ' + url + sufix)
         })
         .error(function(error){
+          db.postError({message: 'Error fetching data: ' + error})
           log('\n!!! Error fetching data: ' + error)
           errors += 1
         })
 
       if (!errors) { localStorage[lastUpdatedVariable] = Date.now() }
+    },
+    postError: function(data) {
+      $http.get( remoteHost + '/mobile_errors?message=' + data.message )
+      .success(function(data){
+        log('Error logged')
+      })
+      .error(function(error){
+        log('Error logging error')
+      })
     },
     select: function(table, collection, id){
       var sqlString = 'select * from ' + table + ' where active="true" ' + (id?'and id="'+id+'"':'')
@@ -140,6 +149,7 @@ services.service('DBService', function($http, $state) {
             if (callBack){callBack(results)}
           },
           function(tx, error) {
+            db.postError({message: 'Error fetching data: ' + error.message})
             log('\n!!! Error executing query: ' + error.message)
           }
         )
@@ -154,13 +164,14 @@ services.service('DBService', function($http, $state) {
       localStorage.lastUpdatedCategoriesAt = 0
       localStorage.lastUpdatedPrayersAt = 0
     },
-    recreateDB: function() {
+    recreateDB: function(callback) {
       log('\n>>>> Recreating DB')
       db.execute('DROP TABLE prayers_table', function(){
         db.execute('CREATE TABLE prayers_table ( id integer primary key, categoryId integer, body text, author text, preamble text, favorite boolean, active boolean )', function() {
           db.execute('DROP TABLE categories_table', function(){
             db.execute('CREATE TABLE categories_table ( id integer primary key, title text, active boolean )', function() {
               log('\n>>>> DB recreated successfully')
+              callback()
             })
           })
         })
@@ -173,4 +184,4 @@ services.service('DBService', function($http, $state) {
   }
 })
 
-log = function() { return console.log.apply(console, arguments); };
+log = function() { return console.log.apply(console, arguments) }

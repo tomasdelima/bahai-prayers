@@ -1,5 +1,6 @@
 controllers = angular.module('controllers', [])
 remoteHost = 'http://bahai-prayers-server.herokuapp.com'
+// remoteHost = 'http://localhost:3000'
 
 controllers.controller('AppCtrl', function($scope, $stateParams, DBService, PrayersService, CategoriesService) {
   DBService.load()
@@ -8,7 +9,7 @@ controllers.controller('AppCtrl', function($scope, $stateParams, DBService, Pray
   PrayersService.load()
 
   var daysSinceLastUpdate = ((new Date).getTime() - Number(localStorage.lastUpdatedCategoriesAt))/(1000*60*60*24)
-  if (navigator.onLine &&  daysSinceLastUpdate > 3) {
+  if (navigator.onLine &&  daysSinceLastUpdate > 0) {
     CategoriesService.loadFromRemoteServer(remoteHost)
     PrayersService.loadFromRemoteServer(remoteHost)
   }
