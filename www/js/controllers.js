@@ -2,16 +2,15 @@ controllers = angular.module('controllers', [])
 remoteHost = 'http://bahai-prayers-server.herokuapp.com'
 // remoteHost = 'http://localhost:3000'
 
-controllers.controller('AppCtrl', function($scope, $stateParams, DBService, PrayersService, CategoriesService) {
+controllers.controller('AppCtrl', function($scope, $stateParams, DBService, PrayersService) {
   DBService.load()
 
-  CategoriesService.load()
   PrayersService.load()
 
   var daysSinceLastUpdate = ((new Date).getTime() - Number(localStorage.lastUpdatedCategoriesAt))/(1000*60*60*24)
   if (navigator.onLine &&  daysSinceLastUpdate > 0) {
-    CategoriesService.loadFromRemoteServer(remoteHost)
-    PrayersService.loadFromRemoteServer(remoteHost)
+    PrayersService.loadPrayersFromRemoteServer(remoteHost)
+    PrayersService.loadCategoriesFromRemoteServer(remoteHost)
   }
 
   $scope.changeFontSize = changeFontSize
@@ -20,28 +19,29 @@ controllers.controller('AppCtrl', function($scope, $stateParams, DBService, Pray
   $scope.currentView = currentView
 })
 
-controllers.controller('CategoriesCtrl', function($scope, $stateParams, CategoriesService) {
-  $scope.categories = CategoriesService.categories
-  $scope.currentView = currentView
-})
-
-controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersService', 'CategoriesService', 'DBService', function($scope, $stateParams, PrayersService, CategoriesService, DBService) {
-  DBService.execute('select * from prayers_table where categoryId = "' + $stateParams.categoryId + '"', function(results) {
-    $scope.prayers = []
-    for(i=0; i<results.rows.length; i++) {
-      $scope.prayers.push(results.rows.item(i))
-    }
-    $scope.deHtmlize = deHtmlize
-  })
-  DBService.select('categories_table', $scope.categories = [], $stateParams.categoryId)
-  $scope.letterCount = letterCount
+controllers.controller('CategoriesCtrl', ['$scope', '$stateParams', 'PrayersService', function($scope, $stateParams, PrayersService) {
+  $scope.categories = PrayersService.categories
   $scope.currentView = currentView
 }])
 
-controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'DBService', function($scope, $stateParams, DBService) {
-  DBService.select('prayers_table', $scope.prayers = [], $stateParams.prayerId)
-  $scope.letterCount = letterCount
-  $scope.deHtmlize = deHtmlize
+controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersService', function($scope, $stateParams, PrayersService) {
+  $scope.deHtmlize = PrayersService.deHtmlize
+  $scope.categories = PrayersService.categories.filter(function(category){
+    return category.id == $stateParams.categoryId
+  })
+  $scope.prayers = PrayersService.prayers.filter(function(prayer){
+    return prayer.categoryId == $stateParams.categoryId
+  })
+  $scope.letterCount = PrayersService.letterCount
+  $scope.currentView = currentView
+}])
+
+controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'PrayersService', function($scope, $stateParams, PrayersService) {
+  $scope.prayers = PrayersService.prayers.filter(function(prayer){
+    return prayer.id == $stateParams.prayerId
+  })
+  $scope.letterCount = PrayersService.letterCount
+  $scope.deHtmlize = PrayersService.deHtmlize
   $scope.currentView = currentView
   $scope.presentPrayer = function(prayerBody) {
     if (prayerBody) {
@@ -72,8 +72,8 @@ controllers.controller('AllahuabhasCtrl', function($scope) {
 
 controllers.controller('SearchCtrl', function($scope, PrayersService){
   $scope.prayers = PrayersService.prayers
-  $scope.letterCount = letterCount
-  $scope.deHtmlize = deHtmlize
+  $scope.letterCount = PrayersService.letterCount
+  $scope.deHtmlize = PrayersService.deHtmlize
   $scope.currentView = currentView
 })
 
@@ -95,8 +95,6 @@ controllers.controller('ConfigCtrl', ["$scope", function($scope) {
   }
 }])
 
-function letterCount(str) { return str.replace(/(^\s*)|(\s*$)/gi,"").replace(/[ ]{2,}/gi," ").replace(/\n /,"\n").split(" ").length }
-function deHtmlize(str) { return str.replace(/<br>/g, ' ') }
 function currentView() { return (location.hash.indexOf('/prayers/') > 0) ? 'prayer-view' : ''}
 function changeFontSize(n, scope) {
   if (isNaN(localStorage.fontSize)) { localStorage.fontSize = 10 }

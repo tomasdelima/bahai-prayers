@@ -3,72 +3,45 @@ versionDate = Number(new Date(2015, 3-1, 8))
 localVersionDate = localStorage.lastUpdatedDBSchemaAt || 0
 globalVerbose = 3 // verbose levels: (1) no logging, (2) medium logging and (3) full logging
 
-services.service('CategoriesService', function($http, DBService) {
+services.service('PrayersService', function($http, DBService) {
   var self = this
+  self.prayers = []
   self.categories = []
 
   return {
-    load: function(categoryId) {
-      return DBService.select('categories_table', self.categories, categoryId)
+    load: function() {
+      DBService.select('prayers_table', self.prayers)
+      DBService.select('categories_table', self.categories)
     },
-    categories: self.categories || [],
-    loadFromRemoteServer: function(url) {
+    prayers: self.prayers,
+    categories: self.categories,
+    loadPrayersFromRemoteServer: function(url) {
+      var existingIds = []
+      DBService.loadFromRemoteServer(url+'/prayers', self.prayers, 'lastUpdatedPrayersAt', function(data){
+        DBService.execute('select id from prayers_table', function(results) {
+          for (var i=0; i<results.rows.length; i++) {
+            existingIds.push(results.rows.item(i).id)
+          }
+          DBService.insertOrUpdateCollection('prayers_table', ['id', 'preamble', 'body', 'author', 'categoryId', 'active'], data, existingIds, self.prayers, 2)
+        })
+      })
+    },
+    loadCategoriesFromRemoteServer: function(url) {
       var existingIds = []
       DBService.loadFromRemoteServer(url+'/categories', self.categories, 'lastUpdatedCategoriesAt', function(data){
         DBService.execute('select id from categories_table', function(results) {
           for (var i=0; i<results.rows.length; i++) {
             existingIds.push(results.rows.item(i).id)
           }
-
-          data.forEach(function(d){
-            if (existingIds.indexOf(Number(d.id)) == -1) {
-              DBService.insert('categories_table', [ 'id', 'title', 'active'],
-                                                   [d.id, d.title, d.active ])
-              self.categories.push(d)
-            } else {
-              DBService.update('categories_table', [ 'title', 'active'],
-                                                   [d.title, d.active ], d.id)
-            }
-          }, 2)
-        })
-      })
-    }
-  }
-})
-
-services.service('PrayersService', function($http, DBService) {
-  var self = this
-  self.prayers = []
-
-  return {
-    load: function(prayerId) {
-      return DBService.select('prayers_table', self.prayers, prayerId)
-    },
-    prayers: self.prayers || [],
-    loadFromRemoteServer: function(url) {
-      var existingIds = []
-      DBService.loadFromRemoteServer(url+'/prayers', self.categories, 'lastUpdatedPrayersAt', function(data){
-        DBService.execute('select id from prayers_table', function(results) {
-          for (var i=0; i<results.rows.length; i++) {
-            existingIds.push(results.rows.item(i).id)
-          }
-
-          data.forEach(function(d){
-            if (existingIds.indexOf(Number(d.id)) == -1) {
-              DBService.insert('prayers_table', [ 'id', 'preamble', 'body', 'author', 'categoryId',  'active'],
-                                                [d.id, d.preamble, d.body, d.author, d.category_id, d.active])
-              self.prayers.push(d)
-            } else {
-              DBService.update('prayers_table', [ 'preamble', 'body', 'author', 'categoryId', 'active' ],
-                                                [d.preamble, d.body, d.author, d.category_id, d.active], d.id)
-            }
-          }, 2)
+          DBService.insertOrUpdateCollection('categories_table', [ 'id', 'title', 'active'], data, existingIds, self.categories, 2)
         })
       })
     },
     loadConfig: function (attr) {
       return localStorage[attr]
-    }
+    },
+    deHtmlize: function (str) { return str.replace(/<br>/g, ' ') },
+    letterCount: function (str) { return str.replace(/(^\s*)|(\s*$)/gi,"").replace(/[ ]{2,}/gi," ").replace(/\n /,"\n").split(" ").length },
   }
 })
 
@@ -134,6 +107,19 @@ services.service('DBService', function($http, $state) {
       })
       sqlString += 'where id = "' + id + '"'
       this.execute(sqlString, undefined, verbose)
+    },
+    insertOrUpdateCollection: function(table, fields, data, existingIds, collection, verbose) {
+      data.forEach(function(d){
+        d.categoryId = d.category_id
+        var values = fields.map(function(f){return d[f]})
+        if (existingIds.indexOf(Number(d.id)) == -1) {
+          values.id = d.id
+          db.insert(table, fields, values, verbose)
+          collection.push(d)
+        } else {
+          db.update(table, fields, values, d.id, verbose)
+        }
+      })
     },
     delete: function(table, ids, verbose) {
       var sqlString = 'delete from ' + table + (ids ? ' where id in (' + ids + ')' : '')
