@@ -1,8 +1,7 @@
 services = angular.module('services', [])
-versionDate = Number(new Date(2015, 3-1, 9))
+versionDate = Number(new Date(2015, 3-1, 8))
 localVersionDate = localStorage.lastUpdatedDBSchemaAt || 0
-// verbose = false
-verbose = true
+globalVerbose = 3 // verbose levels: (1) no logging, (2) medium logging and (3) full logging
 
 services.service('CategoriesService', function($http, DBService) {
   var self = this
@@ -30,7 +29,7 @@ services.service('CategoriesService', function($http, DBService) {
               DBService.update('categories_table', [ 'title', 'active'],
                                                    [d.title, d.active ], d.id)
             }
-          })
+          }, 2)
         })
       })
     }
@@ -63,7 +62,7 @@ services.service('PrayersService', function($http, DBService) {
               DBService.update('prayers_table', [ 'preamble', 'body', 'author', 'categoryId', 'active' ],
                                                 [d.preamble, d.body, d.author, d.category_id, d.active], d.id)
             }
-          })
+          }, 2)
         })
       })
     },
@@ -79,8 +78,8 @@ services.service('DBService', function($http, $state) {
       db = this
       log('\n>> Preparing DB')
       angular.db = openDatabase('bahai-prayers', '1.0', 'bahai-prayers-db', 2 * 1024 * 1024)
-      db.execute('CREATE TABLE IF NOT EXISTS prayers_table ( id integer primary key, categoryId integer, body text, author text, preamble text, favorite boolean, active boolean )')
-      db.execute('CREATE TABLE IF NOT EXISTS categories_table ( id integer primary key, title text, active boolean )')
+      db.execute('CREATE TABLE IF NOT EXISTS prayers_table ( id integer primary key, categoryId integer, body text, author text, preamble text, favorite boolean, active boolean )', undefined, 1)
+      db.execute('CREATE TABLE IF NOT EXISTS categories_table ( id integer primary key, title text, active boolean )', undefined, 1)
       if (localVersionDate < versionDate) {
         db.recreateDB($state.reload)
       }
@@ -105,7 +104,9 @@ services.service('DBService', function($http, $state) {
       if (!errors) { localStorage[lastUpdatedVariable] = Date.now() }
     },
     postError: function(data) {
-      $http.get( remoteHost + '/mobile_errors?message=' + data.message )
+      var query = 'message=' + data.message
+      // if(window.device) { query += '[origin=' + device.name + '-' + device.model + ']'}
+      $http.get( remoteHost + '/mobile_errors?' + query )
       .success(function(data){
         log('Error logged')
       })
@@ -122,30 +123,35 @@ services.service('DBService', function($http, $state) {
       })
       return collection
     },
-    insert: function(table, fields, values) {
+    insert: function(table, fields, values, verbose) {
       var sqlString = 'insert into ' + table + ' (' + fields.join(',') + ') values ("' + values.join('","') + '")'
-      this.execute(sqlString)
+      this.execute(sqlString, undefined, verbose)
     },
-    update: function(table, fields, values, id) {
+    update: function(table, fields, values, id, verbose) {
       var sqlString = 'update ' + table + ' set '
       fields.forEach(function(field, index){
         sqlString += field + ' = "' + values[index] + '"' + (index + 1 == fields.length ? ' ' : ', ')
       })
       sqlString += 'where id = "' + id + '"'
-      this.execute(sqlString)
+      this.execute(sqlString, undefined, verbose)
     },
-    delete: function(table, ids) {
+    delete: function(table, ids, verbose) {
       var sqlString = 'delete from ' + table + (ids ? ' where id in (' + ids + ')' : '')
-      this.execute(sqlString)
+      this.execute(sqlString, undefined, verbose)
     },
-    execute: function(sqlString, callBack) {
-      log('Executing query' + (verbose ? ': ' + sqlString : ''))
+    execute: function(sqlString, callBack, verbose) {
+      verbose = verbose || globalVerbose
+      if(verbose > 1) {
+        log('Executing query' + (verbose > 2 ? ': ' + sqlString : ''))
+      }
 
       angular.db.transaction(function(tx) {
         tx.executeSql(sqlString,[],
           function(tx, results) {
             var lines = (results.rowsAffected ? results.rowsAffected + ' affected' : results.rows.length) + ' lines'
-            log('Query executed successfully (' + lines + ')' + (verbose ? ': ' + sqlString : ''))
+            if(verbose > 1) {
+              log('Query executed successfully (' + lines + ')' + (verbose > 2 ? ': ' + sqlString : ''))
+            }
             if (callBack){callBack(results)}
           },
           function(tx, error) {
