@@ -7,6 +7,7 @@ services.service('PrayersService', function($http, DBService) {
   var self = this
   self.prayers = []
   self.categories = []
+  self.singlePrayerIds = {}
 
   return {
     load: function() {
@@ -15,6 +16,7 @@ services.service('PrayersService', function($http, DBService) {
     },
     prayers: self.prayers,
     categories: self.categories,
+    singlePrayerIds: self.singlePrayerIds,
     loadPrayersFromRemoteServer: function(url) {
       var existingIds = []
       DBService.loadFromRemoteServer(url+'/prayers', self.prayers, 'lastUpdatedPrayersAt', function(data){
@@ -36,6 +38,16 @@ services.service('PrayersService', function($http, DBService) {
           DBService.insertOrUpdateCollection('categories_table', [ 'id', 'title', 'active'], data, existingIds, self.categories, 2)
         })
       })
+    },
+    loadSinglePrayerIds: function() {
+      DBService.execute('select a.id as categoryId, count(b.id) as prayersCount, b.id as prayerId from categories_table a join prayers_table b on a.id = b.categoryId where b.active = "true" group by a.id', function(results) {
+        for (var i=0; i<results.rows.length; i++) {
+          var item = results.rows.item(i)
+          if(item.prayersCount == 1) {
+            self.singlePrayerIds[item.categoryId] = item.prayerId
+          }
+        }
+      }, 1)
     },
     loadConfig: function (attr) {
       return localStorage[attr]

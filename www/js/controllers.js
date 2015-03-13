@@ -4,11 +4,11 @@ remoteHost = 'http://bahai-prayers-server.herokuapp.com'
 
 controllers.controller('AppCtrl', function($scope, $stateParams, DBService, PrayersService) {
   DBService.load()
-
   PrayersService.load()
+  PrayersService.loadSinglePrayerIds()
 
   var daysSinceLastUpdate = ((new Date).getTime() - Number(localStorage.lastUpdatedCategoriesAt))/(1000*60*60*24)
-  if (navigator.onLine &&  daysSinceLastUpdate > 0) {
+  if (navigator.onLine &&  daysSinceLastUpdate > 1) {
     PrayersService.loadPrayersFromRemoteServer(remoteHost)
     PrayersService.loadCategoriesFromRemoteServer(remoteHost)
   }
@@ -22,6 +22,14 @@ controllers.controller('AppCtrl', function($scope, $stateParams, DBService, Pray
 controllers.controller('CategoriesCtrl', ['$scope', '$stateParams', 'PrayersService', function($scope, $stateParams, PrayersService) {
   $scope.categories = PrayersService.categories
   $scope.currentView = currentView
+  $scope.singlePrayerIds = PrayersService.singlePrayerIds
+  $scope.hrefFor = function(categoryId) {
+    if($scope.singlePrayerIds[categoryId] > 0) {
+      return '#/app/prayers/' + $scope.singlePrayerIds[categoryId]
+    } else {
+      return '#/app/categories/' + categoryId
+    }
+  }
 }])
 
 controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersService', function($scope, $stateParams, PrayersService) {

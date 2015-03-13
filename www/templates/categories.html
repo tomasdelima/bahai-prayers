@@ -1,6 +1,6 @@
 <ion-view view-title="Categorias">
   <ion-content>
-    <ion-item ng-repeat="category in categories | orderBy:'title':reverse" href="#/app/categories/{{category.id}}">
+    <ion-item ng-repeat="category in categories | orderBy:'title':reverse" href="{{hrefFor(category.id)}}">
       {{ category.title }}
     </ion-item>
   </ion-content>
