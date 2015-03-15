@@ -3,9 +3,10 @@ remoteHost = 'http://bahai-prayers-server.herokuapp.com'
 // remoteHost = 'http://localhost:3000'
 
 controllers.controller('AppCtrl', function($scope, $stateParams, DBService, PrayersService) {
-  DBService.load()
-  PrayersService.load()
-  PrayersService.loadSinglePrayerIds()
+  DBService.load(function(){
+    PrayersService.load()
+    PrayersService.loadSinglePrayerIds()
+  })
 
   var daysSinceLastUpdate = ((new Date).getTime() - Number(localStorage.lastUpdatedCategoriesAt))/(1000*60*60*24)
   if (navigator.onLine &&  daysSinceLastUpdate > 1) {

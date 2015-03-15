@@ -1,6 +1,4 @@
 services = angular.module('services', [])
-versionDate = Number(new Date(2015, 3-1, 8))
-localVersionDate = localStorage.lastUpdatedDBSchemaAt || 0
 globalVerbose = 3 // verbose levels: (1) no logging, (2) medium logging and (3) full logging
 
 services.service('PrayersService', function($http, DBService) {
@@ -59,15 +57,15 @@ services.service('PrayersService', function($http, DBService) {
 
 services.service('DBService', function($http, $state) {
   return {
-    load: function() {
+    load: function(callBack) {
       db = this
-      log('\n>> Preparing DB')
+      log('>> Preparing DB')
       angular.db = openDatabase('bahai-prayers', '1.0', 'bahai-prayers-db', 2 * 1024 * 1024)
-      db.execute('CREATE TABLE IF NOT EXISTS prayers_table ( id integer primary key, categoryId integer, body text, author text, preamble text, favorite boolean, active boolean )', undefined, 1)
-      db.execute('CREATE TABLE IF NOT EXISTS categories_table ( id integer primary key, title text, active boolean )', undefined, 1)
-      if (localVersionDate < versionDate) {
-        db.recreateDB($state.reload)
-      }
+      db.prepareSchema('categories_table', {title1: 'text', active: 'boolean'}, function(){
+        db.prepareSchema('prayers_table', {categoryId: 'integer', body: 'text', author: 'text', preamble: 'text', favorite: 'boolean', active: 'boolean'}, function(){
+          if(callBack){callBack()}
+        })
+      })
     },
     loadFromRemoteServer: function(url, collection, lastUpdatedVariable, callBack) {
       var self = this,
@@ -159,8 +157,20 @@ services.service('DBService', function($http, $state) {
         )
       })
     },
-    executeAndLog: function(sqlString) {
-      db.execute(sqlString, function(r){for(i=0;i<r.rows.length;i++){log(r.rows.item(i))}})
+    executeAndLog: function(sqlString, verbose) {
+      db.execute(sqlString, function(r){for(i=0;i<r.rows.length;i++){log(r.rows.item(i))}}, verbose)
+    },
+    prepareSchema: function(table, fieldsObj, callBack){
+      log('>>>> Preparing schema for ' + table)
+      db.execute('CREATE TABLE IF NOT EXISTS ' + table + ' ( id integer primary key )', undefined, 1)
+      db.execute('select * from ' + table + ' limit 1', function(results) {
+        for(var f in fieldsObj) {
+          if(!results.rows.item(0).hasOwnProperty(f)){
+            db.executeAndLog('ALTER TABLE ' + table + ' ADD COLUMN ' + f + ' ' + fieldsObj[f], 3)
+          }
+        }
+        if(callBack){callBack()}
+      }, 1)
     },
     resetDB: function(){
       this.delete('categories_table')
@@ -168,14 +178,14 @@ services.service('DBService', function($http, $state) {
       localStorage.lastUpdatedCategoriesAt = 0
       localStorage.lastUpdatedPrayersAt = 0
     },
-    recreateDB: function(callback) {
-      log('\n>>>> Recreating DB')
+    recreateDB: function(callBack) {
+      log('>>>> Recreating DB')
       db.execute('DROP TABLE prayers_table', function(){
         db.execute('CREATE TABLE prayers_table ( id integer primary key, categoryId integer, body text, author text, preamble text, favorite boolean, active boolean )', function() {
           db.execute('DROP TABLE categories_table', function(){
             db.execute('CREATE TABLE categories_table ( id integer primary key, title text, active boolean )', function() {
-              log('\n>>>> DB recreated successfully')
-              callback()
+              log('>>>> DB recreated successfully')
+              callBack()
             })
           })
         })
