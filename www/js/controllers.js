@@ -6,13 +6,10 @@ controllers.controller('AppCtrl', function($scope, $stateParams, DBService, Pray
   DBService.load(function(){
     PrayersService.load()
     PrayersService.loadSinglePrayerIds()
-  })
 
-  var daysSinceLastUpdate = ((new Date).getTime() - Number(localStorage.lastUpdatedCategoriesAt))/(1000*60*60*24)
-  if (navigator.onLine &&  daysSinceLastUpdate > 1) {
     PrayersService.loadPrayersFromRemoteServer(remoteHost)
     PrayersService.loadCategoriesFromRemoteServer(remoteHost)
-  }
+  })
 
   $scope.changeFontSize = changeFontSize
   $scope.fontSize = localStorage.fontSize || 10
@@ -61,7 +58,7 @@ controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'PrayersService
   }
 }])
 
-controllers.controller('AllahuabhasCtrl', function($scope) {
+controllers.controller('AllahuabhasCtrl', ['$scope', function($scope) {
   $scope.counter = 0
   $scope.tap = function() {
     $scope.counter += 1
@@ -77,7 +74,7 @@ controllers.controller('AllahuabhasCtrl', function($scope) {
     $scope.counter = 0
     $scope.cssClass = ''
   }
-})
+}])
 
 controllers.controller('SearchCtrl', function($scope, PrayersService){
   $scope.prayers = PrayersService.prayers

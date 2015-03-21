@@ -8,7 +8,7 @@ services.service('PrayersService', function($http, DBService) {
   self.singlePrayerIds = {}
 
   return {
-    load: function() {
+    load: function(){
       DBService.select('prayers_table', self.prayers)
       DBService.select('categories_table', self.categories)
     },
@@ -37,7 +37,7 @@ services.service('PrayersService', function($http, DBService) {
         })
       })
     },
-    loadSinglePrayerIds: function() {
+    loadSinglePrayerIds: function(){
       DBService.execute('select a.id as categoryId, count(b.id) as prayersCount, b.id as prayerId from categories_table a join prayers_table b on a.id = b.categoryId where b.active = "true" group by a.id', function(results) {
         for (var i=0; i<results.rows.length; i++) {
           var item = results.rows.item(i)
@@ -61,11 +61,51 @@ services.service('DBService', function($http, $state) {
       db = this
       log('>> Preparing DB')
       angular.db = openDatabase('bahai-prayers', '1.0', 'bahai-prayers-db', 2 * 1024 * 1024)
-      db.prepareSchema('categories_table', {title1: 'text', active: 'boolean'}, function(){
-        db.prepareSchema('prayers_table', {categoryId: 'integer', body: 'text', author: 'text', preamble: 'text', favorite: 'boolean', active: 'boolean'}, function(){
+      db.prepareSchema('categories_table', {title: 'text', active: 'boolean'}, function(){
+        db.prepareSchema('prayers_table', {categoryId: 'integer', body: 'text', author: 'text', preamble: 'text', favorite: 'boolean', active: 'boolean'}, callBack)
+      })
+    },
+    prepareSchema: function(table, fieldsObj, callBack){
+      log('>>>> Preparing schema for ' + table)
+      db.createRawTable(table, function(){
+        db.addColumns(table, fieldsObj, function(){
+          log('>>>> Schema loaded for ' + table)
           if(callBack){callBack()}
         })
-      })
+      }, 1)
+    },
+    createRawTable: function(table, callBack){
+      db.execute('CREATE TABLE IF NOT EXISTS ' + table + ' ( id integer primary key )', function(results){
+        db.execute('select * from ' + table + ' limit 1', function(results) {
+          if(results.rows.length == 0){
+            db.insert(table, ['id'], [0], function(){
+              log('>>>>>> Table "' + table + '" created successfully')
+              if(callBack){callBack()}
+            }, 1)
+          } else {
+            if(callBack){callBack()}
+          }
+        }, 1)
+      }, 1)
+    },
+    addColumns: function(table, fieldsObj, callBack){
+      db.execute('select * from ' + table + ' limit 1', function(results) {
+        var newColumns = [],
+            sqlStrings = []
+
+        for(var f in fieldsObj) {
+          if(results.rows.length && !results.rows.item(0).hasOwnProperty(f)){
+            newColumns.push(f)
+            sqlStrings.push('ALTER TABLE ' + table + ' ADD COLUMN ' + f + ' ' + fieldsObj[f] + ' DEFAULT ""')
+          }
+        }
+        db.executeTransaction(sqlStrings, undefined, function(){
+          if(newColumns.length > 0) {
+            log('>>>>>> Columns created successfully: ' + newColumns.join(', ') + ' (' + table + ')')
+          }
+          if(callBack){callBack()}
+        }, 1)
+      }, 1)
     },
     loadFromRemoteServer: function(url, collection, lastUpdatedVariable, callBack) {
       var self = this,
@@ -88,7 +128,7 @@ services.service('DBService', function($http, $state) {
     },
     postError: function(data) {
       var query = 'message=' + data.message
-      // if(window.device) { query += '[origin=' + device.name + '-' + device.model + ']'}
+      if(window.device) { query += ' [origin=' + device.name + '-' + device.model + ']'}
       $http.get( remoteHost + '/mobile_errors?' + query )
       .success(function(data){
         log('Error logged')
@@ -106,71 +146,72 @@ services.service('DBService', function($http, $state) {
       })
       return collection
     },
-    insert: function(table, fields, values, verbose) {
-      var sqlString = 'insert into ' + table + ' (' + fields.join(',') + ') values ("' + values.join('","') + '")'
-      this.execute(sqlString, undefined, verbose)
+    stringForInsert: function(table, fields, values, callBack, verbose) {
+      return 'insert into ' + table + ' (' + fields.join(',') + ') values ("' + values.join('","') + '")'
     },
-    update: function(table, fields, values, id, verbose) {
+    insert: function(table, fields, values, callBack, verbose) {
+      var sqlString = db.stringForInsert(table, fields, values, callBack, verbose)
+      this.execute(sqlString, callBack, verbose)
+    },
+    stringForUpdate: function(table, fields, values, id, callBack, verbose) {
       var sqlString = 'update ' + table + ' set '
       fields.forEach(function(field, index){
         sqlString += field + ' = "' + values[index] + '"' + (index + 1 == fields.length ? ' ' : ', ')
       })
       sqlString += 'where id = "' + id + '"'
-      this.execute(sqlString, undefined, verbose)
+      return sqlString
+    },
+    update: function(table, fields, values, id, callBack, verbose){
+      var sqlString = db.stringForUpdate(table, fields, values, id, callBack, verbose)
+      this.execute(sqlString, callBack, verbose)
     },
     insertOrUpdateCollection: function(table, fields, data, existingIds, collection, verbose) {
+      array = []
+
       data.forEach(function(d){
         d.categoryId = d.category_id
         var values = fields.map(function(f){return d[f]})
-        if (existingIds.indexOf(Number(d.id)) == -1) {
-          values.id = d.id
-          db.insert(table, fields, values, verbose)
-          collection.push(d)
+        if (existingIds.has(Number(d.id))) {
+          array.push(db.stringForUpdate(table, fields, values, d.id, undefined, verbose))
         } else {
-          db.update(table, fields, values, d.id, verbose)
+          values.id = d.id
+          array.push(db.stringForInsert(table, fields, values, undefined, verbose))
+          collection.push(d)
         }
       })
+
+      db.executeTransaction(array, undefined, undefined, verbose)
     },
     delete: function(table, ids, verbose) {
       var sqlString = 'delete from ' + table + (ids ? ' where id in (' + ids + ')' : '')
       this.execute(sqlString, undefined, verbose)
     },
-    execute: function(sqlString, callBack, verbose) {
+    executeTransaction: function(sqlStrings, executionCallBack, transactionCallBack, verbose) {
       verbose = verbose || globalVerbose
-      if(verbose > 1) {
-        log('Executing query' + (verbose > 2 ? ': ' + sqlString : ''))
-      }
 
       angular.db.transaction(function(tx) {
-        tx.executeSql(sqlString,[],
-          function(tx, results) {
+        sqlStrings.forEach(function(sqlString){
+          if(verbose > 1) {
+            log('Executing query' + (verbose > 2 ? ': ' + sqlString : ''))
+          }
+          tx.executeSql(sqlString,[], function(tx, results) {
             var lines = (results.rowsAffected ? results.rowsAffected + ' affected' : results.rows.length) + ' lines'
             if(verbose > 1) {
               log('Query executed successfully (' + lines + ')' + (verbose > 2 ? ': ' + sqlString : ''))
             }
-            if (callBack){callBack(results)}
-          },
-          function(tx, error) {
+            if (executionCallBack){executionCallBack(results)}
+          }, function(tx, error) {
             db.postError({message: 'Error fetching data: ' + error.message})
             log('\n!!! Error executing query: ' + error.message)
-          }
-        )
-      })
+          })
+        })
+      }, function(e){log(123,e)}, transactionCallBack )
+    },
+    execute: function(sqlString, callBack, verbose){
+      db.executeTransaction([sqlString], callBack, undefined, verbose)
     },
     executeAndLog: function(sqlString, verbose) {
-      db.execute(sqlString, function(r){for(i=0;i<r.rows.length;i++){log(r.rows.item(i))}}, verbose)
-    },
-    prepareSchema: function(table, fieldsObj, callBack){
-      log('>>>> Preparing schema for ' + table)
-      db.execute('CREATE TABLE IF NOT EXISTS ' + table + ' ( id integer primary key )', undefined, 1)
-      db.execute('select * from ' + table + ' limit 1', function(results) {
-        for(var f in fieldsObj) {
-          if(!results.rows.item(0).hasOwnProperty(f)){
-            db.executeAndLog('ALTER TABLE ' + table + ' ADD COLUMN ' + f + ' ' + fieldsObj[f], 3)
-          }
-        }
-        if(callBack){callBack()}
-      }, 1)
+      db.execute(sqlString, function(r){for(i=0;i<r.rows.length;i++){console.log(r.rows.item(i))}}, verbose)
     },
     resetDB: function(){
       this.delete('categories_table')
@@ -181,11 +222,11 @@ services.service('DBService', function($http, $state) {
     recreateDB: function(callBack) {
       log('>>>> Recreating DB')
       db.execute('DROP TABLE prayers_table', function(){
-        db.execute('CREATE TABLE prayers_table ( id integer primary key, categoryId integer, body text, author text, preamble text, favorite boolean, active boolean )', function() {
+        db.execute('CREATE TABLE prayers_table ( id integer primary key )', function(){
           db.execute('DROP TABLE categories_table', function(){
-            db.execute('CREATE TABLE categories_table ( id integer primary key, title text, active boolean )', function() {
+            db.execute('CREATE TABLE categories_table ( id integer primary key )', function(){
               log('>>>> DB recreated successfully')
-              callBack()
+              if(callBack){callBack()}
             })
           })
         })
@@ -199,3 +240,4 @@ services.service('DBService', function($http, $state) {
 })
 
 log = function() { return console.log.apply(console, arguments) }
+Array.prototype.has = function(element) { return this.indexOf(element) > 0}
