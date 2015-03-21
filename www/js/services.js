@@ -234,6 +234,26 @@ services.service('DBService', function($http, $state) {
 
       localStorage.lastUpdatedCategoriesAt = 0
       localStorage.lastUpdatedPrayersAt = 0
+    },
+    documentation: {
+      load: '(callBack) Initializes the DB',
+      prepareSchema: '(table, fieldsObj, callBack) Alters a table given a set of fields',
+      createRawTable: '(table, callBack) Creates an empty table with a dummy element',
+      addColumns: '(table, fieldsObj, callBack) Adds a new column to a table',
+      loadFromRemoteServer: '(url, collection, lastUpdatedVariable, callBack) Loads data from the remote server',
+      postError: '(data) Posts errors to the remote server',
+      select: '(table, collection, id, callBack, verbose) Selects the DB based on the given id, if given, and inserts the result inthe collection ',
+      stringForInsert: '(table, fields, values, callBack, verbose) Creates a SQL INSERT string',
+      insert: '(table, fields, values, callBack, verbose) Executes an SQL INSERT statement',
+      stringForUpdate: '(table, fields, values, id, callBack, verbose) Creates a SQL UPDATE string',
+      update: '(table, fields, values, id, callBack, verbose) Executes an SQL UPDATE statement',
+      insertOrUpdateCollection: '(table, fields, data, existingIds, collection, verbose) Executes an SQL INSERT or UPDATE statement based the given id (if it exists on the DB or not)',
+      delete: '(table, ids, verbose) Executes a SQL DELETE statement',
+      executeTransaction: '(sqlStrings, executionCallBack, transactionCallBack, verbose) Executes a set of SQL strings in a single transaction',
+      execute: '(sqlString, callBack, verbose) Executes a single SQL statement',
+      executeAndLog: '(sqlString, verbose) Executes a single SQL statement and logs the results (no callBack)',
+      resetDB: '() Empties the tables and persistent variables',
+      recreateDB: '(callBack) Drops and creates again the tables',
     }
   }
 })
