@@ -2,21 +2,37 @@ controllers = angular.module('controllers', [])
 remoteHost = 'http://bahai-prayers-server.herokuapp.com'
 // remoteHost = 'http://localhost:3000'
 
-controllers.controller('AppCtrl', function($scope, $stateParams, DBService, PrayersService) {
+controllers.controller('AppCtrl', ['$scope', '$timeout', '$window', 'PrayersService', 'DBService', function($scope, $timeout, $window, PrayersService, DBService) {
+  $scope.loading = true
   DBService.load(function(){
     PrayersService.load(function(){
-      PrayersService.loadSinglePrayerIds()
-      PrayersService.loadPrayersFromRemoteServer(remoteHost, function(){
-        PrayersService.loadCategoriesFromRemoteServer(remoteHost)
+      PrayersService.loadSinglePrayerIds(function(){
+        PrayersService.loadCategoriesFromRemoteServer(remoteHost, function(){
+          $scope.loading = false
+          PrayersService.loadPrayersFromRemoteServer(remoteHost, function(){
+          })
+        })
       })
     })
   })
 
+  $scope.dots = ''
+  $scope.startDots = function(){
+    $timeout(function(){
+      if($scope.dots.length > 2) {
+        $scope.dots = ''
+      } else {
+        $scope.dots += '.'
+      }
+      $scope.startDots()
+    }, 1000)
+  }
   $scope.changeFontSize = changeFontSize
   $scope.fontSize = localStorage.fontSize || 10
   $scope.fontFamily = localStorage.fontFamily
   $scope.currentView = currentView
-})
+}])
+
 
 controllers.controller('CategoriesCtrl', ['$scope', '$stateParams', 'PrayersService', function($scope, $stateParams, PrayersService) {
   $scope.categories = PrayersService.categories
