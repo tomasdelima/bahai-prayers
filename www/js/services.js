@@ -1,5 +1,5 @@
 services = angular.module('services', [])
-globalVerbose = 3 // verbose levels: (1) no logging, (2) medium logging and (3) full logging
+globalVerbose = 2 // verbose levels: (1) no logging, (2) medium logging and (3) full logging
 
 services.service('PrayersService', function($http, DBService) {
   var self = this
@@ -8,36 +8,39 @@ services.service('PrayersService', function($http, DBService) {
   self.singlePrayerIds = {}
 
   return {
-    load: function(){
-      DBService.select('prayers_table', self.prayers)
-      DBService.select('categories_table', self.categories)
+    load: function(callBack){
+      DBService.select('prayers_table', self.prayers, undefined, function(){
+        DBService.select('categories_table', self.categories, undefined, callBack, 1)
+      }, 1)
     },
     prayers: self.prayers,
     categories: self.categories,
     singlePrayerIds: self.singlePrayerIds,
-    loadPrayersFromRemoteServer: function(url) {
+    loadPrayersFromRemoteServer: function(url, callBack) {
       var existingIds = []
       DBService.loadFromRemoteServer(url+'/prayers', self.prayers, 'lastUpdatedPrayersAt', function(data){
         DBService.execute('select id from prayers_table', function(results) {
           for (var i=0; i<results.rows.length; i++) {
             existingIds.push(results.rows.item(i).id)
           }
-          DBService.insertOrUpdateCollection('prayers_table', ['id', 'preamble', 'body', 'author', 'categoryId', 'active'], data, existingIds, self.prayers, 2)
-        })
+          DBService.insertOrUpdateCollection('prayers_table', ['id', 'preamble', 'body', 'author', 'categoryId', 'active'], data, existingIds, self.prayers, 1)
+          if(callBack){callBack()}
+        }, 1)
       })
     },
-    loadCategoriesFromRemoteServer: function(url) {
+    loadCategoriesFromRemoteServer: function(url, callBack) {
       var existingIds = []
       DBService.loadFromRemoteServer(url+'/categories', self.categories, 'lastUpdatedCategoriesAt', function(data){
         DBService.execute('select id from categories_table', function(results) {
           for (var i=0; i<results.rows.length; i++) {
             existingIds.push(results.rows.item(i).id)
           }
-          DBService.insertOrUpdateCollection('categories_table', [ 'id', 'title', 'active'], data, existingIds, self.categories, 2)
-        })
+          DBService.insertOrUpdateCollection('categories_table', [ 'id', 'title', 'active'], data, existingIds, self.categories, 1)
+          if(callBack){callBack()}
+        }, 1)
       })
     },
-    loadSinglePrayerIds: function(){
+    loadSinglePrayerIds: function(callBack){
       DBService.execute('select a.id as categoryId, count(b.id) as prayersCount, b.id as prayerId from categories_table a join prayers_table b on a.id = b.categoryId where b.active = "true" group by a.id', function(results) {
         for (var i=0; i<results.rows.length; i++) {
           var item = results.rows.item(i)
@@ -45,6 +48,7 @@ services.service('PrayersService', function($http, DBService) {
             self.singlePrayerIds[item.categoryId] = item.prayerId
           }
         }
+        if(callBack){callBack()}
       }, 1)
     },
     loadConfig: function (attr) {
@@ -59,10 +63,13 @@ services.service('DBService', function($http, $state) {
   return {
     load: function(callBack) {
       db = this
-      log('>> Preparing DB')
+      log('\n>> Preparing DB')
       angular.db = openDatabase('bahai-prayers', '1.0', 'bahai-prayers-db', 2 * 1024 * 1024)
       db.prepareSchema('categories_table', {title: 'text', active: 'boolean'}, function(){
-        db.prepareSchema('prayers_table', {categoryId: 'integer', body: 'text', author: 'text', preamble: 'text', favorite: 'boolean', active: 'boolean'}, callBack)
+        db.prepareSchema('prayers_table', {categoryId: 'integer', body: 'text', author: 'text', preamble: 'text', favorite: 'boolean', active: 'boolean'}, function(){
+          log('>> DB Prepared')
+          if(callBack){callBack()}
+        })
       })
     },
     prepareSchema: function(table, fieldsObj, callBack){
@@ -112,11 +119,11 @@ services.service('DBService', function($http, $state) {
           errors = 0,
           sufix =  '.json' + (localStorage[lastUpdatedVariable] ? '?last_updated_at=' + localStorage[lastUpdatedVariable] : '')
 
-      log('Fetching data from: ' + url + sufix)
+      log('\n>> Fetching data from: ' + url + sufix)
       $http.get( url + sufix)
         .success(function(data){
           callBack(data)
-          log('Fetched data from: ' + url + sufix)
+          log('>> Fetched data from: ' + url + sufix)
         })
         .error(function(error){
           db.postError({message: 'Error fetching data: ' + error})
@@ -137,13 +144,14 @@ services.service('DBService', function($http, $state) {
         log('Error logging error')
       })
     },
-    select: function(table, collection, id){
+    select: function(table, collection, id, callBack, verbose){
       var sqlString = 'select * from ' + table + ' where active="true" ' + (id?'and id="'+id+'"':'')
       this.execute(sqlString, function(results) {
         for (var i=0; i<results.rows.length; i++) {
           collection.push(results.rows.item(i))
         }
-      })
+        if(callBack){callBack()}
+      }, verbose)
       return collection
     },
     stringForInsert: function(table, fields, values, callBack, verbose) {

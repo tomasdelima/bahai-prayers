@@ -4,11 +4,12 @@ remoteHost = 'http://bahai-prayers-server.herokuapp.com'
 
 controllers.controller('AppCtrl', function($scope, $stateParams, DBService, PrayersService) {
   DBService.load(function(){
-    PrayersService.load()
-    PrayersService.loadSinglePrayerIds()
-
-    PrayersService.loadPrayersFromRemoteServer(remoteHost)
-    PrayersService.loadCategoriesFromRemoteServer(remoteHost)
+    PrayersService.load(function(){
+      PrayersService.loadSinglePrayerIds()
+      PrayersService.loadPrayersFromRemoteServer(remoteHost, function(){
+        PrayersService.loadCategoriesFromRemoteServer(remoteHost)
+      })
+    })
   })
 
   $scope.changeFontSize = changeFontSize
