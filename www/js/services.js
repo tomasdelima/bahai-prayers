@@ -205,7 +205,7 @@ services.service('DBService', function($http, $state) {
             log('\n!!! Error executing query: ' + error.message)
           })
         })
-      }, function(e){log(123,e)}, transactionCallBack )
+      }, function(e){log(e)}, transactionCallBack )
     },
     execute: function(sqlString, callBack, verbose){
       db.executeTransaction([sqlString], callBack, undefined, verbose)
@@ -234,7 +234,6 @@ services.service('DBService', function($http, $state) {
 
       localStorage.lastUpdatedCategoriesAt = 0
       localStorage.lastUpdatedPrayersAt = 0
-      localStorage.lastUpdatedDBSchemaAt = Date.now()
     }
   }
 })

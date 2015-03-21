@@ -65,7 +65,7 @@ controllers.controller('AllahuabhasCtrl', ['$scope', function($scope) {
     var vibrationIntensity = Number(localStorage.vibrationIntensity)
     if ($scope.counter >= 95) {
       $scope.cssClass = 'done'
-      navigator.notification.vibrate(vibrationIntensity * 5)
+      navigator.notification.vibrate(vibrationIntensity * 10)
     } else {
       navigator.notification.vibrate(vibrationIntensity)
     }
