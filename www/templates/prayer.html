@@ -1,8 +1,30 @@
 <ion-view view-title="Oração" id="prayer-view">
+  <ion-nav-buttons side="right">
+    <div class="menu-custom-buttons">
+      <a class="decrease font" ng-click="changeFontSize(-5)">a</a>
+      <a class="increase font" ng-click="changeFontSize(+5)">A</a>
+    </div>
+  </ion-nav-buttons>
+
   <ion-content class="prayer">
     <bg class="{{prayers[0].author.slice(2,4)}}"></bg>
     <p class="preamble" ng-if="prayers[0].preamble.length">{{prayers[0].preamble}}</p>
-    <p class="body" ng-bind-html="presentPrayer(prayers[0].body)"></p>
+    <p class="body scroll" ng-bind-html="presentPrayer(prayers[0].body)"></p>
     <p class="author"> &mdash; {{prayers[0].author}}</p>
   </ion-content>
 </ion-view>
+
+<style type="text/css">
+  .prayer .preamble { margin-bottom: {{fontSize*1.5}}px; }
+  .prayer .body { padding-top: {{fontSize*1.5}}px; }
+  .prayer .body::first-letter { padding-left: {{fontSize/2}}px; }
+  .prayer .preamble, .prayer .body, .prayer .author {
+    font-size: {{fontSize}}px;
+    line-height: {{fontSize*1.5}}px;
+  }
+  .accent {
+    font-size: {{fontSize*2}}px;
+    right: {{fontSize}}px;
+    top: {{-fontSize*1.2}}px;
+  }
+</style>

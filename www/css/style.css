@@ -109,24 +109,24 @@ ion-content h1 { padding-left: 10px }
 }
 
 
-.menu-custom-buttoms { min-width: 130px }
-.menu-custom-buttoms a {
-  float: right;
+.menu-custom-buttons {
+  min-width: 130px;
+  text-align: right;
+}
+.menu-custom-buttons a {
+  display: inline-block;
   width: 30px;
   height: 34px;
 }
-.menu-custom-buttoms #search { margin-right: 8px }
-.menu-custom-buttoms #search:before { font-size: 29px }
-.menu-custom-buttoms.prayer-view .font { display: inherit }
-.menu-custom-buttoms.prayer-view #search { display: none }
-.menu-custom-buttoms .font {
-  display: none;
+.menu-custom-buttons #search { margin-right: 8px }
+.menu-custom-buttons #search:before { font-size: 29px }
+.menu-custom-buttons .font {
   text-align: center;
   font-size: 40px;
   line-height: 35px;
 }
-.menu-custom-buttoms .decrease.font { color: rgba(140,0,0,0.8) }
-.menu-custom-buttoms .increase.font { color: rgba(0,130,70,0.8) }
+.menu-custom-buttons .decrease.font { color: rgba(140,0,0,0.8) }
+.menu-custom-buttons .increase.font { color: rgba(0,130,70,0.8) }
 
 
 .configurations .item { line-height: 26px }

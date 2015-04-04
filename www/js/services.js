@@ -54,7 +54,7 @@ services.service('PrayersService', function($http, DBService) {
     loadConfig: function (attr) {
       return localStorage[attr]
     },
-    deHtmlize: function (str) { return str.replace(/<br>/g, ' ') },
+    deHtmlize: function (str, newline) { return str.replace(/<br>/g, newline || ' ') },
     letterCount: function (str) { return str.replace(/(^\s*)|(\s*$)/gi,"").replace(/[ ]{2,}/gi," ").replace(/\n /,"\n").split(" ").length },
   }
 })

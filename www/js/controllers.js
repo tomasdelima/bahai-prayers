@@ -7,9 +7,10 @@ controllers.controller('AppCtrl', ['$scope', '$timeout', '$window', 'PrayersServ
   DBService.load(function(){
     PrayersService.load(function(){
       PrayersService.loadSinglePrayerIds(function(){
+        if(PrayersService.prayers.length > 0 && PrayersService.categories.length > 0) { $scope.loading = false }
         PrayersService.loadCategoriesFromRemoteServer(remoteHost, function(){
-          $scope.loading = false
           PrayersService.loadPrayersFromRemoteServer(remoteHost, function(){
+            $scope.loading = false
           })
         })
       })
@@ -17,6 +18,7 @@ controllers.controller('AppCtrl', ['$scope', '$timeout', '$window', 'PrayersServ
   })
 
   $scope.dots = ''
+  $scope.fontFamily = localStorage.fontFamily
   $scope.startDots = function(){
     $timeout(function(){
       if($scope.dots.length > 2) {
@@ -27,16 +29,10 @@ controllers.controller('AppCtrl', ['$scope', '$timeout', '$window', 'PrayersServ
       $scope.startDots()
     }, 1000)
   }
-  $scope.changeFontSize = changeFontSize
-  $scope.fontSize = localStorage.fontSize || 10
-  $scope.fontFamily = localStorage.fontFamily
-  $scope.currentView = currentView
 }])
-
 
 controllers.controller('CategoriesCtrl', ['$scope', '$stateParams', 'PrayersService', function($scope, $stateParams, PrayersService) {
   $scope.categories = PrayersService.categories
-  $scope.currentView = currentView
   $scope.singlePrayerIds = PrayersService.singlePrayerIds
   $scope.hrefFor = function(categoryId) {
     if($scope.singlePrayerIds[categoryId] > 0) {
@@ -56,16 +52,24 @@ controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersServic
     return prayer.categoryId == $stateParams.categoryId
   })
   $scope.letterCount = PrayersService.letterCount
-  $scope.currentView = currentView
 }])
 
 controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'PrayersService', function($scope, $stateParams, PrayersService) {
   $scope.prayers = PrayersService.prayers.filter(function(prayer){
     return prayer.id == $stateParams.prayerId
   })
+  $scope.changeFontSize = function changeFontSize(n) {
+    if (isNaN(localStorage.fontSize)) { localStorage.fontSize = 10 }
+    $scope.fontSize = Number(localStorage.fontSize)
+    if ($scope.fontSize + n <= 40 && $scope.fontSize + n >= 10) { $scope.fontSize += n }
+    localStorage.fontSize = $scope.fontSize
+  }
   $scope.letterCount = PrayersService.letterCount
   $scope.deHtmlize = PrayersService.deHtmlize
-  $scope.currentView = currentView
+  $scope.fontSize = localStorage.fontSize || 10
+  $scope.sharePrayer = function() {
+    window.plugins.socialsharing.share('"' + $scope.deHtmlize($scope.prayers[0].body, '\n') + '"\n— ' + $scope.prayers[0].author)
+  }
   $scope.presentPrayer = function(prayerBody) {
     if (prayerBody) {
       var accent = '<span class="accent">&acute</span>'
@@ -97,7 +101,6 @@ controllers.controller('SearchCtrl', function($scope, PrayersService){
   $scope.prayers = PrayersService.prayers
   $scope.letterCount = PrayersService.letterCount
   $scope.deHtmlize = PrayersService.deHtmlize
-  $scope.currentView = currentView
 })
 
 controllers.controller('ConfigCtrl', ["$scope", function($scope) {
@@ -118,10 +121,3 @@ controllers.controller('ConfigCtrl', ["$scope", function($scope) {
   }
 }])
 
-function currentView() { return (location.hash.indexOf('/prayers/') > 0) ? 'prayer-view' : ''}
-function changeFontSize(n, scope) {
-  if (isNaN(localStorage.fontSize)) { localStorage.fontSize = 10 }
-  scope.fontSize = Number(localStorage.fontSize)
-  if (scope.fontSize + n <= 40 && scope.fontSize + n >= 10) { scope.fontSize += n }
-  localStorage.fontSize = scope.fontSize
-}

@@ -10,33 +10,7 @@
       </ion-nav-buttons>
 
       <ion-nav-buttons side="right">
-        <menu class="menu-custom-buttoms {{currentView()}}">
-          <a class="increase font"
-                ng-click="changeFontSize(+5, this)">A</a>
-          <a class="decrease font"
-                ng-click="changeFontSize(-5, this)">a</a>
-          <a ng-href="#/app/search" class="button button-icon button-clear fa fa-search" id="search"></a>
-        </menu>
-
         <style type="text/css">
-          #prayer-view .preamble {
-            margin-bottom: {{fontSize*1.5}}px;
-          }
-          #prayer-view .body {
-            padding-top: {{fontSize*1.5}}px;
-          }
-          #prayer-view .body::first-letter {
-            padding-left: {{fontSize/2}}px;
-          }
-          #prayer-view .preamble, #prayer-view .body, #prayer-view .author {
-            font-size: {{fontSize}}px;
-            line-height: {{fontSize*1.5}}px;
-          }
-          .accent {
-            font-size: {{fontSize*2}}px;
-            right: {{fontSize}}px;
-            top: {{-fontSize*1.2}}px;
-          }
           body {
             font-family: {{fontFamily}};
           }

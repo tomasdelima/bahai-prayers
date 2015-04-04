@@ -1,4 +1,10 @@
 <ion-view view-title="{{categories[0].title || 'Orações'}}" class="prayers">
+  <ion-nav-buttons side="right">
+    <div class="menu-custom-buttons">
+      <a ng-href="#/app/search" class="button button-icon button-clear fa fa-search" id="search"></a>
+    </div>
+  </ion-nav-buttons>
+
   <ion-content>
     <ion-item ng-repeat="prayer in prayers | orderBy:'preamble'" href="#/app/prayers/{{prayer.id}}">
       {{deHtmlize(prayer.body)}}
