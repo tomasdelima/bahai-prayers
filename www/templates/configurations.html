@@ -1,4 +1,10 @@
 <ion-view view-title="Configurações">
+  <ion-nav-buttons side="right">
+    <div class="menu-custom-buttons">
+      <a class="theme icon" ng-class="{'ion-arrow-up-a': theme == 'day', 'ion-ionic': theme == 'night'}" ng-click="changeTheme()"></a>
+    </div>
+  </ion-nav-buttons>
+
   <ion-content class="configurations">
     <ion-item>
       Fonte: <select ng-options="fontFamily for fontFamily in fontFamilies" ng-model="fontFamily" ng-change="setFontFamily(fontFamily)"></select>

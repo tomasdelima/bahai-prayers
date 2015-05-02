@@ -3,7 +3,13 @@ remoteHost = 'http://bahai-prayers-server.herokuapp.com'
 // remoteHost = 'http://localhost:3000'
 
 controllers.controller('AppCtrl', ['$scope', '$timeout', '$window', 'PrayersService', 'DBService', function($scope, $timeout, $window, PrayersService, DBService) {
+  var body = angular.element(document.getElementsByTagName("body"))
   $scope.loading = true
+  $scope.dots = ''
+  $scope.fontFamily = localStorage.fontFamily
+  $scope.theme = localStorage.theme
+  $scope.loadingAngle = 0
+
   DBService.load(function(){
     PrayersService.load(function(){
       PrayersService.loadSinglePrayerIds(function(){
@@ -17,8 +23,19 @@ controllers.controller('AppCtrl', ['$scope', '$timeout', '$window', 'PrayersServ
     })
   })
 
-  $scope.dots = ''
-  $scope.fontFamily = localStorage.fontFamily
+  if(!localStorage.theme) { localStorage.theme = 'day' }
+  body.addClass($scope.theme)
+  $scope.changeTheme = function() {
+    if($scope.theme == 'night') {
+      localStorage.theme = $scope.theme = 'day'
+      body.addClass('day')
+      body.removeClass('night')
+    } else {
+      localStorage.theme = $scope.theme = 'night'
+      body.addClass('night')
+      body.removeClass('day')
+    }
+  }
   $scope.startDots = function(){
     $timeout(function(){
       if($scope.dots.length > 2) {
@@ -27,6 +44,7 @@ controllers.controller('AppCtrl', ['$scope', '$timeout', '$window', 'PrayersServ
         $scope.dots += '.'
       }
       $scope.startDots()
+      $scope.loadingAngle += 90
     }, 1000)
   }
 }])
@@ -120,4 +138,3 @@ controllers.controller('ConfigCtrl', ["$scope", function($scope) {
     navigator.notification.vibrate($scope.vibrationIntensity)
   }
 }])
-

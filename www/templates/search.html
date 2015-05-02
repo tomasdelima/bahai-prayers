@@ -1,4 +1,10 @@
 <ion-view view-title="Busca" class="prayers search">
+  <ion-nav-buttons side="right">
+    <div class="menu-custom-buttons">
+      <a class="theme icon" ng-class="{'ion-arrow-up-a': theme == 'day', 'ion-ionic': theme == 'night'}" ng-click="changeTheme()"></a>
+    </div>
+  </ion-nav-buttons>
+
   <ion-content>
     <input class='search' ng-model='search' id="search-input" autofocus='true'>
     <h3 class="search-results" ng-hide="filtered.length < 20 || !search.length">

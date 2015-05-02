@@ -16,15 +16,30 @@ bg {
   text-align: center;
   font-size: 129px;
   line-height: 350%;
-  color: rgba(0,0,0,0.15);
+  color: rgba(127,127,127,0.2);
 }
-bg.counter { color: rgba(0,0,0,0.5); }
-bg.counter.done { color: rgba(140,0,0,0.8); }
-bg.Bá:after { content: "B"; }
-bg.há:after { content: "B"; }
-bg.bd:after { content: "A"; }
+bg.counter { color: rgba(127,127,127,1) }
+bg.counter.done { color: rgba(150,0,0,1); }
+#page-body.night .bar.bar-footer.bar-balanced { background: rgba(51,205,95,0.5); }
+bg.Bá:after { content: "B" }
+bg.há:after { content: "B" }
+bg.bd:after { content: "A" }
 
 ion-content h1 { padding-left: 10px }
+
+#page-body.night ion-view, #page-body.night ion-item a, #page-body.night ion-item , #page-body.night ion-content {
+  background: black;
+  color: white;
+}
+#page-body.night ion-item {
+  border-color: #555;
+}
+#page-body.night ion-header-bar {
+  background: #333;
+}
+#page-body.night button, #page-body.night .title {
+  color: white;
+}
 
 .right {
   position: absolute;
@@ -40,6 +55,17 @@ ion-content h1 { padding-left: 10px }
   display: flex;
 }
 .load .container { margin: auto }
+.day .load .loading { background: url('../img/loading-day.png') }
+.night .load .loading { background: url('../img/loading-night.png') }
+.day .load .loading, .night .load .loading {
+  transition: 1s transform linear;
+  /*transform: rotate(27000deg);*/
+  width: 128px;
+  height: 128px;
+  margin: auto;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .load .message {
   width: 300px;
   margin-top: 17px;
@@ -74,6 +100,9 @@ ion-content h1 { padding-left: 10px }
   text-align: center;
   color: #444;
   padding: 0 10px;
+}
+.prayer .preamble {
+  color: inherit;
 }
 .prayer .body {
   font-size: 20px;
@@ -127,6 +156,16 @@ ion-content h1 { padding-left: 10px }
 }
 .menu-custom-buttons .decrease.font { color: rgba(140,0,0,0.8) }
 .menu-custom-buttons .increase.font { color: rgba(0,130,70,0.8) }
+.menu-custom-buttons .theme.icon {
+  color: #333;
+  font-size: 35px;
+}
+.night .menu-custom-buttons .decrease.font, .night .menu-custom-buttons .increase.font, .night .menu-custom-buttons .theme.icon, .night .menu-custom-buttons .fa-search {
+  color: #aaa;
+}
+.night > ion-nav-view > ion-side-menus > ion-side-menu {
+  border-right: 1px solid #555;
+}
 
 
 .configurations .item { line-height: 26px }
@@ -143,6 +182,8 @@ ion-content h1 { padding-left: 10px }
   float: right;
   margin-left: -1px;
   padding: 3px 9px;
+  width: 33px;
+  text-align: center;
 }
 .configurations .vibration a.fa {
   border: 1px solid #ddd;
