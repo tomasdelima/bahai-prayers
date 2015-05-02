@@ -266,5 +266,10 @@ services.service('DBService', function($http, $state) {
   }
 })
 
+vibrate = function(duration){
+  var vibrationIntensity = Number(localStorage.vibrationIntensity)
+  log('Vibrating with duration: ' + vibrationIntensity * duration + 'ms')
+  if(navigator.notification) { navigator.notification.vibrate(vibrationIntensity * duration) }
+}
 log = function() { return console.log.apply(console, arguments) }
 Array.prototype.has = function(element) { return this.indexOf(element) > 0}

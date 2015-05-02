@@ -99,14 +99,15 @@ controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'PrayersService
 
 controllers.controller('AllahuabhasCtrl', ['$scope', function($scope) {
   $scope.counter = 0
+
   $scope.tap = function() {
-    $scope.counter += 1
-    var vibrationIntensity = Number(localStorage.vibrationIntensity)
-    if ($scope.counter >= 95) {
+    if ($scope.counter == 95 - 1) {
+      vibrate(10)
       $scope.cssClass = 'done'
-      navigator.notification.vibrate(vibrationIntensity * 10)
-    } else {
-      navigator.notification.vibrate(vibrationIntensity)
+      $scope.counter += 1
+    } else if ($scope.counter < 95) {
+      vibrate(1)
+      $scope.counter += 1
     }
   }
   $scope.restart = function(){
@@ -135,6 +136,6 @@ controllers.controller('ConfigCtrl', ["$scope", function($scope) {
     $scope.vibrationIntensity = Number(localStorage.vibrationIntensity) + increase
     if($scope.vibrationIntensity < 0) { $scope.vibrationIntensity = 0 }
     localStorage.vibrationIntensity = $scope.vibrationIntensity
-    navigator.notification.vibrate($scope.vibrationIntensity)
+    vibrate(1)
   }
 }])
