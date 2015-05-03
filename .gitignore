@@ -7,3 +7,4 @@ plugins/
 hooks/
 release.sh
 *.keystore
+www/css/ionic.app.*

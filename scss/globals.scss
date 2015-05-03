@@ -1,0 +1,40 @@
+@import url("font-awesome.css");
+@font-face { font-family: Alegreya; src: url('../fonts/Alegreya-Regular.otf'); }
+@font-face { font-family: Artifika; src: url('../fonts/Artifika-Regular.ttf'); }
+@font-face { font-family: Cambo; src: url('../fonts/Cambo.otf'); }
+@font-face { font-family: Ruritania; src: url('../fonts/Ruritania.ttf'); }
+@font-face { font-family: Timeless; src: url('../fonts/Timeless.ttf'); }
+
+
+ion-content h1 { padding-left: 10px }
+
+.right {
+  position: absolute;
+  right: 20px;
+}
+
+.hidden {
+  visibility: hidden !important;
+  display: none;
+}
+
+.change-font { margin: 0 10px } // ???
+
+.if-animation {
+  -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.3s;
+  transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.3s;
+
+  &.ng-enter, &.ng-leave.ng-leave-active { opacity: 0 }
+  &.ng-leave, &.ng-enter.ng-enter-active { opacity: 1 }
+}
+
+.restart .bar-footer {
+  height: 74px;
+
+  .title {
+    height: 74px;
+    line-height: 74px;
+  }
+}
+
+

@@ -1,0 +1,44 @@
+#page-body.night {
+  .bar.bar-footer.bar-balanced {
+    background: rgba(51,205,95,0.5);
+  }
+
+  ion-view, ion-item a, ion-item , ion-content {
+    background: black;
+    color: white;
+  }
+  ion-item {
+    border-color: #555;
+  }
+
+  ion-header-bar {
+    background: #333;
+  }
+
+  button, .title {
+    color: white;
+  }
+
+  .menu-custom-buttons {
+    .decrease.font, .increase.font, .theme.icon, .fa-search {
+      color: #aaa;
+    }
+  }
+
+  & > ion-nav-view > ion-side-menus > ion-side-menu {
+    border-right: 1px solid #555;
+  }
+}
+
+.day .load .loading { background: url('../img/loading-day.png') }
+.night .load .loading { background: url('../img/loading-night.png') }
+.day, .night {
+  .load .loading {
+    transition: 1s transform linear;
+    width: 128px;
+    height: 128px;
+    margin: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
