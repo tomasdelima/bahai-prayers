@@ -60,6 +60,7 @@ services.service('PrayersService', function($http, DBService) {
 })
 
 services.service('DBService', function($http, $state) {
+  a=this
   return {
     load: function(callBack) {
       db = this
@@ -219,7 +220,7 @@ services.service('DBService', function($http, $state) {
       db.executeTransaction([sqlString], callBack, undefined, verbose)
     },
     executeAndLog: function(sqlString, verbose) {
-      db.execute(sqlString, function(r){for(i=0;i<r.rows.length;i++){console.log(r.rows.item(i))}}, verbose)
+      db.execute(sqlString, function(r){for(i=0;i<r.rows.length;i++){log(r.rows.item(i))}}, verbose)
     },
     resetDB: function(){
       this.delete('categories_table')

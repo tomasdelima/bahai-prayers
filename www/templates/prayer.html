@@ -1,7 +1,7 @@
 <ion-view view-title="Oração" id="prayer-view">
   <ion-nav-buttons side="right">
     <div class="menu-custom-buttons">
-      <a class="theme icon" ng-class="{'ion-arrow-up-a': theme == 'day', 'ion-ionic': theme == 'night'}" ng-click="changeTheme()"></a>
+      <a class="theme icon ion-{{theme}}" ng-click="changeTheme()"></a>
       <a class="decrease font" ng-click="changeFontSize(-5)">a</a>
       <a class="increase font" ng-click="changeFontSize(+5)">A</a>
     </div>

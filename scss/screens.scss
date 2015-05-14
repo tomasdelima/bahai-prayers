@@ -54,33 +54,29 @@ bg {
   .preamble {
     font-style: italic;
     text-align: center;
-    color: #444;
-    padding: 0 10px;
-  }
-
-  .preamble {
     color: inherit;
+    padding: 0 10px;
   }
 
   .body {
     font-size: 20px;
     line-height: 25px;
     padding: 0 17px;
+
+    &:first-letter {
+      font-size: 200%;
+      color: #777;
+      font-family: Ruritania;
+    }
+
+     .accent {
+      position: relative;
+      display: inline-block;
+      color: #777;
+      width: 0px;
+      height: 0px;
+    }
    }
-
-  .body::first-letter {
-    font-size: 200%;
-    color: #777;
-    font-family: Ruritania;
-  }
-
-  .body .accent {
-    position: relative;
-    display: inline-block;
-    color: #777;
-    width: 0px;
-    height: 0px;
-  }
 
   .author {
     font-style: italic;

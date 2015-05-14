@@ -20,7 +20,7 @@
   }
 
   .menu-custom-buttons {
-    .decrease.font, .increase.font, .theme.icon, .fa-search {
+    .decrease.font, .increase.font, .icon {
       color: #aaa;
     }
   }
@@ -29,6 +29,10 @@
     border-right: 1px solid #555;
   }
 }
+
+.ion-night:before { content: "\f452"; }
+.ion-day:before { content: "\f451"; }
+.ion-night:before, .ion-day:before { font-family: "Ionicons"; }
 
 .day .load .loading { background: url('../img/loading-day.png') }
 .night .load .loading { background: url('../img/loading-night.png') }
@@ -42,3 +46,7 @@
     background-size: cover;
   }
 }
+
+
+
+

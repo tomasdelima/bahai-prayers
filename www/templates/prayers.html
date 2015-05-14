@@ -1,8 +1,8 @@
 <ion-view view-title="{{categories[0].title || 'Orações'}}" class="prayers">
   <ion-nav-buttons side="right">
     <div class="menu-custom-buttons">
-      <a class="theme icon" ng-class="{'ion-arrow-up-a': theme == 'day', 'ion-ionic': theme == 'night'}" ng-click="changeTheme()"></a>
-      <a ng-href="#/app/search" class="button button-icon button-clear fa fa-search" id="search"></a>
+      <a class="theme icon ion-{{theme}}" ng-click="changeTheme()"></a>
+      <a ng-href="#/app/search" class="icon ion-ios-search-strong" id="search"></a>
     </div>
   </ion-nav-buttons>
 
