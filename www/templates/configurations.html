@@ -7,18 +7,20 @@
 
   <ion-content class="configurations">
     <ion-item>
-      Fonte: <select ng-options="fontFamily for fontFamily in fontFamilies" ng-model="fontFamily" ng-change="setFontFamily(fontFamily)"></select>
+      Fonte:
+      <select class="right" ng-options="fontFamily for fontFamily in fontFamilies" ng-model="fontFamily" ng-change="setFontFamily(fontFamily)"></select>
       <style type="text/css">
         body { font-family: {{fontFamily}}; }
       </style>
     </ion-item>
     <ion-item class="vibration">
       Intensidade da vibração:
-      <div>
+      <div class="right">
         <a ng-click="setVibration(-1)" class="fa fa-minus"></a>
         <a>{{vibrationIntensity}}</a>
         <a ng-click="setVibration(+1)" class="fa fa-plus"></a>
       </div>
     </ion-item>
+    <ion-toggle class="show-watermark" toggle-class="toggle-balanced" ng-model="waterMarkVisibility" ng-true-value="1" ng-false-value="0" ng-click="saveWaterMarkVisibility()">Exibir marca d'água:</ion-toggle>
   </ion-content>
 </ion-view>

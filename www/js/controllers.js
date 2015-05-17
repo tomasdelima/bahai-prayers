@@ -82,6 +82,7 @@ controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'PrayersService
     if ($scope.fontSize + n <= 40 && $scope.fontSize + n >= 10) { $scope.fontSize += n }
     localStorage.fontSize = $scope.fontSize
   }
+  $scope.showWatermark = Number(localStorage.waterMarkVisibility)
   $scope.letterCount = PrayersService.letterCount
   $scope.deHtmlize = PrayersService.deHtmlize
   $scope.fontSize = localStorage.fontSize || 10
@@ -137,5 +138,10 @@ controllers.controller('ConfigCtrl', ["$scope", function($scope) {
     if($scope.vibrationIntensity < 0) { $scope.vibrationIntensity = 0 }
     localStorage.vibrationIntensity = $scope.vibrationIntensity
     vibrate(1)
+  }
+  if(!localStorage.waterMarkVisibility) { localStorage.waterMarkVisibility = 1 }
+  $scope.waterMarkVisibility = Number(localStorage.waterMarkVisibility)
+  $scope.saveWaterMarkVisibility = function () {
+    localStorage.waterMarkVisibility = $scope.waterMarkVisibility = 1 - $scope.waterMarkVisibility
   }
 }])

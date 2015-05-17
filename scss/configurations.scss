@@ -36,4 +36,17 @@
       }
     }
   }
+
+  .show-watermark {
+    background: #fff;
+
+    .toggle {
+      top: 13px;
+
+      .track {
+        border-color: rgba(0,0,0,0);
+        background-color: rgba(200,200,200,0.7);
+      }
+    }
+  }
 }

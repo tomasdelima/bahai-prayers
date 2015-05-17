@@ -3,11 +3,11 @@
     background: rgba(51,205,95,0.5);
   }
 
-  ion-view, ion-item a, ion-item , ion-content {
+  ion-view, ion-item a, ion-item , ion-content, .item {
     background: black;
     color: white;
   }
-  ion-item {
+  ion-item, .item {
     border-color: #555;
   }
 
