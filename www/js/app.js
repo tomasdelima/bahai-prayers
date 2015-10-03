@@ -57,6 +57,16 @@ angular.module('prayer', ['ionic', 'controllers', 'services'])
     }
   })
 
+  .state('app.favorites', {
+    url: "/favorites/:filterFavorites",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/prayers.html",
+        controller: 'FavoritesCtrl'
+      }
+    }
+  })
+
   .state('app.prayer', {
     url: "/prayers/:prayerId",
     views: {

@@ -6,7 +6,6 @@ controllers.controller('AppCtrl', ['$scope', '$timeout', '$window', 'PrayersServ
   var body = angular.element(document.getElementsByTagName("body"))
   $scope.loading = true
   $scope.dots = ''
-  $scope.fontFamily = localStorage.fontFamily
   $scope.theme = localStorage.theme
   $scope.loadingAngle = 0
 
@@ -21,7 +20,7 @@ controllers.controller('AppCtrl', ['$scope', '$timeout', '$window', 'PrayersServ
         })
       })
     })
-  })
+  }, true)
 
   if(!localStorage.theme) { localStorage.theme = 'day' }
   body.addClass($scope.theme)
@@ -72,7 +71,7 @@ controllers.controller('CategoryCtrl', ['$scope', '$stateParams', 'PrayersServic
   $scope.letterCount = PrayersService.letterCount
 }])
 
-controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'PrayersService', function($scope, $stateParams, PrayersService) {
+controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'PrayersService', 'DBService', function($scope, $stateParams, PrayersService, DBService) {
   $scope.prayers = PrayersService.prayers.filter(function(prayer){
     return prayer.id == $stateParams.prayerId
   })
@@ -82,6 +81,7 @@ controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'PrayersService
     if ($scope.fontSize + n <= 40 && $scope.fontSize + n >= 10) { $scope.fontSize += n }
     localStorage.fontSize = $scope.fontSize
   }
+  $scope.filterFavorites = $stateParams
   $scope.showWatermark = Number(localStorage.waterMarkVisibility)
   $scope.letterCount = PrayersService.letterCount
   $scope.deHtmlize = PrayersService.deHtmlize
@@ -96,6 +96,16 @@ controllers.controller('PrayersCtrl', ['$scope', '$stateParams', 'PrayersService
       return firstLetter + prayerBody.slice(1)
     }
   }
+  $scope.toggleFavorite = function() {
+    prayer = $scope.prayers[0]
+    prayer.favorite = !prayer.favorite
+    DBService.update('prayers_table', ['favorite'], [prayer.favorite], prayer.id)
+  }
+}])
+
+controllers.controller('FavoritesCtrl', ['$scope', '$controller', '$stateParams', 'PrayersService', 'DBService', function($scope, $controller, $stateParams, PrayersService, DBService) {
+  $controller('PrayersCtrl', {$scope: $scope})
+  $scope.prayers = PrayersService.prayers
 }])
 
 controllers.controller('AllahuabhasCtrl', ['$scope', function($scope) {
@@ -124,17 +134,9 @@ controllers.controller('SearchCtrl', function($scope, PrayersService){
 })
 
 controllers.controller('ConfigCtrl', ["$scope", function($scope) {
-  $scope.fontFamilies = [
-    'Alegreya',
-    'Artifika',
-    'Cardo',
-    'Timeless',
-  ]
-  $scope.fontFamily = localStorage.fontFamily || 'Cardo'
-  $scope.setFontFamily = function(newFontFamily) {localStorage.fontFamily = newFontFamily}
-  $scope.vibrationIntensity = Number(localStorage.vibrationIntensity)
+  $scope.vibrationIntensity = Number(localStorage.vibrationIntensity) || 5
   $scope.setVibration = function(increase) {
-    $scope.vibrationIntensity = Number(localStorage.vibrationIntensity) + increase
+    $scope.vibrationIntensity += increase
     if($scope.vibrationIntensity < 0) { $scope.vibrationIntensity = 0 }
     localStorage.vibrationIntensity = $scope.vibrationIntensity
     vibrate(1)

@@ -1,5 +1,9 @@
 // Styles for reading
 
+body {
+  font-family: 'Timeless';
+}
+
 bg {
   font-family: Ruritania;
   position: fixed;
@@ -38,14 +42,13 @@ bg {
   font-size: 12px;
   color: #888;
 
-  span { width: 84px; }
+  i { width: 0 }
 
-  .word-count { text-align: right; }
-
-  div {
-    text-align: center;
-    width: 10px;
+  .word-count {
+    width: 84px;
+    text-align: right;
   }
+  .divider { padding: 0 5px }
 }
 
 .prayer {

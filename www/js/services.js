@@ -60,23 +60,31 @@ services.service('PrayersService', function($http, DBService) {
 })
 
 services.service('DBService', function($http, $state) {
-  a=this
   return {
-    load: function(callBack) {
+    load: function(callBack, recreateDB) {
       db = this
       log('\n>> Preparing DB')
       angular.db = openDatabase('bahai-prayers', '1.0', 'bahai-prayers-db', 2 * 1024 * 1024)
-      db.prepareSchema('categories_table', {title: 'text', active: 'boolean'}, function(){
-        db.prepareSchema('prayers_table', {categoryId: 'integer', body: 'text', author: 'text', preamble: 'text', favorite: 'boolean', active: 'boolean'}, function(){
+      if(recreateDB) {
+        db.recreateDB(function(){
+          db.prepareDB(callBack)
+        })
+      } else {
+        db.prepareDB(callBack)
+      }
+    },
+    prepareDB: function(callBack){
+      db.prepareSchema('categories_table', {title: 'text', active: 'boolean'}, {}, function(){
+        db.prepareSchema('prayers_table', {categoryId: 'integer', body: 'text', author: 'text', preamble: 'text', favorite: 'boolean', active: 'boolean'}, {favorite: false}, function(){
           log('>> DB Prepared')
           if(callBack){callBack()}
         })
       })
     },
-    prepareSchema: function(table, fieldsObj, callBack){
+    prepareSchema: function(table, fieldsObj, defaultValues, callBack){
       log('>>>> Preparing schema for ' + table)
       db.createRawTable(table, function(){
-        db.addColumns(table, fieldsObj, function(){
+        db.addColumns(table, fieldsObj, defaultValues, function(){
           log('>>>> Schema loaded for ' + table)
           if(callBack){callBack()}
         })
@@ -96,7 +104,7 @@ services.service('DBService', function($http, $state) {
         }, 1)
       }, 1)
     },
-    addColumns: function(table, fieldsObj, callBack){
+    addColumns: function(table, fieldsObj, defaultValues, callBack){
       db.execute('select * from ' + table + ' limit 1', function(results) {
         var newColumns = [],
             sqlStrings = []
@@ -104,7 +112,8 @@ services.service('DBService', function($http, $state) {
         for(var f in fieldsObj) {
           if(results.rows.length && !results.rows.item(0).hasOwnProperty(f)){
             newColumns.push(f)
-            sqlStrings.push('ALTER TABLE ' + table + ' ADD COLUMN ' + f + ' ' + fieldsObj[f] + ' DEFAULT ""')
+            defaultValue = defaultValues[f] || '""'
+            sqlStrings.push('ALTER TABLE ' + table + ' ADD COLUMN ' + f + ' ' + fieldsObj[f] + ' DEFAULT ' + defaultValue)
           }
         }
         db.executeTransaction(sqlStrings, undefined, function(){
@@ -128,7 +137,7 @@ services.service('DBService', function($http, $state) {
         })
         .error(function(error){
           db.postError({message: 'Error fetching data: ' + error})
-          log('\n!!! Error fetching data: ' + error)
+          console.error('\n!!! Error fetching data: ' + error)
           errors += 1
         })
 
@@ -142,7 +151,7 @@ services.service('DBService', function($http, $state) {
         log('Error logged')
       })
       .error(function(error){
-        log('Error logging error')
+        console.error('Error logging error')
       })
     },
     select: function(table, collection, id, callBack, verbose){
@@ -211,7 +220,7 @@ services.service('DBService', function($http, $state) {
             if (executionCallBack){executionCallBack(results)}
           }, function(tx, error) {
             db.postError({message: 'Error fetching data: ' + error.message})
-            log('\n!!! Error executing query: ' + error.message)
+            console.error('!!! Error executing query: ' + error.message)
           })
         })
       }, function(e){log(e)}, transactionCallBack )
@@ -221,12 +230,6 @@ services.service('DBService', function($http, $state) {
     },
     executeAndLog: function(sqlString, verbose) {
       db.execute(sqlString, function(r){for(i=0;i<r.rows.length;i++){log(r.rows.item(i))}}, verbose)
-    },
-    resetDB: function(){
-      this.delete('categories_table')
-      this.delete('prayers_table')
-      localStorage.lastUpdatedCategoriesAt = 0
-      localStorage.lastUpdatedPrayersAt = 0
     },
     recreateDB: function(callBack) {
       log('>>>> Recreating DB')
@@ -261,7 +264,6 @@ services.service('DBService', function($http, $state) {
       executeTransaction: '(sqlStrings, executionCallBack, transactionCallBack, verbose) Executes a set of SQL strings in a single transaction',
       execute: '(sqlString, callBack, verbose) Executes a single SQL statement',
       executeAndLog: '(sqlString, verbose) Executes a single SQL statement and logs the results (no callBack)',
-      resetDB: '() Empties the tables and persistent variables',
       recreateDB: '(callBack) Drops and creates again the tables',
     }
   }
