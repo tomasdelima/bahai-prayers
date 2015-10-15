@@ -10,14 +10,10 @@
 <ion-view view-title="Carregando" ng-if="loading" class="if-animation">
   <div class="load">
     <div class="container">
-      <div class="loading"></div>
+      <ng-include src="'img/nine-pointed-star.svg'"></ng-include>
       <div class="message">As orações estão sendo carregadas <span class="dots" ng-init="startDots()">{{dots}}</span></div>
     </div>
   </div>
-
-  <style type="text/css">
-    .loading { transform: rotate({{loadingAngle}}deg) }
-  </style>
 </ion-view>
 
 <ion-view view-title="Categorias" class="categories if-animation" ng-if="!loading">

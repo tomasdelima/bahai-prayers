@@ -7,7 +7,6 @@ controllers.controller('AppCtrl', ['$scope', '$timeout', '$window', 'PrayersServ
   $scope.loading = true
   $scope.dots = ''
   $scope.theme = localStorage.theme
-  $scope.loadingAngle = 0
 
   DBService.load(function(){
     PrayersService.load(function(){
@@ -20,7 +19,7 @@ controllers.controller('AppCtrl', ['$scope', '$timeout', '$window', 'PrayersServ
         })
       })
     })
-  }, true)
+  }, false)
 
   if(!localStorage.theme) { localStorage.theme = 'day' }
   body.addClass($scope.theme)
@@ -43,7 +42,6 @@ controllers.controller('AppCtrl', ['$scope', '$timeout', '$window', 'PrayersServ
         $scope.dots += '.'
       }
       $scope.startDots()
-      $scope.loadingAngle += 90
     }, 1000)
   }
 }])
@@ -51,6 +49,7 @@ controllers.controller('AppCtrl', ['$scope', '$timeout', '$window', 'PrayersServ
 controllers.controller('CategoriesCtrl', ['$scope', '$stateParams', 'PrayersService', function($scope, $stateParams, PrayersService) {
   $scope.categories = PrayersService.categories
   $scope.singlePrayerIds = PrayersService.singlePrayerIds
+
   $scope.hrefFor = function(categoryId) {
     if($scope.singlePrayerIds[categoryId] > 0) {
       return '#/app/prayers/' + $scope.singlePrayerIds[categoryId]

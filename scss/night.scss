@@ -34,8 +34,9 @@
 .ion-day:before { content: "\f451"; }
 .ion-night:before, .ion-day:before { font-family: "Ionicons"; }
 
-.day .load .loading { background: url('../img/loading-day.png') }
-.night .load .loading { background: url('../img/loading-night.png') }
+.day svg polygon { stroke: #222; }
+.night svg polygon { stroke: #ddd; }
+
 .day, .night {
   .load .loading {
     transition: 1s transform linear;
