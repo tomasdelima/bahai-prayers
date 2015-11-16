@@ -37,12 +37,26 @@ bg {
   .dots { position: absolute }
 }
 
+.categories, .prayers {
+  .item {
+    height: 70px;
+    font-size: 20px;
+
+    .item-content {
+      height: 100%;
+      padding: 23px 20px;
+    }
+  }
+}
+
 .prayers .prayer-details {
   display: flex;
   font-size: 12px;
   color: #888;
 
   i { width: 0 }
+
+  .favorite.ion-ios-star { color: #FFD755; }
 
   .word-count {
     width: 84px;

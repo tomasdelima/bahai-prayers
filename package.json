@@ -12,9 +12,10 @@
   },
   "devDependencies": {
     "bower": "^1.3.3",
+    "gulp": "~3.8.10",
+    "gulp-sass": "^2.0.4",
     "gulp-util": "~3.0.2",
-    "shelljs": "^0.3.0",
-    "gulp": "~3.8.10"
+    "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
     "org.apache.cordova.vibration",
