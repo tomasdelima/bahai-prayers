@@ -133,14 +133,16 @@ controllers.controller('SearchCtrl', function($scope, PrayersService){
 })
 
 controllers.controller('ConfigCtrl', ["$scope", function($scope) {
+  if(!localStorage.waterMarkVisibility) { localStorage.waterMarkVisibility = 1 }
+  if(!localStorage.vibrationIntensity) { localStorage.vibrationIntensity = 5 }
+
   $scope.vibrationIntensity = Number(localStorage.vibrationIntensity) || 5
   $scope.setVibration = function(increase) {
     $scope.vibrationIntensity += increase
-    if($scope.vibrationIntensity < 0) { $scope.vibrationIntensity = 0 }
+    if($scope.vibrationIntensity < 1) { $scope.vibrationIntensity = 1 }
     localStorage.vibrationIntensity = $scope.vibrationIntensity
     vibrate(1)
   }
-  if(!localStorage.waterMarkVisibility) { localStorage.waterMarkVisibility = 1 }
   $scope.waterMarkVisibility = Number(localStorage.waterMarkVisibility)
   $scope.saveWaterMarkVisibility = function () {
     localStorage.waterMarkVisibility = $scope.waterMarkVisibility = 1 - $scope.waterMarkVisibility

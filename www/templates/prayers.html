@@ -10,7 +10,7 @@
     <ion-item ng-repeat="prayer in prayers | orderBy:'preamble'" href="#/app/prayers/{{prayer.id}}" ng-if="!filterFavorites">
       {{deHtmlize(prayer.body)}}
       <span class="prayer-details">
-        <i class="theme icon ion-ios-star" ng-if="prayer.favorite"></i>
+        <i class="favorite icon ion-ios-star" ng-if="prayer.favorite"></i>
         <span class="word-count">{{letterCount(prayer.body)}} palavras</span>
         <span class="divider">|</span>
         <span class="author">{{prayer.author}}</span>
