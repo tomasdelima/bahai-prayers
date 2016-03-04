@@ -1,4 +1,5 @@
-<ion-view view-title="Configurações">
+<ion-view>
+  <ion-nav-title>{{labels.configurations}}</ion-nav-title>
   <ion-nav-buttons side="right">
     <div class="menu-custom-buttons">
       <a class="theme icon ion-{{theme}}" ng-click="changeTheme()"></a>
@@ -7,13 +8,13 @@
 
   <ion-content class="configurations">
     <ion-item class="vibration">
-      Intensidade da vibração:
+      {{labels.vibrationIntensity}}:
       <div class="right">
         <a ng-click="setVibration(-1)" class="fa fa-minus"></a>
         <a>{{vibrationIntensity}}</a>
         <a ng-click="setVibration(+1)" class="fa fa-plus"></a>
       </div>
     </ion-item>
-    <ion-toggle class="show-watermark" toggle-class="toggle-balanced" ng-model="waterMarkVisibility" ng-true-value="1" ng-false-value="0" ng-click="saveWaterMarkVisibility()">Exibir marca d'água:</ion-toggle>
+    <ion-toggle class="show-watermark" toggle-class="toggle-balanced" ng-model="waterMarkVisibility" ng-true-value="1" ng-false-value="0" ng-click="saveWaterMarkVisibility()">{{labels.showWatermark}}:</ion-toggle>
   </ion-content>
 </ion-view>

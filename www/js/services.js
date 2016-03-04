@@ -51,11 +51,11 @@ services.service('PrayersService', function($http, DBService) {
         if(callBack){callBack()}
       }, 1)
     },
-    loadConfig: function (attr) {
+    loadConfig: function(attr) {
       return localStorage[attr]
     },
-    deHtmlize: function (str, newline) { return str.replace(/<br>/g, newline || ' ') },
-    letterCount: function (str) { return str.replace(/(^\s*)|(\s*$)/gi,"").replace(/[ ]{2,}/gi," ").replace(/\n /,"\n").split(" ").length },
+    deHtmlize: function(str, newline) { return str.replace(/<br>/g, newline || ' ') },
+    letterCount: function(str) { return str.replace(/(^\s*)|(\s*$)/gi,"").replace(/[ ]{2,}/gi," ").replace(/\n /,"\n").split(" ").length },
   }
 })
 
@@ -265,6 +265,59 @@ services.service('DBService', function($http, $state) {
       execute: '(sqlString, callBack, verbose) Executes a single SQL statement',
       executeAndLog: '(sqlString, verbose) Executes a single SQL statement and logs the results (no callBack)',
       recreateDB: '(callBack) Drops and creates again the tables',
+    }
+  }
+})
+
+services.service('TranslationService', function() {
+  var translations = {
+    pt: {
+      prayers: 'Orações',
+      allahuabha: 'Alláh-u-Abhá',
+      loading: 'Carregando',
+      configurations: 'Configurações',
+      categories: 'Categorias',
+      loadingPrayers: 'As orações estão sendo carregadas',
+      restart: 'Reiniciar',
+      search: 'Busca',
+      vibrationIntensity: 'Intensidade da vibração',
+      showWatermark: 'Exibir marca d\'água',
+      words: 'palavras',
+      foundPrayers: 'orações encontradas',
+    },
+    en: {
+      prayers: 'Prayers',
+      allahuabha: 'Alláh-u-Abhá',
+      loading: 'Loading',
+      configurations: 'Configurations',
+      categories: 'Categories',
+      loadingPrayers: 'Loading prayers',
+      restart: 'Restart',
+      search: 'Search',
+      vibrationIntensity: 'Vibration intensity',
+      showWatermark: 'Show watermark',
+      words: 'words',
+      foundPrayers: 'prayers found',
+    },
+    es: {
+      prayers: 'Oraciones',
+      allahuabha: 'Alláh-u-Abhá',
+      loading: 'Cargando',
+      configurations: 'Configuraciones',
+      categories: 'Categorias',
+      loadingPrayers: 'Las oraciones se están cargando',
+      restart: 'Reiniciar',
+      search: 'Busca',
+      vibrationIntensity: 'Intensidade da vibracion',
+      showWatermark: 'Exhibir marca de agua',
+      words: 'palavras',
+      foundPrayers: 'oraciones encontradas',
+    },
+  }
+
+  return {
+    load: function() {
+      return translations[localStorage.language]
     }
   }
 })

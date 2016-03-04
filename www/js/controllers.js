@@ -2,11 +2,13 @@ controllers = angular.module('controllers', [])
 remoteHost = 'http://bahai-prayers-server.herokuapp.com'
 // remoteHost = 'http://localhost:3000'
 
-controllers.controller('AppCtrl', ['$scope', '$timeout', '$window', 'PrayersService', 'DBService', function($scope, $timeout, $window, PrayersService, DBService) {
+controllers.controller('AppCtrl', ['$scope', '$timeout', '$window', 'PrayersService', 'DBService', 'TranslationService', function($scope, $timeout, $window, PrayersService, DBService, TranslationService) {
   var body = angular.element(document.getElementsByTagName("body"))
   $scope.loading = true
   $scope.dots = ''
   $scope.theme = localStorage.theme
+
+  $scope.labels = TranslationService.load()
 
   DBService.load(function(){
     PrayersService.load(function(){

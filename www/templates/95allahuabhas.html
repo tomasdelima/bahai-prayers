@@ -1,4 +1,6 @@
 <ion-view view-title="Alláh-u-Abhá" class="restart">
+  <ion-nav-title>{{labels.allahuabha}}</ion-nav-title>
+
   <ion-nav-buttons side="right">
     <div class="menu-custom-buttons">
       <a class="theme icon ion-{{theme}}" ng-click="changeTheme()"></a>
@@ -10,6 +12,6 @@
   </ion-content>
 
   <div ng-click="restart()" class="bar bar-footer bar-balanced">
-    <div class="title">Reiniciar</div>
+    <div class="title">{{labels.restart}}</div>
   </div>
 </ion-view>

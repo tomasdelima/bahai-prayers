@@ -1,4 +1,6 @@
-<ion-view view-title="Busca" class="prayers search">
+<ion-view class="prayers search">
+  <ion-nav-title>{{labels.search}}</ion-nav-title>
+
   <ion-nav-buttons side="right">
     <div class="menu-custom-buttons">
       <a class="theme icon ion-{{theme}}" ng-click="changeTheme()"></a>
@@ -7,16 +9,16 @@
 
   <ion-content>
     <input class='search' ng-model='search' id="search-input" autofocus='true'>
-    <h3 class="search-results" ng-hide="filtered.length < 20 || !search.length">
+    <h3 class="search-results" ng-hide="filtered.length < 100 || !search.length">
       Muitos resultados encontrados. Por favor, refine sua busca.
     </h3>
-    <div class="search-results" ng-show="filtered.length < 20">
-      <h3 ng-filter="search">{{filtered.length}} resultado{{filtered.length > 1 ? 's':''}}</h3>
-      <ion-item ng-repeat="prayer in filtered = (prayers | filter:search | limitTo:20)" href="#/app/prayers/{{prayer.id}}">
+    <div class="search-results" ng-show="filtered.length < 100">
+      <h3 ng-filter="search">{{filtered.length}} {{labels.foundPrayers}}</h3>
+      <ion-item ng-repeat="prayer in filtered = (prayers | filter:search | limitTo:100)" href="#/app/prayers/{{prayer.id}}">
         {{ deHtmlize(prayer.body) }}
         <span class="prayer-details">
-          <span class="word-count">{{ letterCount(prayer.body) }} palavras</span>
-          <div> | </div>
+          <span class="word-count">{{ letterCount(prayer.body) }} {{labels.words}}</span>
+          <div>|</div>
           <span>{{ prayer.author }}</span>
         </span>
       </ion-item>
