@@ -13,6 +13,7 @@ var Category = React.createClass({
     this.props.navigator.push({
       id: 'prayers',
       name: 'Prayers',
+      categoryId: this.props.category.id,
     })
   },
   render () {
@@ -24,8 +25,9 @@ var Category = React.createClass({
 
 var styles = StyleSheet.create({
   category: {
-    margin: 30
-  },
+    fontSize: 20,
+    margin: 30,
+  }
 })
 
 module.exports = Category;

@@ -10,13 +10,14 @@ import {
 
 var Prayer = React.createClass({
   render () {
-    return <Text style={styles.prayer}>{this.props.prayer.body}</Text>
+    return <Text style={styles.prayer}>{this.props.prayer.body.slice(0, 30)}</Text>
   },
 })
 
 var styles = StyleSheet.create({
   prayer: {
-    margin: 20
+    margin: 20,
+    fontSize: 30,
   }
 })
 
