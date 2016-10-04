@@ -9,11 +9,12 @@ import {
 } from 'react-native'
 
 var Category = require('./category')
+var NavBar   = require('./nav-bar')
 
 var Categories = React.createClass({
   getInitialState() {
     return {
-      categories: []
+      categories: [{id: 1, title: 'Category 1'}, {id: 2, title: 'Category 2'}]
     }
   },
   componentDidMount() {
@@ -27,6 +28,7 @@ var Categories = React.createClass({
   },
   render() {
     return <View style={styles.container}>
+      <NavBar navigator={this.props.navigator} categoryId returnTo/>
       <Text style={styles.header}>Categorias</Text>
       {this.state.categories.map(category => <Category key={category.id} category={category} navigator={this.props.navigator} />)}
     </View>

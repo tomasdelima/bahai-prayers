@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 
 var Prayer = require('./prayer')
+var NavBar   = require('./nav-bar')
 
 var Prayers = React.createClass({
   prayers() {
@@ -18,12 +19,17 @@ var Prayers = React.createClass({
       {
         active:      true,
         author:      "Not a real author",
-        body:        "Not a real prayer",
-        category_id: -1,
-        created_at:  "2015-02-07T00:05:30.496Z",
-        id:          -1,
+        body:        "Not a real prayer 1",
+        category_id: 1,
+        id:          1,
         preamble:    "",
-        updated_at:  "2016-08-06T03:28:51.595Z",
+      }, {
+        active:      true,
+        author:      "Not a real author",
+        body:        "Not a real prayer 2",
+        category_id: 1,
+        id:          2,
+        preamble:    "",
       }
     ]}
   },
@@ -37,7 +43,9 @@ var Prayers = React.createClass({
     })
   },
   render () {
+      <NavBar navigator={this.props.navigator} categoryId={this.props.categoryId} returnTo='category' />
     return <View style={styles.prayers}>
+      <NavBar navigator={this.props.navigator} returnTo='categories' />
       {this.state.prayers.map(prayer => <Prayer key={prayer.id} prayer={prayer}/> )}
     </View>
   },
