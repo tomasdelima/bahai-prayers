@@ -12,7 +12,7 @@ import {
 
 var s = require('./styles')
 
-var Loading = React.createClass({
+module.exports = React.createClass({
   getInitialState() {
     return {
       spinning: new Animated.Value(0),
@@ -31,7 +31,7 @@ var Loading = React.createClass({
   fade (toValue, callBack) {
     Animated.timing(this.state.fading, {
       toValue: toValue,
-      duration: 700,
+      duration: 500,
     }).start(callBack)
   },
   grow () {
@@ -67,5 +67,3 @@ var Loading = React.createClass({
     </View>
   }
 })
-
-module.exports = Loading

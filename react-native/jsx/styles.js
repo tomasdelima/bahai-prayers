@@ -4,6 +4,7 @@ import React, {Component} from 'react'
 import {StyleSheet} from 'react-native'
 
 module.exports = StyleSheet.create({
+  // General
   empty: {},
   row: { flexDirection: 'row' },
   container: {
@@ -12,23 +13,20 @@ module.exports = StyleSheet.create({
     alignItems: 'stretch',
   },
   center: { alignSelf: 'center' },
-  category: {
+  item: {
     fontSize: 20,
     margin: 30,
     fontFamily: 'timeless',
   },
-  prayer: {
-    fontSize: 20,
-    margin: 30,
-    fontFamily: 'timeless',
-  },
+  red: {backgroundColor: 'red'},
+
+  // Specific
   navBar: {
     flex: 1,
     flexDirection: 'row',
     height: 60,
     backgroundColor: '#ccc',
     alignItems: 'center',
-    // justifyContent: 'space-between',
   },
   navBarLeft: {
     flex: 1,
@@ -42,6 +40,5 @@ module.exports = StyleSheet.create({
     flex: 1,
     fontSize: 26,
   },
-  red: {backgroundColor: 'red'},
 })
 

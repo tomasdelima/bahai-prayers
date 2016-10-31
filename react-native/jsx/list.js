@@ -11,17 +11,16 @@ import {
   TextInput,
 } from 'react-native'
 
-var Loading    = require('./loading')
+var Item    = require('./item')
 var s = require('./styles')
 
-var List = React.createClass({
+module.exports = React.createClass({
   getInitialState() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
       ds: ds,
-      items: ds.cloneWithRows([1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0]),
+      items: ds.cloneWithRows(this.props.items),
       fading: new Animated.Value(0),
-      // finishedLoading: true,
     }
   },
   fade (toValue) {
@@ -34,18 +33,9 @@ var List = React.createClass({
     this.fade(1)
     setTimeout(() => { this.setState({loading: false}) }, 1000)
   },
-  finishLoading () {
-    this.setState({finishedLoading: true})
-  },
   render() {
-    if(!this.state.finishedLoading) {
-      return <Loading loading={this.state.loading} finishLoading={this.finishLoading}/>
-    } else {
-      return <Animated.View style={[s.container, {opacity: this.state.fading}]}>
-        <ListView dataSource={this.state.items} renderRow={(item) => <Text style={s.category}>{item}</Text>} />
-      </Animated.View>
-    }
+    return <Animated.View style={[s.container, {opacity: this.state.fading}]}>
+      <ListView dataSource={this.state.items} renderRow={(item, a ,i) => <Item navigation={this.props.navigation} item={item} type={this.props.type}/>} />
+    </Animated.View>
   }
 })
-
-module.exports = List
