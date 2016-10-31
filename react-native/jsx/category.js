@@ -8,6 +8,8 @@ import {
   TextInput,
 } from 'react-native'
 
+var s = require('./styles')
+
 var Category = React.createClass({
   goToPrayers () {
     this.props.navigator.push({
@@ -17,16 +19,9 @@ var Category = React.createClass({
     })
   },
   render () {
-    return <Text style={styles.category} onPress={this.goToPrayers}>
+    return <Text style={s.category} onPress={this.goToPrayers}>
       {this.props.category.title}
     </Text>
-  }
-})
-
-var styles = StyleSheet.create({
-  category: {
-    fontSize: 20,
-    margin: 30,
   }
 })
 

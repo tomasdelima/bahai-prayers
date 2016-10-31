@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 
 var Category = require('./category')
+var s = require('./styles')
 
 var NavBar = React.createClass({
   goTo () {
@@ -26,32 +27,12 @@ var NavBar = React.createClass({
     }
   },
   render () {
-    return <View style={styles.container}>
-      <Text style={styles.leftText} onPress={this.goTo}>Back</Text>
-      <Text style={styles.centralText}>Nav Bar</Text>
+    return <View style={s.navBar}>
+      <Text style={s.navBarLeft} onPress={this.goTo}>Back</Text>
+      <Text style={s.navBarCenter}>{this.props.label}</Text>
+      <Text style={s.navBarRight}></Text>
     </View>
   }
-})
-
-var styles = StyleSheet.create({
-  container: {
-    height: 100,
-    // border: 1,
-    // borderColor: 'red',
-    backgroundColor: '#ccc',
-  },
-  leftText: {
-    paddingTop: 5,
-    textAlign: 'left',
-    fontSize: 26,
-    width: 100,
-    // display: 'inline-block',
-  },
-  centralText: {
-    paddingTop: 5,
-    textAlign: 'center',
-    fontSize: 26,
-  },
 })
 
 module.exports = NavBar;

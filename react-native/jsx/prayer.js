@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 import React, {Component} from 'react'
 import {
@@ -8,17 +8,20 @@ import {
   TextInput,
 } from 'react-native'
 
+var LongPrayer = require('./long-prayer')
+var s          = require('./styles')
+
 var Prayer = React.createClass({
+  goToLongPrayer () {
+    this.props.navigator.push({
+      id: 'long-prayer',
+      name: 'Prayer',
+      prayer: this.props.prayer,
+    })
+  },
   render () {
-    return <Text style={styles.prayer}>{this.props.prayer.body.slice(0, 30)}</Text>
+    return <Text style={s.prayer} onPress={this.goToLongPrayer}>{this.props.prayer.body.slice(0, 30)}</Text>
   },
 })
 
-var styles = StyleSheet.create({
-  prayer: {
-    margin: 20,
-    fontSize: 30,
-  }
-})
-
-module.exports = Prayer;
+module.exports = Prayer

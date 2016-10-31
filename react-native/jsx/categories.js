@@ -1,47 +1,54 @@
-'use strict';
+'use strict'
 
 import React, {Component} from 'react'
 import {
   StyleSheet,
   Text,
+  Image,
   View,
+  ListView,
   TextInput,
 } from 'react-native'
 
 var Category = require('./category')
 var NavBar   = require('./nav-bar')
+var Loading  = require('./loading')
+var DB       = require('../db')
+var s        = require('./styles')
 
 var Categories = React.createClass({
   getInitialState() {
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     return {
-      categories: [{id: 1, title: 'Category 1'}, {id: 2, title: 'Category 2'}]
+      loading: true,
+      ds: ds,
+      categories: ds.cloneWithRows([]),
     }
   },
+  setCategories(categories) {
+    if(categories) {
+      this.setState({
+        loading: false,
+        categories: this.state.ds.cloneWithRows(categories),
+      })
+    }
+  },
+  error(error) {
+    console.log('Something went wrong: ' + error)
+  },
   componentDidMount() {
-    var url = this.props.remoteHost + '/categories.json'
-    console.log('Fetching data from: ' + url)
-    fetch(url).then(function(response) {
-      this.setState({categories: JSON.parse(response._bodyInit)})
-    }.bind(this), function (error) {
-      console.log(error)
-    })
+    global.db.loadFromDB('categories', {active: [true]}, 'title').then(this.setCategories).catch(this.error)
+    global.db.loadFromRemoteServer(this.props.remoteHost + '/categories.json', 'categories').then(this.setCategories).catch(this.error)
+    global.db.loadFromRemoteServer(this.props.remoteHost + '/prayers.json', 'prayers').catch(this.error)
   },
   render() {
-    return <View style={styles.container}>
-      <NavBar navigator={this.props.navigator} categoryId returnTo/>
-      <Text style={styles.header}>Categorias</Text>
-      {this.state.categories.map(category => <Category key={category.id} category={category} navigator={this.props.navigator} />)}
-    </View>
+      // <NavBar label='Categorias' navigator={this.props.navigator} returnTo='categories' />
+    if(this.state.loading) {
+      return <Loading loading={this.state.loading}/>
+    } else {
+      return <ListView dataSource={this.state.categories} renderRow={(category) => <Category key={category.id} category={category} navigator={this.props.navigator} />} />
+    }
   }
 })
 
-var styles = StyleSheet.create({
-  container: {
-  },
-  header: {
-    fontSize: 30,
-    margin: 10,
-  },
-})
-
-module.exports = Categories;
+module.exports = Categories
