@@ -41,20 +41,6 @@ var loadFromRemoteServer = function (url, table, where) {
       console.log('FETCH: START:  ' + url)
       fetch(url).then(function(response) {
         var loadedData = JSON.parse(response._bodyInit)
-        // if(table == 'categories') {
-        //   var loadedData = [
-        //     {id: 1, title: 'Category 1', active: true},
-        //     {id: 2, title: 'Category 2', active: true},
-        //     {id: 3, title: 'Category 3', active: true},
-        //     {id: 4, title: 'Category 4', active: true},
-        //     {id: 5, title: 'Category 5', active: true},
-        //   ]
-        // } else {
-        //   var loadedData = [
-        //     {id: 1, active: true, category_id: 1, author: "Not a real author", body: "Not a real prayer 1", preamble: ""},
-        //     {id: 2, active: true, category_id: 1, author: "Not a real author", body: "Not a real prayer 2", preamble: ""},
-        //   ]
-        // }
         global['fetched:' + url] = true
 
         global.db.transaction(function (tx) {

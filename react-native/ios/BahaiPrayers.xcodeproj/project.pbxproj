@@ -28,6 +28,8 @@
 		84912A63DC54438AAFF7EB23 /* Timeless.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CFDC7C9CD4494D7D998FD85E /* Timeless.ttf */; };
 		93DD3AE5E32D4E059717AF43 /* timeless_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19E781AE262B4676B19C4D7C /* timeless_bold.ttf */; };
 		998750C41F814A81B7E7DA1D /* timeless.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 40280E7A37784147A7417CED /* timeless.ttf */; };
+		244A72FE1DF34F1E871CB681 /* gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CC3A39C1CFE4DC28BACBE5A /* gradient.png */; };
+		FE6FAFF714F4482AB4CB5CDE /* nine-pointed-star.png in Resources */ = {isa = PBXBuildFile; fileRef = 6325FEB995934459969BCB15 /* nine-pointed-star.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +141,8 @@
 		CFDC7C9CD4494D7D998FD85E /* Timeless.ttf */ = {isa = PBXFileReference; name = "Timeless.ttf"; path = "../fonts/Timeless.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		19E781AE262B4676B19C4D7C /* timeless_bold.ttf */ = {isa = PBXFileReference; name = "timeless_bold.ttf"; path = "../fonts/timeless_bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		40280E7A37784147A7417CED /* timeless.ttf */ = {isa = PBXFileReference; name = "timeless.ttf"; path = "../fonts/timeless.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3CC3A39C1CFE4DC28BACBE5A /* gradient.png */ = {isa = PBXFileReference; name = "gradient.png"; path = "../images/gradient.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6325FEB995934459969BCB15 /* nine-pointed-star.png */ = {isa = PBXFileReference; name = "nine-pointed-star.png"; path = "../images/nine-pointed-star.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -340,6 +344,8 @@
 				CFDC7C9CD4494D7D998FD85E /* Timeless.ttf */,
 				19E781AE262B4676B19C4D7C /* timeless_bold.ttf */,
 				40280E7A37784147A7417CED /* timeless.ttf */,
+				3CC3A39C1CFE4DC28BACBE5A /* gradient.png */,
+				6325FEB995934459969BCB15 /* nine-pointed-star.png */,
 			);
 			name = Resources;
 			path = "";
@@ -551,6 +557,8 @@
 				84912A63DC54438AAFF7EB23 /* Timeless.ttf in Resources */,
 				93DD3AE5E32D4E059717AF43 /* timeless_bold.ttf in Resources */,
 				998750C41F814A81B7E7DA1D /* timeless.ttf in Resources */,
+				244A72FE1DF34F1E871CB681 /* gradient.png in Resources */,
+				FE6FAFF714F4482AB4CB5CDE /* nine-pointed-star.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

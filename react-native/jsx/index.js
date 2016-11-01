@@ -3,6 +3,7 @@
 import React, {Component} from 'react'
 import {
   View,
+  Navigator,
   ListView,
   Text,
   AppRegistry,
@@ -19,58 +20,64 @@ var remoteHost = 'http://bahai-prayers-server.herokuapp.com'
 module.exports = React.createClass({
   getInitialState() {
     return {
-      loading: true,
-      type: '',
-      items: [],
-      navigation: {
-        goToCategories: this.goToCategories,
-        goToCategory: this.goToCategory,
-        goToPrayer: this.goToPrayer,
-      },
+      routes: [{id: 'root'}],
     }
   },
   setItems(items, type) {
+    global.navigator.push({id: 'loading'})
+
     if(items) {
-      this.setState({
-        loading: false,
-        items: items,
-        type: type,
-      })
+      global.navigator.push({id: type, items: items})
     }
   },
-  startLoading () {
-    this.setState({loading: true, finishedLoading: false})
-  },
   goToCategories () {
-    this.startLoading()
-    global.db.loadFromDB('categories', {active: [true]}, 'title').then((categries) => {
-      this.setItems(categries, 'categories')
+    global.db.loadFromDB('categories', {active: [true]}, 'title').then((categories) => {
+      if (categories.length > 0) {
+        this.setItems(categories, 'categories')
+      } else {
+        global.db.loadFromRemoteServer(remoteHost + '/categories.json', 'categories').then((categories) => {
+          global.db.loadFromRemoteServer(remoteHost + '/prayers.json', 'prayers').then(() => {
+            this.setItems(categories, 'categories')
+          }).catch(this.error)
+        }).catch(this.error)
+      }
     }).catch(this.error)
   },
+  error (error) { console.log('ERROR: ' + error) },
   goToCategory (categoryId) {
-    this.startLoading()
     global.db.loadFromDB('prayers', {category_id: [categoryId], active: [true]}, 'author').then((prayers) => {
       this.setItems(prayers, 'prayers')
     }).catch(this.error)
   },
   goToPrayer (prayer) {
-    this.setState({prayer: prayer, type: 'prayer'})
+    global.navigator.push({id: 'prayer', prayer: prayer})
   },
   componentDidMount () {
+    global.navigation = {
+      goToCategories: this.goToCategories,
+      goToCategory: this.goToCategory,
+      goToPrayer: this.goToPrayer,
+    }
     this.goToCategories()
     global.db.loadFromRemoteServer(remoteHost + '/categories.json', 'categories').catch(this.error)
     global.db.loadFromRemoteServer(remoteHost + '/prayers.json', 'prayers').catch(this.error)
   },
-  finishLoading () {
-    this.setState({finishedLoading: true})
-  },
   render () {
-    if(!this.state.finishedLoading) {
-      return <Loading loading={this.state.loading} finishLoading={this.finishLoading}/>
-    } else if (this.state.type == 'categories' || this.state.type == 'prayers') {
-      return <List items={this.state.items} type={this.state.type} navigation={this.state.navigation}/>
-    } else if (this.state.type == 'prayer') {
-      return <LongPrayer prayer={this.state.prayer} navigation={this.state.navigation}/>
-    }
+    return <Navigator
+      initialRoute={this.state.routes[0]}
+      initialRouteStack={this.state.routes}
+      renderScene={this.renderScene}
+      configureScene={(route) => { return Navigator.SceneConfigs.FadeAndroid }}
+    />
   },
+  renderScene (route, navigator) {
+    global.navigator = navigator
+         if (route.id == 'root')       { return null }
+    else if (route.id == 'loading')    { return <Loading/> }
+    else if (route.id == 'categories') { return <List items={route.items} type={'categories'}/> }
+    else if (route.id == 'prayers')    { return <List items={route.items} type={'prayers'}   /> }
+    else if (route.id == 'prayer')     { return <LongPrayer prayer={route.prayer}/> }
+    else { return <Text>NO ROUTE FOUND!</Text>}
+  }
 })
+

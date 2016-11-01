@@ -14,6 +14,7 @@ import java.util.List;
 
 // Custom
 import org.pgsqlite.SQLitePluginPackage;
+import com.BV.LinearGradient.LinearGradientPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new SQLitePluginPackage(),
+        new LinearGradientPackage(),
         new MainReactPackage()
       );
     }
