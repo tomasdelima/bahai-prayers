@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
-var s    = require('./styles')
+var s = require('../styles')
 
 module.exports = React.createClass({
   render () {

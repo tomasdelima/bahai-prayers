@@ -10,7 +10,7 @@ import {
   TextInput,
 } from 'react-native'
 
-var s = require('./styles')
+var s = require('../styles')
 
 module.exports = React.createClass({
   render () {

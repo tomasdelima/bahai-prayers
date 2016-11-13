@@ -10,7 +10,7 @@ import {
 
 var Category = require('./category')
 var Prayer   = require('./prayer')
-var s        = require('./styles')
+var s        = require('../styles')
 
 module.exports = React.createClass({
   goToChild () {
