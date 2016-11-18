@@ -20,6 +20,7 @@ module.exports = StyleSheet.create({
   paddingV:     { paddingVertical: 15 },
   marginV:      { marginVertical: 15 },
   paddingDown:  { paddingBottom: 10 },
+  rotate:       { transform: [{rotate: '90deg'}] },
   justifyLeft:  { justifyContent: 'flex-start' },
   justifyRight: { justifyContent: 'flex-end' },
   red:          { backgroundColor: 'rgba(255, 0, 0, 0.2)' },
@@ -29,6 +30,7 @@ module.exports = StyleSheet.create({
   white:        { backgroundColor: 'white' },
   high:         { height: windowHeight },
   wide:         { width: windowWidth },
+  highInverted: { width: windowHeight },
 
   // General: complex
   container: {
