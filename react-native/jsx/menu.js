@@ -9,20 +9,25 @@ import {
 } from 'react-native'
 
 const s = require('./styles')
+const t = require('./themes')
 
 module.exports = React.createClass({
   goToMenuItem (id) {
-    console.log(Object.keys(global.navigator))
-    if (id == 'configurations') {
-      global.navigator.root.push({id: id})
-    } else {
-      global.navigator.root.pop()
-    }
+    global.navigator.root.push({id: id})
+    this.props.closeMenu()
+  },
+  menuItem (label, routeId) {
+    return <TouchableHighlight underlayColor='rgba(0,0,0,0.2)' onPress={() => {this.goToMenuItem(routeId)}}>
+      <Text style={[s.paddingV, s.item, t[this.props.theme].text, {}]}>{label}</Text>
+    </TouchableHighlight>
   },
   render () {
-    return <View style={s.red}>
-      <TouchableHighlight underlayColor='rgba(0,0,0,0.2)' onPress={() => {this.goToMenuItem('categories')}}><Text>Orações</Text></TouchableHighlight>
-      <TouchableHighlight underlayColor='rgba(0,0,0,0.2)' onPress={() => {this.goToMenuItem('configurations')}}><Text>Configurações</Text></TouchableHighlight>
+    return <View style={[t[this.props.theme].background, {}]}>
+      <View style={[s.high, s.gray, {}]}>
+        {this.menuItem('Orações', 'prayers')}
+        {this.menuItem('Configurações', 'configurations')}
+        {this.menuItem('Loading', 'loading')}
+      </View>
     </View>
   },
 })

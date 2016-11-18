@@ -19,16 +19,18 @@ module.exports = React.createClass({
   componentDidMount() {
     this.spin()
   },
-  spin ()            { Anim.continuous(this.state.spinning) },
+  spin () { Anim.continuous(this.state.spinning) },
   render() {
     var spin = this.state.spinning.interpolate({
       inputRange:  [0, 1],
       outputRange: ['0deg', '360deg'],
     })
 
+    var image = this.props.theme == 'dark' ? require('../images/nine-pointed-star-dark.png') : require('../images/nine-pointed-star-light.png')
+
     return <View style={[s.container, s.absolute, {}]}>
       <Animated.Image
-        source={require('../images/nine-pointed-star.png')}
+        source={image}
         style={[s.center, {
           width: 250,
           height: 250,

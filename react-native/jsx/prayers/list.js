@@ -28,7 +28,7 @@ module.exports = React.createClass({
   render() {
     if (this.props.items) {
       return <View style={[s.container, s.absolute, {}]}>
-        <ListView dataSource={this.state.items} renderRow={(item, a ,i) => <Item goToPrayer={this.state.goToPrayer} item={item} type={this.props.type}/>} />
+        <ListView dataSource={this.state.items} renderRow={(item, a ,i) => <Item goToPrayer={this.state.goToPrayer} item={item} type={this.props.type} theme={this.props.theme}/>} />
       </View>
     } else {
       return null

@@ -7,6 +7,7 @@ import {
   ListView,
   Text,
   AppRegistry,
+  BackAndroid,
 } from 'react-native'
 
 const SideMenu   = require('react-native-side-menu');
@@ -23,7 +24,6 @@ const remoteHost = 'http://bahai-prayers-server.herokuapp.com'
 module.exports = React.createClass({
   getInitialState() {
     return {
-      // theme: await AsyncStorage.getItem('theme'),
       routes: [{id: 'root'}],
     }
   },
@@ -57,6 +57,9 @@ module.exports = React.createClass({
     global.navigator.prayers.push({id: 'prayer', prayer: prayer})
   },
   componentDidMount () {
+    BackAndroid.addEventListener('hardwareBackPress', () => {
+      global.navigator.prayers.pop()
+    })
     global.navigation = {
       goToCategories: this.goToCategories,
       goToCategory: this.goToCategory,
@@ -67,7 +70,7 @@ module.exports = React.createClass({
     global.db.loadFromRemoteServer(remoteHost + '/prayers.json', 'prayers').catch(this.error)
   },
   render () {
-    return<Navigator style={s.white}
+    return <Navigator style={[{}]}
       initialRoute={this.state.routes[0]}
       initialRouteStack={this.state.routes}
       renderScene={this.renderScene}
@@ -78,11 +81,10 @@ module.exports = React.createClass({
     global.navigator.prayers = navigator
 
          if (route.id == 'root')       { return null }
-    else if (route.id == 'loading')    { return <Loading/> }
-    else if (route.id == 'categories') { return <List items={route.items} type={'categories'}/> }
-    else if (route.id == 'prayers')    { return <List items={route.items} type={'prayers'}   /> }
-    else if (route.id == 'prayer')     { return <LongPrayer prayer={route.prayer}/> }
-    else if (route.id == 'configurations') { return <Configurations/> }
+    else if (route.id == 'loading')    { return <Loading theme={this.props.theme}/> }
+    else if (route.id == 'categories') { return <List items={route.items} type={'categories'} theme={this.props.theme}/> }
+    else if (route.id == 'prayers')    { return <List items={route.items} type={'prayers'}    theme={this.props.theme}/> }
+    else if (route.id == 'prayer')     { return <LongPrayer prayer={route.prayer} theme={this.props.theme}/> }
     else { return <Text>NO ROUTE FOUND!</Text>}
   }
 })

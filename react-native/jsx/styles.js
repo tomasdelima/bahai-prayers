@@ -25,8 +25,10 @@ module.exports = StyleSheet.create({
   red:          { backgroundColor: 'rgba(255, 0, 0, 0.2)' },
   blue:         { backgroundColor: 'rgba(0, 0, 255, 0.2)' },
   green:        { backgroundColor: 'rgba(0, 255, 0, 0.2)' },
+  gray:         { backgroundColor: 'rgba(128, 128, 128, 0.2)' },
   white:        { backgroundColor: 'white' },
   high:         { height: windowHeight },
+  wide:         { width: windowWidth },
 
   // General: complex
   container: {
@@ -49,13 +51,8 @@ module.exports = StyleSheet.create({
 
   // Specific
   letterCount: {
-    // left: windowWidth * 2 / 3,
     width: windowWidth - 200,
-    // left: 200,
-    // width: windowWidth/2,
-    // position: 'relative',
     backgroundColor: 'red',
-    // marginLeft: 200,
   },
   scrollView: {
     justifyContent: 'flex-start',

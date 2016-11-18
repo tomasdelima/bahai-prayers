@@ -10,6 +10,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient'
 
 var s = require('../styles')
+var t = require('../themes')
 
 module.exports = React.createClass({
   render () {
@@ -18,10 +19,10 @@ module.exports = React.createClass({
 
       return <View style={[s.container, s.justifyLeft, {
       }]}>
-        <Text style={[s.shrink, s.item, s.justifyLeft, {height: 50, lineHeight: 25}]}>{this.props.prayer.body.replace(/<br><br>/gi, ' ')}</Text>
+        <Text style={[s.shrink, s.item, s.justifyLeft, t[this.props.theme].text, {height: 50, lineHeight: 25}]}>{this.props.prayer.body.replace(/<br><br>/gi, ' ')}</Text>
         <View style={[s.static, s.container, s.row, s.justifyRight, {}]}>
-          <Text style={{marginRight: 20}}>{letterCount} palavras</Text>
-          <Text style={[s.green], {width: 140}}>{this.props.prayer.author}</Text>
+          <Text style={[t[this.props.theme].text, {marginRight: 20}]}>{letterCount} palavras</Text>
+          <Text style={[t[this.props.theme].text, {width: 140}]}>{this.props.prayer.author}</Text>
         </View>
       </View>
     } else {
