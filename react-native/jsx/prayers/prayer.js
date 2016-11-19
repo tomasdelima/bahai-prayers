@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableHighlight,
   Text,
+  Image,
   View,
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
@@ -20,10 +21,11 @@ module.exports = React.createClass({
       return <View style={[s.container, s.justifyLeft, {
       }]}>
         <Text style={[s.shrink, s.item, s.justifyLeft, t[this.props.theme].text, {height: 50, lineHeight: 25}]}>{this.props.prayer.body.replace(/<br><br>/gi, ' ')}</Text>
-        <View style={[s.static, s.container, s.row, s.justifyRight, {}]}>
+        <View style={[s.static, s.container, s.row, s.justifyRight, s.translucid, {}]}>
           <Text style={[t[this.props.theme].text, {marginRight: 20}]}>{letterCount} palavras</Text>
-          <Text style={[t[this.props.theme].text, {width: 140}]}>{this.props.prayer.author}</Text>
+          <Text style={[t[this.props.theme].text, {width: 100}]}>{this.props.prayer.author}</Text>
         </View>
+        <Image source={t[this.props.theme].arabesco2} style={[s.center, s.translucid, {top: 12, width: 45, height: 45}]}/>
       </View>
     } else {
       return null

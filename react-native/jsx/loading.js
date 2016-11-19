@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 
 var s    = require('./styles')
+var t    = require('./themes')
 var Anim = require('./animation')
 
 module.exports = React.createClass({
@@ -26,11 +27,9 @@ module.exports = React.createClass({
       outputRange: ['0deg', '360deg'],
     })
 
-    var image = this.props.theme == 'dark' ? require('../images/nine-pointed-star-dark.png') : require('../images/nine-pointed-star-light.png')
-
     return <View style={[s.container, s.absolute, {}]}>
       <Animated.Image
-        source={image}
+        source={t[this.props.theme].loading}
         style={[s.center, {
           width: 250,
           height: 250,

@@ -23,6 +23,7 @@ module.exports = StyleSheet.create({
   rotate:       { transform: [{rotate: '90deg'}] },
   justifyLeft:  { justifyContent: 'flex-start' },
   justifyRight: { justifyContent: 'flex-end' },
+  translucid:   { opacity: 0.6 },
   red:          { backgroundColor: 'rgba(255, 0, 0, 0.2)' },
   blue:         { backgroundColor: 'rgba(0, 0, 255, 0.2)' },
   green:        { backgroundColor: 'rgba(0, 255, 0, 0.2)' },
