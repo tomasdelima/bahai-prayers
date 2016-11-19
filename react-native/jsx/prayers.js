@@ -36,23 +36,35 @@ module.exports = React.createClass({
   },
   goToCategories () {
     global.navigator.prayers.push({id: 'loading'})
-    global.db.loadFromDB('categories', {active: [true]}, 'title').then((categories) => {
-      if (categories.length > 0) {
-        this.setItems(categories, 'categories')
-      }
-      global.db.loadFromRemoteServer(remoteHost + '/categories.json', 'categories').then((loadedCategories) => {
-        global.db.loadFromRemoteServer(remoteHost + '/prayers.json', 'prayers').then((loadedPrayers) => {
-          if (categories.length == 0) {
-            this.setItems(loadedCategories, 'categories')
-          }
+
+    if (global.db.loadFromDB) {
+      var specialPrayersValues = this.props.specialPrayers ? [true] : ['', false, 'null']
+      global.db.loadFromDB('categories', {active: [true], special_category: specialPrayersValues}, 'title').then((categories) => {
+        if (categories.length > 0) {
+          this.setItems(categories, 'categories')
+        }
+        global.db.loadFromRemoteServer(remoteHost + '/categories.json', 'categories').then((loadedCategories) => {
+          global.db.loadFromRemoteServer(remoteHost + '/prayers.json', 'prayers').then((loadedPrayers) => {
+            if (categories.length == 0) {
+              var filteredCategories = loadedCategories.filter((c) => { return (!c.special_category || c.special_category == 'null') && c.active })
+              this.setItems(filteredCategories, 'categories')
+            }
+          }).catch(this.error)
         }).catch(this.error)
       }).catch(this.error)
-    }).catch(this.error)
+    } else {
+      console.log('ERROR: global.db.loadFromDB is not defined. Trying to load again')
+      setTimeout(this.goToCategories, 100)
+    }
   },
   goToCategory (categoryId) {
     global.navigator.prayers.push({id: 'loading'})
     global.db.loadFromDB('prayers', {category_id: [categoryId], active: [true]}, 'author').then((prayers) => {
-      this.setItems(prayers, 'prayers')
+      if (prayers.size == 1) {
+        this.goToPrayer(prayers[0])
+      } else {
+        this.setItems(prayers, 'prayers')
+      }
     }).catch(this.error)
   },
   goToPrayer (prayer) {

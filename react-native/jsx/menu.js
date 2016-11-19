@@ -25,8 +25,8 @@ module.exports = React.createClass({
     return <View style={[t[this.props.theme].background, {}]}>
       <View style={[s.high, s.gray, {}]}>
         {this.menuItem('Orações', 'prayers')}
+        {this.menuItem('Orações Especiais', 'special-prayers')}
         {this.menuItem('Configurações', 'configurations')}
-        {this.menuItem('Loading', 'loading')}
       </View>
     </View>
   },

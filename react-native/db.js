@@ -91,19 +91,35 @@ var insert = function (table, obj, transaction) {
   return (transaction || global).db.executeSql(sqlString)
 }
 
+var createTables = function (db) {
+  db.transaction(function (tx) {
+    tx.executeSql("CREATE TABLE IF NOT EXISTS categories (id INT PRIMARY KEY NOT NULL, title TEXT, active TEXT, special_category TEXT, created_at TEXT, updated_at TEXT)")
+    tx.executeSql("CREATE TABLE IF NOT EXISTS prayers (id INT PRIMARY KEY NOT NULL, category_id INT NOT NULL, author TEXT, body TEXT, preamble TEXT, active TEXT, special_prayer TEXT, created_at TEXT, updated_at TEXT)")
+  }).then(() => {
+    console.log("DB:    LOADED")
+    db.insert = insert
+    db.update = update
+    db.select = select
+    db.loadFromRemoteServer = loadFromRemoteServer
+    db.loadFromDB = loadFromDB
+  }).catch((e) => {
+    recreateTables(db)
+  })
+}
+
+var recreateTables = function (db) {
+  console.log("DB:    RECREATING")
+  db.transaction(function (tx) {
+    tx.executeSql("DROP TABLE categories")
+    tx.executeSql("DROP TABLE prayers")
+  }).then(() => {
+    createTables(db)
+  })
+}
+
 SQLite.openDatabase("bahai-prayers.db", "1.0", "Bahai Prayers Database", 200000).then(function (db) {
   global.db = db
-  db.transaction(function (tx) {
-    // tx.executeSql("DROP TABLE categories")
-    tx.executeSql("CREATE TABLE IF NOT EXISTS categories (id INT PRIMARY KEY NOT NULL, title TEXT, active TEXT, created_at TEXT, updated_at TEXT)")
-    tx.executeSql("CREATE TABLE IF NOT EXISTS prayers (id INT PRIMARY KEY NOT NULL, category_id INT NOT NULL, author TEXT, body TEXT, preamble TEXT, active TEXT, created_at TEXT, updated_at TEXT)")
-    global.db.insert = insert
-    global.db.update = update
-    global.db.select = select
-    global.db.loadFromRemoteServer = loadFromRemoteServer
-    global.db.loadFromDB = loadFromDB
-    console.log("DB:    LOADED")
-  })
+  createTables(db)
 }).catch(function (error) {
   console.log("DB:    ERROR:  " + error)
 })

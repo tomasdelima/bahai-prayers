@@ -54,10 +54,11 @@ module.exports = React.createClass({
   renderScene (route, navigator) {
     global.navigator.root = navigator
 
-         if (route.id == 'root')           { return null }
-    else if (route.id == 'prayers')        { return <Prayers theme={this.state.theme}/> }
-    else if (route.id == 'configurations') { return <Configurations theme={this.state.theme} reloadTheme={this.reloadTheme}/> }
-    else if (route.id == 'loading')        { return <Loading theme={this.state.theme}/> }
+         if (route.id == 'root')            { return null }
+    else if (route.id == 'prayers')         { return <Prayers theme={this.state.theme}/> }
+    else if (route.id == 'special-prayers') { return <Prayers theme={this.state.theme} specialPrayers={true}/> }
+    else if (route.id == 'configurations')  { return <Configurations theme={this.state.theme} reloadTheme={this.reloadTheme}/> }
+    else if (route.id == 'loading')         { return <Loading theme={this.state.theme}/> }
     else { return <Text>NO ROUTE FOUND!</Text>}
   }
 })
