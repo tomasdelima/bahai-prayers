@@ -39,7 +39,7 @@ var loadFromRemoteServer = function (url, table, where) {
 
     if (!global['fetched:' + url]) {
       console.log('FETCH: START:  ' + url)
-      fetch(url).then(function(response) {
+      return fetch(url).then((response) => {
         var loadedData = JSON.parse(response._bodyInit)
         global['fetched:' + url] = true
 

@@ -39,13 +39,14 @@ module.exports = React.createClass({
     global.db.loadFromDB('categories', {active: [true]}, 'title').then((categories) => {
       if (categories.length > 0) {
         this.setItems(categories, 'categories')
-      } else {
-        global.db.loadFromRemoteServer(remoteHost + '/categories.json', 'categories').then((categories) => {
-          global.db.loadFromRemoteServer(remoteHost + '/prayers.json', 'prayers').then(() => {
-            this.setItems(categories, 'categories')
-          }).catch(this.error)
-        }).catch(this.error)
       }
+      global.db.loadFromRemoteServer(remoteHost + '/categories.json', 'categories').then((loadedCategories) => {
+        global.db.loadFromRemoteServer(remoteHost + '/prayers.json', 'prayers').then((loadedPrayers) => {
+          if (categories.length == 0) {
+            this.setItems(loadedCategories, 'categories')
+          }
+        }).catch(this.error)
+      }).catch(this.error)
     }).catch(this.error)
   },
   goToCategory (categoryId) {
@@ -67,8 +68,6 @@ module.exports = React.createClass({
       goToPrayer: this.goToPrayer,
     }
     this.goToCategories()
-    global.db.loadFromRemoteServer(remoteHost + '/categories.json', 'categories').catch(this.error)
-    global.db.loadFromRemoteServer(remoteHost + '/prayers.json', 'prayers').catch(this.error)
   },
   render () {
     return <Navigator style={[{}]}
