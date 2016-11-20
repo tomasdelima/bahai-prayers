@@ -61,6 +61,19 @@ module.exports = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start'
   },
+  floatingButtonsContainer: {
+    backgroundColor: '#f9f9f9',
+    borderColor: '#ededed',
+    borderRadius: 100,
+    borderWidth: 3,
+    margin: 10,
+  },
+  floatingButtonsIcon: {
+    width: 70,
+    height: 70,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  },
   navBar: {
     flex: 1,
     flexDirection: 'row',
