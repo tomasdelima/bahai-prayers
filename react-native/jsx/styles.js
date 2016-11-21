@@ -18,11 +18,14 @@ module.exports = StyleSheet.create({
   top:          { top: 20 },
   paddingH:     { paddingHorizontal: 30 },
   paddingV:     { paddingVertical: 15 },
+  marginH:      { marginHorizontal: 15 },
   marginV:      { marginVertical: 15 },
   paddingDown:  { paddingBottom: 10 },
   rotate:       { transform: [{rotate: '90deg'}] },
   justifyLeft:  { justifyContent: 'flex-start' },
   justifyRight: { justifyContent: 'flex-end' },
+  justifyCenter:{ justifyContent: 'center' },
+  alignCenter:  { alignItems: 'center' },
   translucid:   { opacity: 0.6 },
   red:          { backgroundColor: 'rgba(255, 0, 0, 0.2)' },
   blue:         { backgroundColor: 'rgba(0, 0, 255, 0.2)' },
@@ -50,6 +53,10 @@ module.exports = StyleSheet.create({
     width: windowWidth,
     top: 20,
     left: 0,
+  },
+  textAlignCenter: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
   },
 
   // Specific

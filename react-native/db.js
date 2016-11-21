@@ -7,7 +7,7 @@ var loadFromDB = function (table, where, orderBy) {
   var cacheKey = 'loaded:' + table + ':' + JSON.stringify(where)
 
   if (global[cacheKey]) {
-    console.log('CACHE: LOADED: ' + JSON.stringify({table: where}))
+    console.log('CACHE: LOADED: ' + cacheKey)
     return new Promise(function (resolve, reject) {
       resolve(global[cacheKey])
     })
@@ -20,13 +20,18 @@ var loadFromDB = function (table, where, orderBy) {
         existingData.push(results[0].rows.item(i))
       }
 
-      console.log('CACHE: SET:    ' + table + ':' + JSON.stringify(where))
+      console.log('CACHE: SET:    ' + cacheKey)
       global[cacheKey] = existingData
 
       console.log('DB:    END:    ' + table)
       return existingData
     })
   }
+}
+
+var flushCache = function (key) {
+  console.log('CACHE: FLUSH:  ' + key)
+  global[key] = null
 }
 
 var loadFromRemoteServer = function (url, table, where) {
@@ -74,11 +79,14 @@ var select = function (table, where, orderBy) {
 }
 
 var update = function (table, obj, transaction) {
+  // console.log('DB:    UPDATE: START')
   var columns = []
   Object.keys(obj).map((key) => {columns.push(key + " = \"" + obj[key] + "\"")})
 
   var sqlString = "UPDATE " + table + " SET " + columns.join(", ") + " WHERE id = " + obj.id
-  return (transaction || global).db.executeSql(sqlString)
+  return (transaction || global).db.executeSql(sqlString).then(() => {
+    // console.log('DB:    UPDATE: END')
+  })
 }
 
 var insert = function (table, obj, transaction) {
@@ -94,7 +102,7 @@ var insert = function (table, obj, transaction) {
 var createTables = function (db) {
   db.transaction(function (tx) {
     tx.executeSql("CREATE TABLE IF NOT EXISTS categories (id INT PRIMARY KEY NOT NULL, title TEXT, active TEXT, special_category TEXT, created_at TEXT, updated_at TEXT)")
-    tx.executeSql("CREATE TABLE IF NOT EXISTS prayers (id INT PRIMARY KEY NOT NULL, category_id INT NOT NULL, author TEXT, body TEXT, preamble TEXT, active TEXT, special_prayer TEXT, created_at TEXT, updated_at TEXT)")
+    tx.executeSql("CREATE TABLE IF NOT EXISTS prayers (id INT PRIMARY KEY NOT NULL, category_id INT NOT NULL, author TEXT, body TEXT, preamble TEXT, active TEXT, special_prayer TEXT, stared TEXT, created_at TEXT, updated_at TEXT)")
   }).then(() => {
     console.log("DB:    LOADED")
     db.insert = insert
@@ -102,6 +110,7 @@ var createTables = function (db) {
     db.select = select
     db.loadFromRemoteServer = loadFromRemoteServer
     db.loadFromDB = loadFromDB
+    db.flushCache = flushCache
   }).catch((e) => {
     recreateTables(db)
   })

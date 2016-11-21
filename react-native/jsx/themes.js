@@ -5,6 +5,8 @@ import {AsyncStorage} from 'react-native'
 var themes = {
   light: {
     text: { color: 'black' },
+    stared: { color: 'yellow' },
+    notStared: { color: '#333' },
     background: { backgroundColor: 'white' },
     arabesco: require('../images/arabesco-light.png'),
     arabesco2: require('../images/arabesco-2-light.png'),
@@ -12,6 +14,8 @@ var themes = {
   },
   dark: {
     text: { color: 'white' },
+    stared: { color: 'goldenrod' },
+    notStared: { color: '#ddd' },
     background: { backgroundColor: 'black' },
     arabesco: require('../images/arabesco-dark.png'),
     arabesco2: require('../images/arabesco-2-dark.png'),
