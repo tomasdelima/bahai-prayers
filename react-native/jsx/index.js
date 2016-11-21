@@ -10,13 +10,14 @@ import {
   AppRegistry,
 } from 'react-native'
 
-const SideMenu       = require('react-native-side-menu');
-const Menu           = require('./menu')
-const Configurations = require('./configurations')
-const Loading        = require('./loading')
-const Prayers        = require('./prayers')
-const s              = require('./styles')
-const t              = require('./themes')
+const SideMenu          = require('react-native-side-menu');
+const Menu              = require('./menu')
+const Configurations    = require('./configurations')
+const Loading           = require('./loading')
+const Prayers           = require('./prayers')
+const AllahUAbhaCounter = require('./allah-u-abha-counter')
+const s                 = require('./styles')
+const t                 = require('./themes')
 
 const remoteHost = 'http://bahai-prayers-server.herokuapp.com'
 
@@ -54,12 +55,13 @@ module.exports = React.createClass({
   renderScene (route, navigator) {
     global.navigator.root = navigator
 
-         if (route.id == 'root')            { return null }
-    else if (route.id == 'prayers')         { return <Prayers theme={this.state.theme}/> }
-    else if (route.id == 'special-prayers') { return <Prayers theme={this.state.theme} specialPrayers={true}/> }
-    else if (route.id == 'stared-prayers')  { return <Prayers theme={this.state.theme} staredPrayers={true}/> }
-    else if (route.id == 'configurations')  { return <Configurations theme={this.state.theme} reloadTheme={this.reloadTheme}/> }
-    else if (route.id == 'loading')         { return <Loading theme={this.state.theme}/> }
+         if (route.id == 'root')                 { return null }
+    else if (route.id == 'prayers')              { return <Prayers theme={this.state.theme}/> }
+    else if (route.id == 'special-prayers')      { return <Prayers theme={this.state.theme} specialPrayers={true}/> }
+    else if (route.id == 'stared-prayers')       { return <Prayers theme={this.state.theme} staredPrayers={true}/> }
+    else if (route.id == 'allah-u-abha-counter') { return <AllahUAbhaCounter theme={this.state.theme}/> }
+    else if (route.id == 'configurations')       { return <Configurations theme={this.state.theme} reloadTheme={this.reloadTheme}/> }
+    else if (route.id == 'loading')              { return <Loading theme={this.state.theme}/> }
     else { return <Text>NO ROUTE FOUND!</Text>}
   }
 })

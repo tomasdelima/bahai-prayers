@@ -41,6 +41,10 @@
 		29CDD509A276469CBDEAEC6C /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8D5F9968EFFF4CAE9FF16C63 /* Octicons.ttf */; };
 		7622BD1668F74F39B0661DA4 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6DA7183574940FCA0EBF83D /* SimpleLineIcons.ttf */; };
 		0DA23F866E2D42D2A200846E /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E5BBD58A459C4B53B14C4132 /* Zocial.ttf */; };
+		A01FCDA28D414938953A74B1 /* Ruritania-Outline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FDED9D0E6E2945FC826BC135 /* Ruritania-Outline.ttf */; };
+		5F3C12A2B41B4DB2ADFEB73B /* Ruritania.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0D4F48E1D3A44FA97A6F2C2 /* Ruritania.ttf */; };
+		9BBB6732193145FBADF7189D /* ruritania_outline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DCB8F2A556DA4C9782E51F42 /* ruritania_outline.ttf */; };
+		BB2276F39BFF4F3C8FE6E5D4 /* ruritania.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0E0EB2E8C9E6427680552CB8 /* ruritania.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,6 +171,10 @@
 		8D5F9968EFFF4CAE9FF16C63 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		B6DA7183574940FCA0EBF83D /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		E5BBD58A459C4B53B14C4132 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FDED9D0E6E2945FC826BC135 /* Ruritania-Outline.ttf */ = {isa = PBXFileReference; name = "Ruritania-Outline.ttf"; path = "../fonts/Ruritania-Outline.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D0D4F48E1D3A44FA97A6F2C2 /* Ruritania.ttf */ = {isa = PBXFileReference; name = "Ruritania.ttf"; path = "../fonts/Ruritania.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DCB8F2A556DA4C9782E51F42 /* ruritania_outline.ttf */ = {isa = PBXFileReference; name = "ruritania_outline.ttf"; path = "../fonts/ruritania_outline.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0E0EB2E8C9E6427680552CB8 /* ruritania.ttf */ = {isa = PBXFileReference; name = "ruritania.ttf"; path = "../fonts/ruritania.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,6 +391,10 @@
 				8D5F9968EFFF4CAE9FF16C63 /* Octicons.ttf */,
 				B6DA7183574940FCA0EBF83D /* SimpleLineIcons.ttf */,
 				E5BBD58A459C4B53B14C4132 /* Zocial.ttf */,
+				FDED9D0E6E2945FC826BC135 /* Ruritania-Outline.ttf */,
+				D0D4F48E1D3A44FA97A6F2C2 /* Ruritania.ttf */,
+				DCB8F2A556DA4C9782E51F42 /* ruritania_outline.ttf */,
+				0E0EB2E8C9E6427680552CB8 /* ruritania.ttf */,
 			);
 			name = Resources;
 			path = "";
@@ -605,6 +617,10 @@
 				29CDD509A276469CBDEAEC6C /* Octicons.ttf in Resources */,
 				7622BD1668F74F39B0661DA4 /* SimpleLineIcons.ttf in Resources */,
 				0DA23F866E2D42D2A200846E /* Zocial.ttf in Resources */,
+				A01FCDA28D414938953A74B1 /* Ruritania-Outline.ttf in Resources */,
+				5F3C12A2B41B4DB2ADFEB73B /* Ruritania.ttf in Resources */,
+				9BBB6732193145FBADF7189D /* ruritania_outline.ttf in Resources */,
+				BB2276F39BFF4F3C8FE6E5D4 /* ruritania.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

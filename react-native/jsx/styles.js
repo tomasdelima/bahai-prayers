@@ -81,24 +81,9 @@ module.exports = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
   },
-  navBar: {
-    flex: 1,
-    flexDirection: 'row',
-    height: 60,
-    backgroundColor: '#ccc',
-    alignItems: 'center',
-  },
-  navBarLeft: {
-    flex: 1,
-    fontSize: 26,
-  }, navBarCenter: {
-    fontFamily: 'timeless',
-    flex: 3,
-    textAlign: 'center',
-    fontSize: 26,
-  }, navBarRight: {
-    flex: 1,
-    fontSize: 26,
+  counter: {
+    fontSize: 150,
+    fontFamily: 'ruritania',
   },
 })
 
