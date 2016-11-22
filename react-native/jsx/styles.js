@@ -85,5 +85,11 @@ module.exports = StyleSheet.create({
     fontSize: 150,
     fontFamily: 'ruritania',
   },
+  watermark: {
+    position: 'absolute',
+    fontSize: windowWidth*0.4,
+    fontFamily: 'ruritania',
+    color: 'rgba(128, 128, 128, 0.25)',
+  },
 })
 

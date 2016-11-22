@@ -32,6 +32,7 @@ module.exports = React.createClass({
   },
   componentDidMount() {
     this.loadFontSize()
+    this.loadShowWatermark()
   },
   changeFontSize (fontSize) {
     this.setState({sliderOpacity: 1})
@@ -46,6 +47,12 @@ module.exports = React.createClass({
       this.setState({fontSize: Number(fontSize || 25)})
     })
   },
+  loadShowWatermark () {
+    AsyncStorage.getItem('showWatermark', (a, showWatermark) => {
+      console.log('WATER: GET:    ' + showWatermark)
+      this.setState({showWatermark: showWatermark == 'true' || showWatermark == null})
+    })
+  },
   toggleFloatingButtons () {
     this.setState({showFloatingButtons: !this.state.showFloatingButtons})
     Anim.fast(this.state.floatingButtonsOpacity, this.state.showFloatingButtons ? 0 : 1)
@@ -58,10 +65,19 @@ module.exports = React.createClass({
       subject: "Compartilhando uma oração bahá'í",
     }).catch(console.log)
   },
-  floatingButtons () {
+  renderFloatingButtons () {
     return <Animated.View style={[{position: 'absolute', right: this.state.showFloatingButtons ? 10 : -100, bottom: 35, opacity: this.state.floatingButtonsOpacity}]}>
       <View style={[s.floatingButtonsContainer]}><Icon onPress={this.share} name="share" size={20} color="#002B36" style={[s.center, s.floatingButtonsIcon]}/></View>
     </Animated.View>
+  },
+  renderWatermark () {
+    if (this.state.showWatermark) {
+      var author = this.props.prayer.author
+      var letter = (author == "Bahá'u'lláh" || author == 'O Báb') ? 'B' : author == "'Abdu'l-Bahá" ? 'A' : ''
+      return <Text style={[s.watermark,s.absolute, s.textAlignCenter]}>{letter}</Text>
+    } else {
+      return null
+    }
   },
   render () {
     var height = Dimensions.get('window').height / 2
@@ -70,9 +86,10 @@ module.exports = React.createClass({
 
     if (this.props.prayer) {
       return <View style={[s.wide, s.justifyRight, s.flex, {position: 'relative'}]}>
-        <ScrollView style={[s.absolute, {}]} contentContainerStyle={[]}>
+        <ScrollView style={[s.absolute, {}]} contentContainerStyle={[]} onScroll={this.paralax}>
           <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={this.toggleFloatingButtons} onLongPress={this.goToParent}>
             <View style={[s.container, s.justifyLeft, {}]}>
+              {this.renderWatermark()}
               <View style={[s.container, {}]}>
                 {((this.props.prayer || {}).body || '').split('<br><br>').map((paragraph, i) =>
                   <Text key={i} style={[s.item, s.justifyLeft, s.paddingDown, t[this.props.theme].text, {fontSize: fontSize, lineHeight: Math.round(fontSize*5/3), paddingBottom: fontSize}]}>{paragraph}</Text>
@@ -88,7 +105,7 @@ module.exports = React.createClass({
           value={this.state.fontValue} minimumValue={15} maximumValue={35} step={1}
           onValueChange={this.changeFontSize} onSlidingComplete={()=>this.setState({sliderOpacity: 0})}/>
 
-        {this.floatingButtons()}
+        {this.renderFloatingButtons()}
       </View>
     } else {
       return null
