@@ -22,7 +22,6 @@ module.exports = React.createClass({
   },
   goToParent () {
     global.navigator.prayers.pop()
-    global.navigator.prayers.pop()
   },
   render () {
     var text = this.props.type == 'categories' ? <Category item={this.props.item} theme={this.props.theme}/> : <Prayer prayer={this.props.item} theme={this.props.theme}/>

@@ -8,6 +8,7 @@ import {
   AsyncStorage,
   Text,
   AppRegistry,
+  BackAndroid,
 } from 'react-native'
 
 const SideMenu          = require('react-native-side-menu');
@@ -26,13 +27,30 @@ module.exports = React.createClass({
     return {
       theme: 'light',
       menuIsOpen: false,
-      routes: [{id: 'prayers'}],
+      initialRoute: {id: 'prayers'},
     }
   },
   componentDidMount() {
     t.getTheme(this)
-  },
-  componentDidUpdate(prevProps, prevState) {
+
+    BackAndroid.addEventListener('hardwareBackPress', () => {
+      var routes = global.navigator.root.getCurrentRoutes()
+      var lastRoute = routes[routes.length - 1].id
+
+      var prayerRoutes = global.navigator.prayers.getCurrentRoutes()
+      var lastPrayerRoute = prayerRoutes[prayerRoutes.length - 1].id
+
+      if (lastRoute == 'prayers') {
+        if (lastPrayerRoute == 'categories') {
+          return false
+        } else {
+          global.navigator.prayers.pop()
+        }
+      } else {
+        global.navigator.root.pop()
+      }
+      return true
+    })
   },
   reloadTheme () {
     t.getTheme(this)
@@ -44,8 +62,7 @@ module.exports = React.createClass({
     return <View style={[s.high, s.wide, t[this.state.theme].background]}>
       <SideMenu menu={<Menu theme={this.state.theme} closeMenu={this.closeMenu}/>} isOpen={this.state.menuIsOpen}>
         <Navigator style={[t[this.state.theme].background]}
-          initialRoute={this.state.routes[0]}
-          initialRouteStack={this.state.routes}
+          initialRoute={this.state.initialRoute}
           renderScene={this.renderScene}
           configureScene={(route) => { return Navigator.SceneConfigs.FadeAndroid }}
         />

@@ -4,7 +4,8 @@ var SQLite   = require('react-native-sqlite-storage')
 SQLite.enablePromise(true)
 
 var loadFromDB = function (table, where, orderBy) {
-  var cacheKey = 'loaded:' + table + ':' + JSON.stringify(where)
+  var key = table + ':' + JSON.stringify(where)
+  var cacheKey = 'loaded:' + key
 
   if (global[cacheKey]) {
     console.log('CACHE: LOADED: ' + cacheKey)
@@ -12,7 +13,7 @@ var loadFromDB = function (table, where, orderBy) {
       resolve(global[cacheKey])
     })
   } else {
-    console.log('DB:    START:  ' + table)
+    console.log('DB:    START:  ' + key)
     return global.db.select(table, where, orderBy).then(function (results) {
       var existingData = []
 
@@ -23,7 +24,7 @@ var loadFromDB = function (table, where, orderBy) {
       console.log('CACHE: SET:    ' + cacheKey)
       global[cacheKey] = existingData
 
-      console.log('DB:    END:    ' + table)
+      console.log('DB:    END:    ' + key)
       return existingData
     })
   }
