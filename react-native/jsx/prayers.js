@@ -40,7 +40,6 @@ module.exports = React.createClass({
     }
   },
   goToCategories () {
-
     if (global.db.loadFromDB) {
       var specialPrayersValues = this.props.specialPrayers ? [true] : ['', false, 'null']
       global.db.loadFromDB('categories', {active: [true], special_category: specialPrayersValues}, 'title').then((categories) => {
@@ -49,14 +48,14 @@ module.exports = React.createClass({
         } else {
           global.navigator.prayers.push({id: 'loading'})
         }
-        global.db.loadFromRemoteServer(remoteHost + '/categories.json', 'categories').then((loadedCategories) => {
-          global.db.loadFromRemoteServer(remoteHost + '/prayers.json', 'prayers').then((loadedPrayers) => {
-            if (categories.length == 0) {
-              var filteredCategories = loadedCategories.filter((c) => { return (!c.special_category || c.special_category == 'null') && c.active })
-              this.setItems(filteredCategories, 'categories')
-            }
-          }).catch(this.error)
-        }).catch(this.error)
+        // global.db.loadFromRemoteServer(remoteHost + '/categories.json', 'categories').then((loadedCategories) => {
+        //   global.db.loadFromRemoteServer(remoteHost + '/prayers.json', 'prayers').then((loadedPrayers) => {
+        //     if (categories.length == 0) {
+        //       var filteredCategories = loadedCategories.filter((c) => { return (!c.special_category || c.special_category == 'null') && c.active })
+        //       this.setItems(filteredCategories, 'categories')
+        //     }
+        //   }).catch(this.error)
+        // }).catch(this.error)
       }).catch(this.error)
     } else {
       console.log('ERROR: global.db.loadFromDB is not defined. Trying to load again')

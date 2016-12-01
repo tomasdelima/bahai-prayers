@@ -73,23 +73,23 @@ module.exports = React.createClass({
   renderWatermark () {
     if (this.state.showWatermark) {
       var author = this.props.prayer.author
-      var letter = (author == "Bahá'u'lláh" || author == 'O Báb') ? 'B' : author == "'Abdu'l-Bahá" ? 'A' : ''
+      var letter = (author[0] == "B" || author == 'O Báb') ? 'B' : author == "‘Abdu’l-Bahá" ? 'A' : ''
       return <Text style={[s.watermark,s.absolute, s.textAlignCenter]}>{letter}</Text>
     } else {
       return null
     }
   },
   render () {
-    var height = Dimensions.get('window').height / 2
-    var left = 21 * Dimensions.get('window').width / 52 - 122
+    var height = Dimensions.get('window').height / 2 - 35
+    var left =   Dimensions.get('window').width * 21 / 52 - 122
     var fontSize = this.state.fontSize
 
     if (this.props.prayer) {
       return <View style={[s.wide, s.justifyRight, s.flex, {position: 'relative'}]}>
+        {this.renderWatermark()}
         <ScrollView style={[s.absolute, {}]} contentContainerStyle={[]} onScroll={this.paralax}>
           <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={this.toggleFloatingButtons} onLongPress={this.goToParent}>
             <View style={[s.container, s.justifyLeft, {}]}>
-              {this.renderWatermark()}
               <View style={[s.container, {}]}>
                 {((this.props.prayer || {}).body || '').split('<br><br>').map((paragraph, i) =>
                   <Text key={i} style={[s.item, s.justifyLeft, s.paddingDown, t[this.props.theme].text, {fontSize: fontSize, lineHeight: Math.round(fontSize*5/3), paddingBottom: fontSize}]}>{paragraph}</Text>
@@ -100,7 +100,7 @@ module.exports = React.createClass({
           </TouchableHighlight>
         </ScrollView>
 
-        <Slider style={[s.rotate, s.highInverted, {position: 'absolute', top: height - 35, left: left, height: 50, opacity: this.state.sliderOpacity}]}
+        <Slider style={[s.rotate, s.highInverted, {position: 'absolute', top: height, left: left, height: 50, opacity: this.state.sliderOpacity}]}
           minimumTrackTintColor={'green'} maximumTrackTintColor={'green'}
           value={this.state.fontValue} minimumValue={15} maximumValue={35} step={1}
           onValueChange={this.changeFontSize} onSlidingComplete={()=>this.setState({sliderOpacity: 0})}/>
