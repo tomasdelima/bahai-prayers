@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import {
   Text,
   View,
-  ListView,
+  ScrollView
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
@@ -28,7 +28,11 @@ module.exports = React.createClass({
   render() {
     if (this.props.items) {
       return <View style={[s.container, s.absolute, {}]}>
-        <ListView dataSource={this.state.items} renderRow={(item, a ,i) => <Item goToPrayer={this.state.goToPrayer} item={item} type={this.props.type} theme={this.props.theme}/>} />
+        <ScrollView>
+          <View>
+            {this.props.items.map((item, i) => {return <Item key={i} goToPrayer={this.state.goToPrayer} item={item} type={this.props.type} theme={this.props.theme}/>})}
+          </View>
+        </ScrollView>
       </View>
     } else {
       return null
