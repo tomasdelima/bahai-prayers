@@ -3,6 +3,7 @@
 import React, {Component} from 'react'
 import {
   View,
+  AsyncStorage,
   Navigator,
   ListView,
   Text,
@@ -48,14 +49,16 @@ module.exports = React.createClass({
         } else {
           global.navigator.prayers.push({id: 'loading'})
         }
-        // global.db.loadFromRemoteServer(remoteHost + '/categories.json', 'categories').then((loadedCategories) => {
-        //   global.db.loadFromRemoteServer(remoteHost + '/prayers.json', 'prayers').then((loadedPrayers) => {
-        //     if (categories.length == 0) {
-        //       var filteredCategories = loadedCategories.filter((c) => { return (!c.special_category || c.special_category == 'null') && c.active })
-        //       this.setItems(filteredCategories, 'categories')
-        //     }
-        //   }).catch(this.error)
-        // }).catch(this.error)
+        AsyncStorage.getItem('last_updated_at', (a, last_updated_at) => {
+          global.db.loadFromRemoteServer(remoteHost + '/categories.json?last_updated_at=' + (last_updated_at || 0), 'categories').then((loadedCategories) => {
+            global.db.loadFromRemoteServer(remoteHost + '/prayers.json?last_updated_at=' + (last_updated_at || 0), 'prayers').then((loadedPrayers) => {
+              if (categories.length == 0) {
+                var filteredCategories = loadedCategories.filter((c) => { return (!c.special_category || c.special_category == 'null') && c.active })
+                this.setItems(filteredCategories, 'categories')
+              }
+            }).catch(this.error)
+          }).catch(this.error)
+        })
       }).catch(this.error)
     } else {
       console.log('ERROR: global.db.loadFromDB is not defined. Trying to load again')

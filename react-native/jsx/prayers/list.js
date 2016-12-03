@@ -4,6 +4,7 @@ import React, {Component} from 'react'
 import {
   Text,
   View,
+  ListView,
   ScrollView
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'

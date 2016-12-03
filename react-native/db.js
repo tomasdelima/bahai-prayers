@@ -1,5 +1,9 @@
 'use strict'
 
+import {
+  AsyncStorage,
+} from 'react-native'
+
 var SQLite   = require('react-native-sqlite-storage')
 SQLite.enablePromise(true)
 
@@ -46,23 +50,28 @@ var loadFromRemoteServer = function (url, table, where) {
     if (!global['fetched:' + url]) {
       console.log('FETCH: START:  ' + url)
       return fetch(url).then((response) => {
-        var loadedData = JSON.parse(response._bodyInit)
+        var parsedResponse = JSON.parse(response._bodyInit)
+        var loadedData = JSON.parse(parsedResponse.data)
+
         global['fetched:' + url] = true
 
         global.db.transaction(function (tx) {
+          var inserted = 0, updated = 0
           loadedData.map(function (item) {
             if(existingIds.indexOf(item.id) < 0) {
               global.db.insert(table, item)
+              inserted += 1
             } else {
               global.db.update(table, item)
+              updated += 1
             }
           })
+          console.log('DB:    UPSERT: Inserted ' + inserted + ', Updated ' + updated + ' into ' + table)
         })
 
+        AsyncStorage.setItem('last_updated_at', parsedResponse.time)
         console.log('FETCH: END:    ' + url)
         return loadedData
-      }).catch(function (error) {
-        console.log(error)
       })
     }
   })
@@ -80,13 +89,11 @@ var select = function (table, where, orderBy) {
 }
 
 var update = function (table, obj, transaction) {
-  // console.log('DB:    UPDATE: START')
   var columns = []
   Object.keys(obj).map((key) => {columns.push(key + " = \"" + obj[key] + "\"")})
 
   var sqlString = "UPDATE " + table + " SET " + columns.join(", ") + " WHERE id = " + obj.id
   return (transaction || global).db.executeSql(sqlString).then(() => {
-    // console.log('DB:    UPDATE: END')
   })
 }
 
