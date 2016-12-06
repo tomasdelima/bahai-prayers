@@ -91,6 +91,8 @@ module.exports = React.createClass({
           <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={this.toggleFloatingButtons} onLongPress={this.goToParent}>
             <View style={[s.container, s.justifyLeft, {}]}>
               <View style={[s.container, {}]}>
+                <Text style={[s.item, s.textAlignCenter, s.paddingDown, t[this.props.theme].text, {fontStyle: 'italic', fontSize: fontSize, lineHeight: Math.round(fontSize*5/3), paddingBottom: fontSize}]}>{this.props.prayer.preamble}</Text>
+
                 {((this.props.prayer || {}).body || '').split('<br><br>').map((paragraph, i) =>
                   <Text key={i} style={[s.item, s.justifyLeft, s.paddingDown, t[this.props.theme].text, {fontSize: fontSize, lineHeight: Math.round(fontSize*5/3), paddingBottom: fontSize}]}>{paragraph}</Text>
                 )}
