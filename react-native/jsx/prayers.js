@@ -67,20 +67,12 @@ module.exports = React.createClass({
   },
   goToCategory (categoryId) {
     global.db.loadFromDB('prayers', {category_id: [categoryId], active: [true]}, 'author').then((prayers) => {
-      if (prayers.size == 1) {
-        this.goToPrayer(prayers[0])
-      } else {
-        this.setItems(prayers, 'prayers')
-      }
+      this.setItems(prayers, 'prayers')
     }).catch(this.error)
   },
   goToStaredPrayers () {
     global.db.loadFromDB('prayers', {active: [true], stared: [true]}, 'author').then((prayers) => {
-      if (prayers.size == 1) {
-        this.goToPrayer(prayers[0])
-      } else {
-        this.setItems(prayers, 'prayers')
-      }
+      this.setItems(prayers, 'prayers')
     }).catch(this.error)
   },
   goToPrayer (prayer) {

@@ -7,6 +7,16 @@ import {
 var SQLite   = require('react-native-sqlite-storage')
 SQLite.enablePromise(true)
 
+var parseDBResponse = function (dbResponse) {
+  var parsedData = []
+
+  for (let i = 0; i < dbResponse[0].rows.length; i++) {
+    parsedData.push(dbResponse[0].rows.item(i))
+  }
+
+  return parsedData
+}
+
 var loadFromDB = function (table, where, orderBy) {
   var key = table + ':' + JSON.stringify(where)
   var cacheKey = 'loaded:' + key
@@ -19,17 +29,11 @@ var loadFromDB = function (table, where, orderBy) {
   } else {
     console.log('DB:    START:  ' + key)
     return global.db.select(table, where, orderBy).then(function (results) {
-      var existingData = []
-
-      for (let i = 0; i < results[0].rows.length; i++) {
-        existingData.push(results[0].rows.item(i))
-      }
-
       console.log('CACHE: SET:    ' + cacheKey)
-      global[cacheKey] = existingData
+      global[cacheKey] = results
 
       console.log('DB:    END:    ' + key)
-      return existingData
+      return results
     })
   }
 }
@@ -41,11 +45,7 @@ var flushCache = function (key) {
 
 var loadFromRemoteServer = function (url, table, where) {
   return global.db.select(table, where).then(function (results) {
-    var existingIds = []
-
-    for (var i = 0; i < results[0].rows.length; i++) {
-      existingIds.push(results[0].rows.item(i).id)
-    }
+    var existingIds = results.map((r) => r.id)
 
     if (!global['fetched:' + url]) {
       console.log('FETCH: START:  ' + url)
@@ -77,6 +77,26 @@ var loadFromRemoteServer = function (url, table, where) {
   })
 }
 
+var fullTextSearch = function (table, keywords) {
+  var start = Date.now()
+  var sqlString = "SELECT * FROM " + table
+
+  var keywordsQuery = []
+  var fields = table == 'categories' ? ['title'] : ['body', 'preamble', 'author']
+  keywords.split(/\s+/g).forEach((keyword, i) => {
+    var fieldsQuery = []
+    fields.forEach((field, j) => {
+      fieldsQuery.push(field + " LIKE '%" + keyword + "%'")
+    })
+    keywordsQuery.push(fieldsQuery.join(" OR "))
+  })
+
+  sqlString += " WHERE active='true' AND (" + keywordsQuery.join(") AND (") + ")"
+  return global.db.executeSql(sqlString).then(parseDBResponse).then((data) => {
+    return {start: start, data: data}
+  })
+}
+
 var select = function (table, where, orderBy) {
   var sqlString = "SELECT * FROM " + table
   if(where) {
@@ -85,7 +105,7 @@ var select = function (table, where, orderBy) {
     sqlString += " WHERE " + items.join(" AND ")
   }
   if(orderBy) { sqlString += " ORDER BY " + orderBy }
-  return global.db.executeSql(sqlString)
+  return global.db.executeSql(sqlString).then(parseDBResponse)
 }
 
 var update = function (table, obj, transaction) {
@@ -119,6 +139,7 @@ var createTables = function (db) {
     db.loadFromRemoteServer = loadFromRemoteServer
     db.loadFromDB = loadFromDB
     db.flushCache = flushCache
+    db.fullTextSearch = fullTextSearch
   }).catch((e) => {
     recreateTables(db)
   })

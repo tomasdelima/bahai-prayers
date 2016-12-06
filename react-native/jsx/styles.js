@@ -16,6 +16,7 @@ module.exports = StyleSheet.create({
   center:       { alignSelf: 'center' },
   right:        { textAlign: 'right', right: 50 },
   top:          { top: 20 },
+  padding:      { padding: 10 },
   paddingH:     { paddingHorizontal: 30 },
   paddingV:     { paddingVertical: 15 },
   marginH:      { marginHorizontal: 15 },
@@ -60,6 +61,10 @@ module.exports = StyleSheet.create({
   },
 
   // Specific
+  searchInput: {
+    fontSize: 30,
+    height: 50
+  },
   letterCount: {
     width: windowWidth - 200,
     backgroundColor: 'red',
