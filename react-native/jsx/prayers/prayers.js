@@ -12,13 +12,13 @@ import {
 } from 'react-native'
 
 const SideMenu   = require('react-native-side-menu');
-const DB         = require('../db')
-const Loading    = require('./loading')
-const Menu       = require('./menu')
-const s          = require('./styles')
+const DB         = require('../../db')
+const Loading    = require('../loading')
+const Menu       = require('../menu')
+const s          = require('../styles')
 
-const List       = require('./prayers/list')
-const LongPrayer = require('./prayers/long-prayer')
+const List       = require('./list')
+const LongPrayer = require('./long-prayer')
 
 const remoteHost = 'http://bahai-prayers-server.herokuapp.com'
 

@@ -3,7 +3,7 @@
 import React, {Component} from 'react'
 import {StyleSheet, Dimensions} from 'react-native'
 
-var windowHeight = Dimensions.get('window').height
+var windowHeight = Dimensions.get('window').height - 25
 var windowWidth  = Dimensions.get('window').width
 
 module.exports = StyleSheet.create({
@@ -13,15 +13,16 @@ module.exports = StyleSheet.create({
   shrink:       { flex: -1 },
   static:       { flex: 0 },
   flex:         { flex: 1 },
+  flex2:        { flex: 2 },
   center:       { alignSelf: 'center' },
   right:        { textAlign: 'right', right: 50 },
   top:          { top: 20 },
   padding:      { padding: 10 },
   paddingH:     { paddingHorizontal: 30 },
   paddingV:     { paddingVertical: 15 },
+  paddingDown:  { paddingBottom: 10 },
   marginH:      { marginHorizontal: 15 },
   marginV:      { marginVertical: 15 },
-  paddingDown:  { paddingBottom: 10 },
   rotate:       { transform: [{rotate: '90deg'}] },
   justifyLeft:  { justifyContent: 'flex-start' },
   justifyRight: { justifyContent: 'flex-end' },
@@ -50,7 +51,7 @@ module.exports = StyleSheet.create({
   },
   absolute: {
     position: 'absolute',
-    height: windowHeight - 50,
+    height: windowHeight,
     width: windowWidth,
     top: 20,
     left: 0,
@@ -59,8 +60,27 @@ module.exports = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
   },
+  border: {
+    borderColor: '#333',
+    borderWidth: 1,
+  },
 
   // Specific
+  cardboard: {
+    flex: 1,
+    backgroundColor: '#eee',
+  },
+  card: {
+    margin: 5,
+    marginBottom: 0,
+    borderTopRightRadius: 5,
+    borderTopLeftRadius: 5,
+    borderWidth: 1,
+  },
+  gregorianMonthBar: {
+    marginBottom: 3,
+    height: 10,
+  },
   searchInput: {
     fontSize: 30,
     height: 50

@@ -15,7 +15,8 @@ const SideMenu          = require('react-native-side-menu');
 const Menu              = require('./menu')
 const Configurations    = require('./configurations')
 const Loading           = require('./loading')
-const Prayers           = require('./prayers')
+const Prayers           = require('./prayers/prayers')
+const Calendar          = require('./calendar/calendar')
 const AllahUAbhaCounter = require('./allah-u-abha-counter')
 const s                 = require('./styles')
 const t                 = require('./themes')
@@ -45,6 +46,12 @@ module.exports = React.createClass({
           return false
         } else {
           global.navigator.prayers.pop()
+        }
+      } else if (lastRoute == 'calendar') {
+        if (lastPrayerRoute == 'year') {
+          return false
+        } else {
+          global.navigator.calendar.pop()
         }
       } else {
         global.navigator.root.pop()
@@ -76,6 +83,7 @@ module.exports = React.createClass({
     else if (route.id == 'prayers')              { return <Prayers theme={this.state.theme}/> }
     else if (route.id == 'special-prayers')      { return <Prayers theme={this.state.theme} specialPrayers={true}/> }
     else if (route.id == 'stared-prayers')       { return <Prayers theme={this.state.theme} staredPrayers={true}/> }
+    else if (route.id == 'calendar')             { return <Calendar theme={this.state.theme}/> }
     else if (route.id == 'allah-u-abha-counter') { return <AllahUAbhaCounter theme={this.state.theme}/> }
     else if (route.id == 'configurations')       { return <Configurations theme={this.state.theme} reloadTheme={this.reloadTheme}/> }
     else if (route.id == 'loading')              { return <Loading theme={this.state.theme}/> }
