@@ -21,12 +21,15 @@ module.exports = React.createClass({
     }
   },
   goToParent () {
-    global.navigator.prayers.pop()
+    if (this.props.type == 'categories') {
+    } else {
+      global.navigator.prayers.pop()
+    }
   },
   render () {
     var text = this.props.type == 'categories' ? <Category item={this.props.item} theme={this.props.theme}/> : <Prayer prayer={this.props.item} theme={this.props.theme}/>
 
-    return <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={this.goToChild} onLongPress={this.goToParent} >
+    return <TouchableHighlight underlayColor='rgba(0, 0, 0, 0.05)' onPress={this.goToChild} onLongPress={this.goToParent} >
       <View style={[s.container, s.marginV, {}]}>
         {text}
       </View>

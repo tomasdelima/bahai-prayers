@@ -18,7 +18,7 @@ module.exports = React.createClass({
   },
   menuItem (label, routeId) {
     return <TouchableHighlight underlayColor='rgba(0,0,0,0.2)' onPress={() => {this.goToMenuItem(routeId)}}>
-      <Text style={[s.paddingV, s.item, t[this.props.theme].text, {}]}>{label}</Text>
+      <Text style={[s.paddingV, s.item, t[this.props.theme].text, s.noFontFamily]}>{label}</Text>
     </TouchableHighlight>
   },
   render () {

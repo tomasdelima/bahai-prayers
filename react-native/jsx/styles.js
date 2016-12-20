@@ -37,6 +37,7 @@ module.exports = StyleSheet.create({
   high:         { height: windowHeight },
   wide:         { width: windowWidth },
   highInverted: { width: windowHeight },
+  noFontFamily: { fontFamily: '' },
 
   // General: complex
   container: {
@@ -53,7 +54,7 @@ module.exports = StyleSheet.create({
     position: 'absolute',
     height: windowHeight,
     width: windowWidth,
-    top: 20,
+    top: 0,
     left: 0,
   },
   textAlignCenter: {
