@@ -26,6 +26,8 @@ module.exports = React.createClass({
   getInitialState() {
     return {
       fontSize: 3,
+      watermarkOpacity: 1,
+      top: 0,
       sliderOpacity: 0,
       floatingButtonsOpacity: new Animated.Value(0),
     }
@@ -70,14 +72,26 @@ module.exports = React.createClass({
       <View style={[s.floatingButtonsContainer]}><Icon onPress={this.share} name="share" size={20} color="#002B36" style={[s.center, s.floatingButtonsIcon]}/></View>
     </Animated.View>
   },
+  renderPreamble (fontSize) {
+    if (this.props.prayer.preamble) {
+      return <Text style={[s.item, s.textAlignCenter, t[this.props.theme].text, {fontStyle: 'italic', fontSize: fontSize, height: Math.round(fontSize*5), paddingBottom: fontSize}]}>
+        {this.props.prayer.preamble}
+      </Text>
+    } else {
+      return null
+    }
+  },
   renderWatermark () {
     if (this.state.showWatermark) {
       var author = this.props.prayer.author
       var letter = (author[0] == "B" || author == 'O Báb') ? 'B' : author == "‘Abdu’l-Bahá" ? 'A' : ''
-      return <Text style={[s.watermark,s.absolute, s.textAlignCenter]}>{letter}</Text>
+      return <Text style={[s.watermark,s.absolute, s.textAlignCenter, {opacity: this.state.watermarkOpacity}]}>{letter}</Text>
     } else {
       return null
     }
+  },
+  fadeWatermark (e) {
+    this.setState({watermarkOpacity: 1 - e.nativeEvent.contentOffset.y / 600})
   },
   render () {
     var height = Dimensions.get('window').height / 2 - 35
@@ -87,11 +101,11 @@ module.exports = React.createClass({
     if (this.props.prayer) {
       return <View style={[s.wide, s.justifyRight, s.flex, {position: 'relative'}]}>
         {this.renderWatermark()}
-        <ScrollView style={[s.absolute, {}]} contentContainerStyle={[]} onScroll={this.paralax}>
+        <ScrollView style={[s.absolute, {}]} contentContainerStyle={[]} onScroll={this.fadeWatermark}>
           <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={this.toggleFloatingButtons} onLongPress={this.goToParent}>
-            <View style={[s.container, s.justifyLeft, {}]}>
+            <View style={[s.container, s.paddingV, s.justifyLeft, {}]}>
               <View style={[s.container, {}]}>
-                <Text style={[s.item, s.textAlignCenter, s.paddingDown, t[this.props.theme].text, {fontStyle: 'italic', fontSize: fontSize, lineHeight: Math.round(fontSize*5/3), paddingBottom: fontSize}]}>{this.props.prayer.preamble}</Text>
+                {this.renderPreamble(fontSize)}
 
                 {((this.props.prayer || {}).body || '').split('<br><br>').map((paragraph, i) =>
                   <Text key={i} style={[s.item, s.justifyLeft, s.paddingDown, t[this.props.theme].text, {fontSize: fontSize, lineHeight: Math.round(fontSize*5/3), paddingBottom: fontSize}]}>{paragraph}</Text>
