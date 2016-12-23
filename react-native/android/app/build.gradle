@@ -97,8 +97,8 @@ android {
         applicationId "com.ionicframework.prayers254063"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 20000
-        versionName "2.0"
+        versionCode 21001
+        versionName "2.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
