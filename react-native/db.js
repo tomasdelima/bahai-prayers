@@ -7,11 +7,18 @@ import {
 var SQLite   = require('react-native-sqlite-storage')
 SQLite.enablePromise(true)
 
+var normalizeItem = function (item) {
+  item.active = item.active == true || item.active == 'true'
+  item.stared = item.stared == true || item.stared == 'true'
+  return item
+}
+
 var parseDBResponse = function (dbResponse) {
   var parsedData = []
 
   for (let i = 0; i < dbResponse[0].rows.length; i++) {
-    parsedData.push(dbResponse[0].rows.item(i))
+    var item = normalizeItem(dbResponse[0].rows.item(i))
+    parsedData.push(item)
   }
 
   return parsedData
@@ -111,9 +118,9 @@ var select = function (table, where, orderBy) {
 var update = function (table, obj, transaction) {
   var columns = []
   Object.keys(obj).map((key) => {columns.push(key + " = \"" + obj[key] + "\"")})
-
   var sqlString = "UPDATE " + table + " SET " + columns.join(", ") + " WHERE id = " + obj.id
-  return (transaction || global).db.executeSql(sqlString).then(() => {
+  return (transaction || global).db.executeSql(sqlString).then((result) => {
+    console.log('UPDATE: END:   ' + result[0].rowsAffected + ' record')
   })
 }
 
