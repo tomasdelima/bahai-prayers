@@ -7,6 +7,7 @@ import {
   Text,
   TouchableHighlight,
 } from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const s = require('./styles')
 const t = require('./themes')
@@ -16,20 +17,23 @@ module.exports = React.createClass({
     global.navigator.root.push({id: id})
     this.props.closeMenu()
   },
-  menuItem (label, routeId) {
+  menuItem (label, routeId, iconName) {
     return <TouchableHighlight underlayColor='rgba(0,0,0,0.2)' onPress={() => {this.goToMenuItem(routeId)}}>
-      <Text style={[s.paddingV, s.item, t[this.props.theme].text, s.noFontFamily]}>{label}</Text>
+      <View style={[s.row]}>
+        <Ionicons style={[t[this.props.theme].outline, s.textAlignCenter, {left: 15}]} name={iconName} size={30}/>
+        <Text style={[s.paddingV, s.item, t[this.props.theme].text, s.noFontFamily]}>{label}</Text>
+      </View>
     </TouchableHighlight>
   },
   render () {
     return <View style={[t[this.props.theme].background, {}]}>
       <View style={[s.high, s.gray, {}]}>
-        {this.menuItem('Orações', 'prayers')}
-        {this.menuItem('Orações Especiais', 'special-prayers')}
-        {this.menuItem('Favoritas', 'stared-prayers')}
-        {this.menuItem('Calendário', 'calendar')}
-        {this.menuItem("95 Alláh'u'Abhás", 'allah-u-abha-counter')}
-        {this.menuItem('Configurações', 'configurations')}
+        {this.menuItem('Orações',           'prayers',              'md-medal')}
+        {this.menuItem('Orações Especiais', 'special-prayers',      'ios-ribbon')}
+        {this.menuItem('Favoritas',         'stared-prayers',       'md-star')}
+        {this.menuItem('Calendário',        'calendar',             'md-calendar')}
+        {this.menuItem("95 Alláh'u'Abhás",  'allah-u-abha-counter', 'md-finger-print')}
+        {this.menuItem('Configurações',     'configurations',       'md-settings')}
       </View>
     </View>
   },
