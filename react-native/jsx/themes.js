@@ -5,8 +5,8 @@ import {AsyncStorage} from 'react-native'
 var themes = {
   light: {
     text:       { color: 'black' },
-    stared:     { color: 'yellow' },
-    notStared:  { color: '#333' },
+    fill:       { color: 'yellow' },
+    outline:    { color: '#333' },
     background: { backgroundColor: 'white' },
     cardboard:  { backgroundColor: '#eee' },
     card:       { backgroundColor: 'white', borderColor: '#ccc' },
@@ -17,8 +17,8 @@ var themes = {
   },
   dark: {
     text:       { color: 'white' },
-    stared:     { color: 'goldenrod' },
-    notStared:  { color: '#ddd' },
+    fill:       { color: 'goldenrod' },
+    outline:    { color: '#ddd' },
     background: { backgroundColor: 'black' },
     cardboard:  { backgroundColor: 'black' },
     card:       { backgroundColor: '#333', borderColor: '#999'},

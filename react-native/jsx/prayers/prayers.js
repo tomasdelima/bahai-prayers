@@ -104,7 +104,7 @@ module.exports = React.createClass({
     else if (route.id == 'loading')    { return <Loading theme={this.props.theme}/> }
     else if (route.id == 'categories') { return <List items={route.items} type={'categories'} theme={this.props.theme}/> }
     else if (route.id == 'prayers')    { return <List items={route.items} type={'prayers'}    theme={this.props.theme}/> }
-    else if (route.id == 'prayer')     { return <LongPrayer prayer={route.prayer} theme={this.props.theme}/> }
+    else if (route.id == 'prayer')     { return <LongPrayer prayer={route.prayer} theme={this.props.theme} reloadTheme={this.props.reloadTheme}/> }
     else { return <Text>NO ROUTE FOUND!</Text>}
   }
 })

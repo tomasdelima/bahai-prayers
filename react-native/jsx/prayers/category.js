@@ -10,8 +10,8 @@ import {
   TextInput,
 } from 'react-native'
 
-var s = require('../styles')
-var t = require('../themes')
+const s = require('../styles')
+const t = require('../themes')
 
 module.exports = React.createClass({
   render () {

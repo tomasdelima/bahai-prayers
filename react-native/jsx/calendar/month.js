@@ -25,7 +25,7 @@ module.exports = React.createClass({
     } else {
       var range = month.gregorianStart.toString() + ' - ' + month.gregorianEnd.toString()
 
-      return <TouchableHighlight style={[s.flex]} onPress={() => global.navigation.goToMonth(this.props.year, month.id)}>
+      return <TouchableHighlight underlayColor='rgba(0,0,0,0)' style={[s.flex]} onPress={() => global.navigation.goToMonth(this.props.year, month.id)}>
         <View style={[s.flex]}>
           <View style={[s.flex, s.card, t[this.props.theme].card]}>
             <Text style={textStyle}>{month.arabicName}</Text>
