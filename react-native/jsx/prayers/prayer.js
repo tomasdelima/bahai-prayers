@@ -37,7 +37,7 @@ module.exports = React.createClass({
           <IconButton lib='FontAwesome' onPress={this.toggleStared} theme={this.props.theme} width={50} height={50} size={20} outline='star-o' fill={this.props.prayer.stared ? 'star' : ''} />
           <Text style={[t[this.props.theme].text, s.translucid, s.textAlignCenter, {width: 200, textAlign: 'left'}]}>{this.state.prayer.author}</Text>
         </View>
-        <Image source={t[this.props.theme].arabesco2} style={[s.center, s.translucid, {width: 40, height: 40}]}/>
+        <Image source={t[this.props.theme].arabesco2} style={[s.center, s.translucid, {width: 40, height: 40, top: 10}]}/>
       </View>
     } else {
       return null

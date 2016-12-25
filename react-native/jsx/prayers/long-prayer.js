@@ -30,7 +30,6 @@ module.exports = React.createClass({
       fontSize: 3,
       watermarkOpacity: 1,
       top: 0,
-      sliderOpacity: 0,
       theme: this.props.theme,
     }
   },
@@ -39,8 +38,6 @@ module.exports = React.createClass({
     this.loadShowWatermark()
   },
   changeFontSize (fontSize) {
-    this.setState({sliderOpacity: 1})
-
     console.log('FONT:  SET:    ' + fontSize)
     AsyncStorage.setItem('fontSize', '' + fontSize)
     this.setState({fontSize: fontSize})
@@ -98,11 +95,24 @@ module.exports = React.createClass({
     this.props.reloadTheme()
   },
   renderBottomButtons () {
-    return <View style={[s.row, s.bottomButtonsContainer]}>
+    return <View style={[s.row, s.bottomButtonsContainer, {top: 30}]}>
       <IconButton lib='SimpleLineIcons' onPress={this.share}        theme={this.props.theme} width={50} height={50} size={30} outline='share' />
       <IconButton lib='FontAwesome'     onPress={this.toggleStared} theme={this.props.theme} width={50} height={50} size={30} outline='star-o' fill={this.props.prayer.stared ? 'star' : ''} />
       <IconButton lib='SimpleLineIcons' onPress={this.toggleTheme}  theme={this.props.theme} width={50} height={50} size={30} outline='bulb' />
     </View>
+  },
+  toggleSlider () {
+    this.setState({showSlider: !this.state.showSlider})
+  },
+  renderSlider (height, left) {
+    if (this.state.showSlider) {
+      return <Slider style={[s.rotate, s.highInverted, {position: 'absolute', top: height, left: left, height: 50}]}
+        minimumTrackTintColor={'green'} maximumTrackTintColor={'green'}
+        value={this.state.fontSize} minimumValue={15} maximumValue={35} step={1}
+        onValueChange={this.changeFontSize}/>
+    } else {
+      return null
+    }
   },
   render () {
     var height = Dimensions.get('window').height / 2 - 35
@@ -113,7 +123,7 @@ module.exports = React.createClass({
       return <View style={[s.wide, s.justifyRight, s.flex, {position: 'relative'}]}>
         {this.renderWatermark()}
         <ScrollView style={[s.absolute, {}]} contentContainerStyle={[]} onScroll={this.fadeWatermark}>
-          <TouchableHighlight underlayColor='rgba(0,0,0,0)' onLongPress={this.goToParent}>
+          <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={this.toggleSlider} onLongPress={this.goToParent}>
             <View style={[s.paddingV3, s.container, s.justifyLeft, {}]}>
               <View style={[s.container, {}]}>
                 {this.renderPreamble(fontSize)}
@@ -129,10 +139,7 @@ module.exports = React.createClass({
           </TouchableHighlight>
         </ScrollView>
 
-        <Slider style={[s.rotate, s.highInverted, {position: 'absolute', top: height, left: left, height: 50, opacity: this.state.sliderOpacity}]}
-          minimumTrackTintColor={'green'} maximumTrackTintColor={'green'}
-          value={this.state.fontValue} minimumValue={15} maximumValue={35} step={1}
-          onValueChange={this.changeFontSize} onSlidingComplete={()=>this.setState({sliderOpacity: 0})}/>
+        {this.renderSlider(height, left)}
 
       </View>
     } else {

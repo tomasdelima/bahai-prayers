@@ -24,7 +24,7 @@ module.exports = StyleSheet.create({
   paddingDown:  { paddingBottom: 10 },
   marginH:      { marginHorizontal: 15 },
   marginV:      { marginVertical: 15 },
-  rotate:       { transform: [{rotate: '90deg'}] },
+  rotate:       { transform: [{rotate: '-90deg'}] },
   justifyLeft:  { justifyContent: 'flex-start' },
   justifyRight: { justifyContent: 'flex-end' },
   justifyCenter:{ justifyContent: 'center' },
