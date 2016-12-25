@@ -22,16 +22,18 @@ module.exports = React.createClass({
     if (!this.props[type] || !this.props.lib) {
       return null
     } else if (this.props.lib == 'SimpleLineIcons') {
-      return <SimpleLineIcons style={[t[this.props.theme][type], s.textAlignCenter, {width: this.props.width, height: this.props.height, top: 0, position: position}]} name={this.props[type]} size={this.props.size} onPress={this.props.onPress}/>
+      return <SimpleLineIcons style={[t[this.props.theme][type], s.textAlignCenter, {width: this.props.width, height: this.props.height, top: 0, position: position}]} name={this.props[type]} size={this.props.size}/>
     } else if (this.props.lib == 'FontAwesome') {
-      return <FontAwesome     style={[t[this.props.theme][type], s.textAlignCenter, {width: this.props.width, height: this.props.height, top: 0, position: position}]} name={this.props[type]} size={this.props.size} onPress={this.props.onPress}/>
+      return <FontAwesome     style={[t[this.props.theme][type], s.textAlignCenter, {width: this.props.width, height: this.props.height, top: 0, position: position}]} name={this.props[type]} size={this.props.size}/>
     }
   },
   render () {
-    return <View style={[s.center, s.static, s.alignCenter, s.justifyCenter, {height: this.props.height}]}>
-      {this.renderSimpleLineIcon('fill')}
-      {this.renderSimpleLineIcon('outline')}
-    </View>
+    return <TouchableHighlight underlayColor='rgba(128 ,128 ,128 , 0.3)' onPress={this.props.onPress} style={[s.center, s.static, s.alignCenter, s.justifyCenter, {height: this.props.height}]}>
+      <View>
+        {this.renderSimpleLineIcon('fill')}
+        {this.renderSimpleLineIcon('outline')}
+      </View>
+    </TouchableHighlight>
   },
 })
 

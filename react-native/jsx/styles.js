@@ -97,6 +97,7 @@ module.exports = StyleSheet.create({
   },
   bottomButtonsContainer: {
     justifyContent: 'space-around',
+    paddingHorizontal: 100,
   },
   counter: {
     fontSize: 150,

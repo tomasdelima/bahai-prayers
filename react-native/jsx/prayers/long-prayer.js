@@ -95,10 +95,10 @@ module.exports = React.createClass({
     this.props.reloadTheme()
   },
   renderBottomButtons () {
-    return <View style={[s.row, s.bottomButtonsContainer, {top: 30}]}>
-      <IconButton lib='SimpleLineIcons' onPress={this.share}        theme={this.props.theme} width={50} height={50} size={30} outline='share' />
-      <IconButton lib='FontAwesome'     onPress={this.toggleStared} theme={this.props.theme} width={50} height={50} size={30} outline='star-o' fill={this.props.prayer.stared ? 'star' : ''} />
-      <IconButton lib='SimpleLineIcons' onPress={this.toggleTheme}  theme={this.props.theme} width={50} height={50} size={30} outline='bulb' />
+    return <View style={[s.row, s.justifyCenter, s.bottomButtonsContainer, {top: 20}]}>
+      <IconButton lib='SimpleLineIcons' onPress={this.share}        theme={this.props.theme} width={70} height={70} size={30} outline='share' />
+      <IconButton lib='FontAwesome'     onPress={this.toggleStared} theme={this.props.theme} width={70} height={70} size={30} outline='star-o' fill={this.props.prayer.stared ? 'star' : ''} />
+      <IconButton lib='SimpleLineIcons' onPress={this.toggleTheme}  theme={this.props.theme} width={70} height={70} size={30} outline='bulb' />
     </View>
   },
   toggleSlider () {
@@ -132,7 +132,7 @@ module.exports = React.createClass({
                 )}
               </View>
 
-              <Text style={[s.right, s.paddingH, s.top, t[this.props.theme].text, {fontSize: fontSize, marginBottom: 70}]}>{(this.props.prayer || {}).author}</Text>
+              <Text style={[s.right, s.paddingH, s.top, t[this.props.theme].text, {fontSize: fontSize, marginBottom: 50}]}>{(this.props.prayer || {}).author}</Text>
               <Image source={t[this.props.theme].arabesco} style={[s.center, s.translucid, {width: 640/4, height: 366/4}]}/>
               {this.renderBottomButtons()}
             </View>
