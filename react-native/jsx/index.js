@@ -35,28 +35,36 @@ module.exports = React.createClass({
     t.getTheme(this)
 
     BackAndroid.addEventListener('hardwareBackPress', () => {
-      var routes = global.navigator.root.getCurrentRoutes()
-      var lastRoute = routes[routes.length - 1].id
-
-      var prayerRoutes = global.navigator.prayers.getCurrentRoutes()
-      var lastPrayerRoute = prayerRoutes[prayerRoutes.length - 1].id
-
-      if (lastRoute == 'prayers') {
-        if (lastPrayerRoute == 'categories') {
-          return false
-        } else {
-          global.navigator.prayers.pop()
-        }
-      } else if (lastRoute == 'calendar') {
-        if (lastPrayerRoute == 'year') {
-          return false
-        } else {
-          global.navigator.calendar.pop()
-        }
+      if (this.state.menuIsOpen) {
+        this.setState({menuIsOpen: false})
+        return false
       } else {
-        global.navigator.root.pop()
+        var routes = global.navigator.root.getCurrentRoutes()
+        var lastRoute = routes[routes.length - 1].id
+
+        if (lastRoute == 'prayers') {
+          var prayerRoutes = global.navigator.prayers.getCurrentRoutes()
+          var lastPrayerRoute = prayerRoutes[prayerRoutes.length - 1].id
+
+          if (lastPrayerRoute == 'categories') {
+            return false
+          } else {
+            global.navigator.prayers.pop()
+          }
+        } else if (lastRoute == 'calendar') {
+          var calendarRoutes = global.navigator.calendar.getCurrentRoutes()
+          var lastCalendarRoute = calendarRoutes[calendarRoutes.length - 1].id
+
+          if (lastCalendarRoute == 'year') {
+            return false
+          } else {
+            global.navigator.calendar.pop()
+          }
+        } else {
+          global.navigator.root.pop()
+        }
+        return true
       }
-      return true
     })
   },
   reloadTheme () {
@@ -80,9 +88,9 @@ module.exports = React.createClass({
     global.navigator.root = navigator
 
          if (route.id == 'root')                 { return null }
-    else if (route.id == 'prayers')              { return <Prayers theme={this.state.theme}/> }
-    else if (route.id == 'special-prayers')      { return <Prayers theme={this.state.theme} specialPrayers={true}/> }
-    else if (route.id == 'stared-prayers')       { return <Prayers theme={this.state.theme} staredPrayers={true}/> }
+    else if (route.id == 'prayers')              { return <Prayers theme={this.state.theme} reloadTheme={this.reloadTheme} /> }
+    else if (route.id == 'special-prayers')      { return <Prayers theme={this.state.theme} reloadTheme={this.reloadTheme}  specialPrayers={true}/> }
+    else if (route.id == 'stared-prayers')       { return <Prayers theme={this.state.theme} reloadTheme={this.reloadTheme}  staredPrayers={true}/> }
     else if (route.id == 'calendar')             { return <Calendar theme={this.state.theme}/> }
     else if (route.id == 'allah-u-abha-counter') { return <AllahUAbhaCounter theme={this.state.theme}/> }
     else if (route.id == 'configurations')       { return <Configurations theme={this.state.theme} reloadTheme={this.reloadTheme}/> }
