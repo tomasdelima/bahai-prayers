@@ -17,7 +17,7 @@ module.exports = StyleSheet.create({
   center:       { alignSelf: 'center' },
   right:        { textAlign: 'right', right: 50 },
   top:          { top: 20 },
-  padding:      { padding: 10 },
+  padding:      { padding: 15 },
   paddingH:     { paddingHorizontal: 30 },
   paddingV:     { paddingVertical: 15 },
   paddingV3:    { paddingVertical: 45 },
@@ -37,8 +37,9 @@ module.exports = StyleSheet.create({
   white:        { backgroundColor: 'white' },
   high:         { height: windowHeight },
   wide:         { width: windowWidth },
-  highInverted: { width: windowHeight },
   noFontFamily: { fontFamily: '' },
+  heightForWidth: { width: windowHeight },
+  widthForHeight: { height: windowWidth },
 
   // General: complex
   container: {
@@ -79,6 +80,20 @@ module.exports = StyleSheet.create({
     borderTopLeftRadius: 5,
     borderWidth: 1,
   },
+  card2: {
+    margin: 5,
+    borderRadius: 7,
+    borderWidth: 1,
+  },
+  indicator: {
+    borderRadius: 24,
+    width: 24,
+    height: 24,
+    right: 1,
+    top: 0,
+    borderWidth: 1,
+    position: 'absolute'
+  },
   gregorianMonthBar: {
     marginBottom: 3,
     height: 10,
@@ -97,7 +112,7 @@ module.exports = StyleSheet.create({
   },
   bottomButtonsContainer: {
     justifyContent: 'space-around',
-    paddingHorizontal: 100,
+    paddingHorizontal: 50,
   },
   counter: {
     fontSize: 150,

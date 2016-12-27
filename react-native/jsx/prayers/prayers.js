@@ -49,7 +49,7 @@ module.exports = React.createClass({
         } else {
           global.navigator.prayers.push({id: 'loading'})
         }
-        AsyncStorage.getItem('last_updated_at', (a, last_updated_at) => {
+        AsyncStorage.getItem('prayers:last_updated_at', (a, last_updated_at) => {
           global.db.loadFromRemoteServer(remoteHost + '/categories.json?last_updated_at=' + (last_updated_at || 0), 'categories').then((loadedCategories) => {
             global.db.loadFromRemoteServer(remoteHost + '/prayers.json?last_updated_at=' + (last_updated_at || 0), 'prayers').then((loadedPrayers) => {
               if (categories.length == 0) {

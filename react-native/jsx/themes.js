@@ -5,11 +5,13 @@ import {AsyncStorage} from 'react-native'
 var themes = {
   light: {
     text:       { color: 'black' },
+    purpleText: { color: '#301934' },
     fill:       { color: 'yellow' },
     outline:    { color: '#333' },
     background: { backgroundColor: 'white' },
     cardboard:  { backgroundColor: '#eee' },
     card:       { backgroundColor: 'white', borderColor: '#ccc' },
+    indicator:  { backgroundColor: '#ccc', borderColor: '#999' },
     counter:    { color: '#666' },
     arabesco:   require('../images/arabesco-light.png'),
     arabesco2:  require('../images/arabesco-2-light.png'),
@@ -17,11 +19,13 @@ var themes = {
   },
   dark: {
     text:       { color: 'white' },
+    purpleText: { color: '#0ca' },
     fill:       { color: 'goldenrod' },
     outline:    { color: '#ddd' },
     background: { backgroundColor: 'black' },
     cardboard:  { backgroundColor: 'black' },
     card:       { backgroundColor: '#333', borderColor: '#999'},
+    indicator:  { backgroundColor: '#555', borderColor: '#999' },
     counter:    { color: '#aaa' },
     arabesco:   require('../images/arabesco-dark.png'),
     arabesco2:  require('../images/arabesco-2-dark.png'),

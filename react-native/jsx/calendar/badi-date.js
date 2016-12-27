@@ -35,6 +35,10 @@ class BadiDate {
   }
 }
 
+Date.prototype.getMonthName = function () {
+  return ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'][this.getMonth()]
+}
+
 Date.prototype.addDays = function (days) {
   var result = new Date(this)
   result.setDate(result.getDate() + days)

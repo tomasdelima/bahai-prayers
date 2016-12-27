@@ -30,8 +30,12 @@ var colors = {
 }
 
 module.exports = React.createClass({
-  getInitialState() {
-    return {}
+  renderGrid () {
+    if (this.props.items) {
+      return this.props.items.map((row, i) => this.renderRow(row, i))
+    } else {
+      return null
+    }
   },
   renderRow (row, i) {
     return <View key={i} style={[s.row, s.flex]}>
@@ -40,14 +44,14 @@ module.exports = React.createClass({
   },
   renderItem (item, j) {
     if (this.props.type == 'year') {
-      return <Month key={j} theme={this.props.theme} month={item} year={this.props.items.year}/>
+      return <Month key={j} theme={this.props.theme} month={item} monthName={item} year={this.props.items.year}/>
     } else {
       return <Day key={j} theme={this.props.theme} day={item} month={this.props.items.month} year={this.props.items.year}/>
     }
   },
   render () {
     return <View style={[s.high, s.wide, t[this.props.theme].cardboard]}>
-      {this.props.items.map((row, i) => this.renderRow(row, i))}
+      {this.renderGrid()}
     </View>
   },
 })

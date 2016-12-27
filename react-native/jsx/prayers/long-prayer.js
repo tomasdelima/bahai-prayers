@@ -106,7 +106,7 @@ module.exports = React.createClass({
   },
   renderSlider (height, left) {
     if (this.state.showSlider) {
-      return <Slider style={[s.rotate, s.highInverted, {position: 'absolute', top: height, left: left, height: 50}]}
+      return <Slider style={[s.rotate, s.heightForWidth, {position: 'absolute', top: height, left: left, height: 50}]}
         minimumTrackTintColor={'green'} maximumTrackTintColor={'green'}
         value={this.state.fontSize} minimumValue={15} maximumValue={35} step={1}
         onValueChange={this.changeFontSize}/>
@@ -132,7 +132,7 @@ module.exports = React.createClass({
                 )}
               </View>
 
-              <Text style={[s.right, s.paddingH, s.top, t[this.props.theme].text, {fontSize: fontSize, marginBottom: 50}]}>{(this.props.prayer || {}).author}</Text>
+              <Text style={[s.right, s.top, t[this.props.theme].text, {fontSize: fontSize, marginBottom: 50}]}>{(this.props.prayer || {}).author}</Text>
               <Image source={t[this.props.theme].arabesco} style={[s.center, s.translucid, {width: 640/4, height: 366/4}]}/>
               {this.renderBottomButtons()}
             </View>

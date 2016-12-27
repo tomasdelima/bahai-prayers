@@ -69,14 +69,14 @@ var loadFromRemoteServer = function (url, table, where) {
               global.db.insert(table, item)
               inserted += 1
             } else {
-              global.db.update(table, item)
+              global.db.update(table, item, tx)
               updated += 1
             }
           })
           console.log('DB:    UPSERT: Inserted ' + inserted + ', Updated ' + updated + ' into ' + table)
         })
 
-        AsyncStorage.setItem('last_updated_at', parsedResponse.time)
+        AsyncStorage.setItem(table + ':last_updated_at', parsedResponse.time)
         console.log('FETCH: END:    ' + url)
         return loadedData
       })
@@ -120,7 +120,9 @@ var update = function (table, obj, transaction) {
   Object.keys(obj).map((key) => {columns.push(key + " = \"" + obj[key] + "\"")})
   var sqlString = "UPDATE " + table + " SET " + columns.join(", ") + " WHERE id = " + obj.id
   return (transaction || global).db.executeSql(sqlString).then((result) => {
-    console.log('UPDATE: END:   ' + result[0].rowsAffected + ' record')
+    if (!transaction) {
+      console.log('UPDATE: END:   ' + result[0].rowsAffected + ' record')
+    }
   })
 }
 
@@ -138,6 +140,7 @@ var createTables = function (db) {
   db.transaction(function (tx) {
     tx.executeSql("CREATE TABLE IF NOT EXISTS categories (id INT PRIMARY KEY NOT NULL, title TEXT, active TEXT, special_category TEXT, created_at TEXT, updated_at TEXT)")
     tx.executeSql("CREATE TABLE IF NOT EXISTS prayers (id INT PRIMARY KEY NOT NULL, category_id INT NOT NULL, author TEXT, body TEXT, preamble TEXT, active TEXT, special_prayer TEXT, stared TEXT, created_at TEXT, updated_at TEXT)")
+    tx.executeSql("CREATE TABLE IF NOT EXISTS holidays (id INT PRIMARY KEY NOT NULL, date DATE, name TEXT, year INT, month INT, day INT)")
   }).then(() => {
     console.log("DB:    LOADED")
     db.insert = insert
@@ -157,6 +160,7 @@ var recreateTables = function (db) {
   db.transaction(function (tx) {
     tx.executeSql("DROP TABLE categories")
     tx.executeSql("DROP TABLE prayers")
+    tx.executeSql("DROP TABLE holidays")
   }).then(() => {
     createTables(db)
   })

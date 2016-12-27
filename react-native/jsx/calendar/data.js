@@ -1,6 +1,7 @@
 'use strict'
 
 const BadiDate = require('./badi-date')
+const DB       = require('../../db')
 
 var colors = {
   0:  '#A02BA7',
@@ -40,6 +41,22 @@ var monthsNames = [
   {id: 20, slug: "ala",        arabicName: "‘Alá’",      portugueseName: "Sublimidade"},
 ]
 
+var loadHolidays = function (year, month, day) {
+  if (global.db.loadFromDB) {
+    if (year || month || day) {
+      var where = {}
+      if (year)  where.year  = [year]
+      if (month) where.month = [month]
+      if (day)   where.day   = [day]
+    }
+
+    return global.db.loadFromDB('holidays', where)
+  } else {
+    console.log('ERROR: global.db.loadFromDB is not defined. Trying to load again')
+    setTimeout(loadHolidays, 100)
+  }
+}
+
 var groupedYear = (year) => {
   var months = [
     [{id: 'year', year: year}, {id: 1}, {id: 2}],
@@ -69,10 +86,10 @@ var groupedYear = (year) => {
     }
   }
   months[6][1].gregorianStart = new BadiDate(year, 19,  1).toGregorian()
-  months[6][1].gregorianEnd =   new BadiDate(year, 19, 19).toGregorian()
+  months[6][1].gregorianEnd   = new BadiDate(year, 19, 19).toGregorian()
   months.year = year
 
-  return months
+  return mergeDataAndHolidays(year, undefined, months)
 }
 
 var groupedMonth = (year, month) => {
@@ -91,6 +108,7 @@ var groupedMonth = (year, month) => {
       var index = 3 * i + j
       if (days[i][j].id != 'month') {
         days[i][j].gregorian = new BadiDate(year, month, index).toGregorian()
+        days[i][j].monthName = monthsNames.filter((m) => m.id == month)[0].arabicName
       }
     }
   }
@@ -98,7 +116,23 @@ var groupedMonth = (year, month) => {
   days.year = year
   days.month = month
 
-  return days
+  return mergeDataAndHolidays(year, month, days)
+}
+
+var mergeDataAndHolidays = function (year, month, data) {
+  return loadHolidays(year, month).then((holidays) => {
+    holidays.map((holiday) => {
+      var type = month ? 'day' : 'month'
+      var item = data[Math.floor(holiday[type]/3)][holiday[type]%3]
+
+      if (item.holidays) {
+        item.holidays.push(holiday)
+      } else {
+        item.holidays = [holiday]
+      }
+    })
+    return data
+  })
 }
 
 module.exports = {
