@@ -128,7 +128,7 @@ module.exports = React.createClass({
               <View style={[s.container, {}]}>
                 {this.renderPreamble(fontSize)}
                 {((this.props.prayer || {}).body || '').split('<br><br>').map((paragraph, i) =>
-                  <Text key={i} style={[s.item, s.justifyLeft, s.paddingDown, t[this.props.theme].text, {fontSize: fontSize, lineHeight: Math.round(fontSize*5/3)}]}>{paragraph}</Text>
+                  <Text key={i} style={[s.item, s.justifyLeft, s.paddingV, t[this.props.theme].text, {fontSize: fontSize, lineHeight: Math.round(fontSize*5/3)}]}>{paragraph}</Text>
                 )}
               </View>
 
@@ -140,7 +140,6 @@ module.exports = React.createClass({
         </ScrollView>
 
         {this.renderSlider(height, left)}
-
       </View>
     } else {
       return null

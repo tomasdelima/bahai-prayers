@@ -74,7 +74,7 @@ module.exports = React.createClass({
     this.setState({menuIsOpen: false})
   },
   render () {
-    return <View style={[s.high, s.wide]}>
+    return <View style={[s.high, s.wide, t[this.state.theme].background]}>
       <SideMenu menu={<Menu theme={this.state.theme} closeMenu={this.closeMenu}/>} isOpen={this.state.menuIsOpen}>
         <Navigator style={[t[this.state.theme].background]}
           initialRoute={this.state.initialRoute}

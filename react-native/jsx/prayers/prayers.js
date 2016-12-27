@@ -67,7 +67,11 @@ module.exports = React.createClass({
   },
   goToCategory (categoryId) {
     global.db.loadFromDB('prayers', {category_id: [categoryId], active: [true]}, 'author').then((prayers) => {
-      this.setItems(prayers, 'prayers')
+      if (prayers.length == 1) {
+        this.goToPrayer(prayers[0])
+      } else {
+        this.setItems(prayers, 'prayers')
+      }
     }).catch(this.error)
   },
   goToStaredPrayers () {
