@@ -28,6 +28,7 @@ module.exports = StyleSheet.create({
   justifyRight: { justifyContent: 'flex-end' },
   justifyCenter:{ justifyContent: 'center' },
   alignCenter:  { alignItems: 'center' },
+  italic:       { fontStyle: 'italic' },
   translucid:   { opacity: 0.6 },
   red:          { backgroundColor: 'rgba(255, 0, 0, 0.2)' },
   blue:         { backgroundColor: 'rgba(0, 0, 255, 0.2)' },
@@ -98,7 +99,7 @@ module.exports = StyleSheet.create({
     height: 10,
   },
   searchInput: {
-    fontSize: 30,
+    fontSize: 20,
     height: 50
   },
   letterCount: {

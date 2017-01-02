@@ -114,6 +114,21 @@ module.exports = React.createClass({
       return null
     }
   },
+  renderParagraphs () {
+    return ((this.props.prayer || {}).body || '').split('<br><br>').map((paragraph, i) =>
+      this.renderParagraph(paragraph, i)
+    )
+  },
+  renderParagraph (paragraph, i) {
+    var fontSize = this.state.fontSize
+    var style = [s.item, s.justifyLeft, s.paddingV, t[this.props.theme].text, {fontSize: fontSize, lineHeight: Math.round(fontSize*5/3)}]
+
+    if (paragraph.slice(0, 20) == '<a class="preamble">') {
+      return <Text key={i} style={[style, s.italic, s.translucid, {fontSize: Math.floor(fontSize*0.8)}]}>{paragraph.slice(20, paragraph.length-4)}</Text>
+    } else {
+      return <Text key={i} style={[style]}>{paragraph}</Text>
+    }
+  },
   render () {
     var height = Dimensions.get('window').height / 2 - 35
     var left   = Dimensions.get('window').width * 21 / 52 - 122
@@ -122,14 +137,12 @@ module.exports = React.createClass({
     if (this.props.prayer) {
       return <View style={[s.wide, s.justifyRight, s.flex, {position: 'relative'}]}>
         {this.renderWatermark()}
-        <ScrollView style={[s.absolute, {}]} contentContainerStyle={[]} onScroll={this.fadeWatermark}>
+        <ScrollView style={[s.absolute, {}]} onScroll={this.fadeWatermark}>
           <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={this.toggleSlider} onLongPress={this.goToParent}>
-            <View style={[s.paddingV3, s.container, s.justifyLeft, {}]}>
-              <View style={[s.container, {}]}>
+            <View style={[s.paddingV, s.container, s.justifyLeft, {paddingBottom: 45}]}>
+              <View style={[s.container]}>
                 {this.renderPreamble(fontSize)}
-                {((this.props.prayer || {}).body || '').split('<br><br>').map((paragraph, i) =>
-                  <Text key={i} style={[s.item, s.justifyLeft, s.paddingV, t[this.props.theme].text, {fontSize: fontSize, lineHeight: Math.round(fontSize*5/3)}]}>{paragraph}</Text>
-                )}
+                {this.renderParagraphs()}
               </View>
 
               <Text style={[s.right, s.top, t[this.props.theme].text, {fontSize: fontSize, marginBottom: 50}]}>{(this.props.prayer || {}).author}</Text>

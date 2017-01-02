@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/EvilIcons'
 
 var Item = require('./item')
 var s    = require('../styles')
+var t    = require('../themes')
 
 module.exports = React.createClass({
   getInitialState() {
@@ -54,7 +55,7 @@ module.exports = React.createClass({
         <ScrollView>
           <View>
             <View style={[s.row, s.marginH]}>
-              <TextInput style={[s.flex, s.searchInput]} onChange={this.updateSearchText} onSubmitEditing={this.searchPrayers} value={this.state.keywords} keyboardType="web-search"/>
+              <TextInput style={[s.flex, t[this.props.theme].text, s.searchInput]} onChange={this.updateSearchText} onSubmitEditing={this.searchPrayers} value={this.state.keywords} keyboardType="web-search" underlineColorAndroid="#095" />
               <Icon onPress={this.clearSearch} name="close" size={30} color="#095" style={[s.static, s.textAlignCenter, {width: 55}]}/>
             </View>
             {this.state.items.map((item, i) => {return <Item key={i} goToPrayer={this.state.goToPrayer} item={item} type={this.state.type} theme={this.props.theme}/>})}
