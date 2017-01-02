@@ -7,9 +7,10 @@ import {
   Text,
 } from 'react-native'
 
-const Data = require('./data')
-const s    = require('../styles')
-const t    = require('../themes')
+const Facts = require('./facts')
+const Data  = require('./data')
+const s     = require('../styles')
+const t     = require('../themes')
 
 module.exports = React.createClass({
   renderDates () {
@@ -46,6 +47,7 @@ module.exports = React.createClass({
       <View style={[s.flex]}>
         {this.renderDates()}
         {this.renderHoliday()}
+        <Facts theme={this.props.theme} date={this.props.day.gregorian}/>
       </View>
     </ScrollView>
   },

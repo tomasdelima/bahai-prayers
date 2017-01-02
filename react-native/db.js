@@ -39,7 +39,7 @@ var loadFromDB = function (table, where, orderBy) {
       console.log('CACHE: SET:    ' + cacheKey)
       global[cacheKey] = results
 
-      console.log('DB:    END:    ' + key)
+      console.log('DB:    END:    ' + key + ' (' + results.length + ' lines)')
       return results
     })
   }
@@ -48,6 +48,16 @@ var loadFromDB = function (table, where, orderBy) {
 var flushCache = function (key) {
   console.log('CACHE: FLUSH:  ' + key)
   global[key] = null
+}
+
+var decomposeDates = function (item) {
+  var date = new Date(item.date.slice(0, 4), item.date.slice(5, 7) - 1, item.date.slice(8, 10))
+
+  item.year  = date.getFullYear()
+  item.month = date.getMonth()
+  item.day   = date.getDate()
+
+  return item
 }
 
 var loadFromRemoteServer = function (url, table, where) {
@@ -62,9 +72,13 @@ var loadFromRemoteServer = function (url, table, where) {
 
         global['fetched:' + url] = true
 
+        var inserted = 0, updated = 0
         global.db.transaction(function (tx) {
-          var inserted = 0, updated = 0
           loadedData.map(function (item) {
+            if (table == 'facts') {
+              item = decomposeDates(item)
+            }
+
             if(existingIds.indexOf(item.id) < 0) {
               global.db.insert(table, item)
               inserted += 1
@@ -73,6 +87,7 @@ var loadFromRemoteServer = function (url, table, where) {
               updated += 1
             }
           })
+        }).then(() => {
           console.log('DB:    UPSERT: Inserted ' + inserted + ', Updated ' + updated + ' into ' + table)
         })
 
@@ -141,6 +156,7 @@ var createTables = function (db) {
     tx.executeSql("CREATE TABLE IF NOT EXISTS categories (id INT PRIMARY KEY NOT NULL, title TEXT, active TEXT, special_category TEXT, created_at TEXT, updated_at TEXT)")
     tx.executeSql("CREATE TABLE IF NOT EXISTS prayers (id INT PRIMARY KEY NOT NULL, category_id INT NOT NULL, author TEXT, body TEXT, preamble TEXT, active TEXT, special_prayer TEXT, stared TEXT, created_at TEXT, updated_at TEXT)")
     tx.executeSql("CREATE TABLE IF NOT EXISTS holidays (id INT PRIMARY KEY NOT NULL, date DATE, name TEXT, year INT, month INT, day INT)")
+    tx.executeSql("CREATE TABLE IF NOT EXISTS facts (id INT PRIMARY KEY NOT NULL, name TEXT, description TEXT, relevance INT, date DATE, year INT, month INT, day INT, created_at TEXT, updated_at TEXT, active TEXT)")
   }).then(() => {
     console.log("DB:    LOADED")
     db.insert = insert
@@ -161,6 +177,7 @@ var recreateTables = function (db) {
     tx.executeSql("DROP TABLE categories")
     tx.executeSql("DROP TABLE prayers")
     tx.executeSql("DROP TABLE holidays")
+    tx.executeSql("DROP TABLE facts")
   }).then(() => {
     createTables(db)
   })

@@ -16,26 +16,12 @@ const Data     = require('./data')
 const s        = require('../styles')
 const t        = require('../themes')
 
-const remoteHost = 'http://badi-calendar.herokuapp.com'
+const calendarHost = 'http://badi-calendar.herokuapp.com'
+const factsHost = 'http://bahai-prayers-server.herokuapp.com'
 
 module.exports = React.createClass({
   componentDidMount () {
     this.goToYear(173)
-    // this.goToDay(173, '', {
-    //   id: 17,
-    //   monthName: 'Rahmat',
-    //   gregorian: new BadiDate(173, 6, 17).toGregorian(),
-    //   holidays: [
-    //     {
-    //       day: 17,
-    //       year: 173,
-    //       name: 'Martírio do Báb',
-    //       month: 6,
-    //       date: '2016-07-09',
-    //       id: 352,
-    //     }
-    //   ]
-    // })
     global.navigation = {
       goToYear: this.goToYear,
       goToMonth: this.goToMonth,
@@ -44,15 +30,30 @@ module.exports = React.createClass({
   },
   loadHolidaysFromRemoteServer () {
     AsyncStorage.getItem('holidays:last_updated_at', (a, last_updated_at) => {
-      global.db.loadFromRemoteServer(remoteHost + '/holidays?last_updated_at=' + (last_updated_at || '2000-01-01'), 'holidays').then()
+      global.db.loadFromRemoteServer(calendarHost + '/holidays?last_updated_at=' + (last_updated_at || '2000-01-01'), 'holidays').then()
+    })
+  },
+  loadFactsFromRemoteServer () {
+    AsyncStorage.getItem('facts:last_updated_at', (a, last_updated_at) => {
+      global.db.loadFromRemoteServer(factsHost + '/facts?last_updated_at=' + (last_updated_at || '2000-01-01'), 'facts').then()
+    })
+  },
+  goToTestDay () {
+    this.goToDay(173, '', {
+      id: 17,
+      monthName: 'Rahmat',
+      gregorian: new BadiDate(173, 6, 17).toGregorian(),
+      holidays: [{day: 17, year: 173, name: 'Martírio do Báb', month: 6, date: '2016-07-09', id: 352}],
     })
   },
   goToYear (year) {
     if (global.db.loadFromDB) {
       Data.groupedYear(year).then((data) => {
         global.navigator.calendar.push({id: 'year', items: data})
+        // this.goToTestDay()
       })
       this.loadHolidaysFromRemoteServer()
+      this.loadFactsFromRemoteServer()
     } else {
       console.log('ERROR: global.db.loadFromDB is not defined. Trying to load again')
       setTimeout(() => this.goToYear(year), 100)
