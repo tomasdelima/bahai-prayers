@@ -24,11 +24,11 @@ var parseDBResponse = function (dbResponse) {
   return parsedData
 }
 
-var loadFromDB = function (table, where, orderBy) {
+var loadFromDB = function (table, where, orderBy, doNotCache) {
   var key = table + ':' + JSON.stringify(where)
   var cacheKey = 'loaded:' + key
 
-  if (global[cacheKey]) {
+  if (global[cacheKey] && !doNotCache) {
     console.log('CACHE: LOADED: ' + cacheKey)
     return new Promise(function (resolve, reject) {
       resolve(global[cacheKey])
@@ -36,8 +36,10 @@ var loadFromDB = function (table, where, orderBy) {
   } else {
     console.log('DB:    START:  ' + key)
     return global.db.select(table, where, orderBy).then(function (results) {
-      console.log('CACHE: SET:    ' + cacheKey)
-      global[cacheKey] = results
+      if (!doNotCache) {
+        console.log('CACHE: SET:    ' + cacheKey)
+        global[cacheKey] = results
+      }
 
       console.log('DB:    END:    ' + key + ' (' + results.length + ' lines)')
       return results

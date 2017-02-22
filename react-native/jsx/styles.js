@@ -29,6 +29,7 @@ module.exports = StyleSheet.create({
   justifyCenter:{ justifyContent: 'center' },
   alignCenter:  { alignItems: 'center' },
   italic:       { fontStyle: 'italic' },
+  underline:    { textDecorationLine: 'underline' },
   translucid:   { opacity: 0.6 },
   red:          { backgroundColor: 'rgba(255, 0, 0, 0.2)' },
   blue:         { backgroundColor: 'rgba(0, 0, 255, 0.2)' },
@@ -62,10 +63,6 @@ module.exports = StyleSheet.create({
   textAlignCenter: {
     textAlign: 'center',
     textAlignVertical: 'center',
-  },
-  border: {
-    borderColor: '#333',
-    borderWidth: 1,
   },
 
   // Specific

@@ -3,6 +3,7 @@
 import {AsyncStorage} from 'react-native'
 
 var themes = {
+  green: '#094',
   light: {
     text:       { color: 'black' },
     purpleText: { color: '#301934' },
