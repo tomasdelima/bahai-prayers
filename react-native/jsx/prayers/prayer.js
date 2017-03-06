@@ -30,8 +30,11 @@ module.exports = React.createClass({
     if (this.state.prayer) {
       var letterCount = this.state.prayer.body.replace(/(^\s*)|(\s*$)/gi,"").replace(/[ ]{2,}/gi," ").replace(/\n /,"\n").split(" ").length
 
-      return <View style={[s.container, s.justifyLeft, {}]}>
-        <Text style={[s.shrink, s.item, s.justifyLeft, t[this.props.theme].text, {height: 50, lineHeight: 25}]}>{this.state.prayer.body.replace(/<br><br>/gi, ' ')}</Text>
+      return <View style={[s.container, s.justifyLeft]}>
+        <Text style={[s.shrink, s.item, s.justifyLeft, t[this.props.theme].text, {height: 50, lineHeight: 25}]}>
+          <Text style={[s.inlineCategory, s.noFontFamily]}>{this.state.prayer.category ? this.state.prayer.category + '   ' : ''}</Text>
+          {this.state.prayer.body.replace(/<br><br>/gi, ' ')}
+        </Text>
         <View style={[s.container, s.row, s.justifyCenter, {height: 50}]}>
           <Text style={[t[this.props.theme].text, s.translucid, s.textAlignCenter, {width: 200, textAlign: 'right'}]}>{letterCount} palavras</Text>
           <IconButton lib='FontAwesome' onPress={this.toggleStared} theme={this.props.theme} width={50} height={50} size={20} outline='star-o' fill={this.props.prayer.stared ? 'star' : ''} />

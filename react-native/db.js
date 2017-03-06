@@ -121,6 +121,20 @@ var fullTextSearch = function (table, keywords) {
   })
 }
 
+var loadCategoriesIntoPrayers = function (prayers) {
+  var categoriesIds = []
+  prayers.map((prayer, i) => {
+    if (categoriesIds.indexOf(prayer.category_id) == -1) categoriesIds.push(prayer.category_id)
+  })
+
+  return loadFromDB('categories', {id: categoriesIds}).then((response) => {
+    var obj = {}
+    response.map((item) => obj[item.id] = item.title)
+    prayers.map((prayer, i) => prayers[i].category = obj['' + prayer.category_id])
+    return prayers
+  })
+}
+
 var select = function (table, where, orderBy) {
   var sqlString = "SELECT * FROM " + table
   if(where) {
@@ -166,6 +180,7 @@ var createTables = function (db) {
     db.select = select
     db.loadFromRemoteServer = loadFromRemoteServer
     db.loadFromDB = loadFromDB
+    db.loadCategoriesIntoPrayers = loadCategoriesIntoPrayers
     db.flushCache = flushCache
     db.fullTextSearch = fullTextSearch
   }).catch((e) => {

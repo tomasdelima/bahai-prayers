@@ -6,13 +6,14 @@ import {
   View,
   ListView,
   TextInput,
-  ScrollView
+  ScrollView,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/EvilIcons'
 
-var Item = require('./item')
-var s    = require('../styles')
-var t    = require('../themes')
+const Loading = require('../loading')
+const Item    = require('./item')
+const s       = require('../styles')
+const t       = require('../themes')
 
 module.exports = React.createClass({
   getInitialState() {
@@ -28,7 +29,9 @@ module.exports = React.createClass({
         this.setState({lastSearch: Date.now(), searching: true})
         global.db.fullTextSearch('prayers', this.state.keywords).then((response) => {
           if (!this.lastSearch || response.start > this.state.lastSearch) {
-            this.setState({type: 'prayers', items: response.data, searching: false})
+            global.db.loadCategoriesIntoPrayers(response.data).then((prayers) =>
+              this.setState({type: 'prayers', items: prayers, searching: false})
+            )
           }
         })
       }
@@ -48,9 +51,16 @@ module.exports = React.createClass({
       this.setState({keywords: text})
     }
   },
-
   render() {
     if (this.props.items) {
+      if (this.state.searching) {
+        var content = <Loading style={[{marginTop: 100}]}/>
+      } else if (this.state.items.length == 0) {
+        var content = <Text style={[s.textAlignCenter, s.paddingH, {fontSize: 30, marginTop: 200}]}>Sua busca não trouxe resultados</Text>
+      } else {
+        var content = this.state.items.map((item, i) => <Item key={i} goToPrayer={this.state.goToPrayer} item={item} type={this.state.type} theme={this.props.theme}/>)
+      }
+
       return <View style={[s.container, s.absolute]}>
         <ScrollView>
           <View>
@@ -58,7 +68,7 @@ module.exports = React.createClass({
               <TextInput style={[s.flex, t[this.props.theme].text, s.searchInput]} onChange={this.updateSearchText} onSubmitEditing={this.searchPrayers} value={this.state.keywords} keyboardType="web-search" underlineColorAndroid={t.green} />
               <Icon onPress={this.clearSearch} name="close" size={30} color={t.green} style={[s.static, s.textAlignCenter, {width: 55}]}/>
             </View>
-            {this.state.items.map((item, i) => {return <Item key={i} goToPrayer={this.state.goToPrayer} item={item} type={this.state.type} theme={this.props.theme}/>})}
+            {content}
           </View>
         </ScrollView>
       </View>

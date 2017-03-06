@@ -95,6 +95,10 @@ module.exports = StyleSheet.create({
     marginBottom: 3,
     height: 10,
   },
+  inlineCategory: {
+    color: 'rgba(128, 128, 128, 128)',
+    fontSize: 15,
+  },
   searchInput: {
     fontSize: 20,
     height: 50

@@ -27,7 +27,7 @@ module.exports = React.createClass({
       outputRange: ['0deg', '360deg'],
     })
 
-    return <View style={[s.container, s.absolute, {}]}>
+    return <View style={this.props.style || [s.container, s.absolute, {}]}>
       <Animated.Image
         source={t[this.props.theme].loading}
         style={[s.center, {

@@ -76,7 +76,7 @@ module.exports = React.createClass({
   },
   goToStaredPrayers () {
     global.db.loadFromDB('prayers', {active: [true], stared: [true]}, 'author').then((prayers) => {
-      this.setItems(prayers, 'prayers')
+      global.db.loadCategoriesIntoPrayers(prayers).then((p) => this.setItems(p, 'prayers'))
     }).catch(this.error)
   },
   goToPrayer (prayer) {
