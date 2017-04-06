@@ -45,3 +45,4 @@ android/keystores/debug.keystore
 tmp/
 *.tmp
 *.keystore
+.watchman*

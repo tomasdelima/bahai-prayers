@@ -137,7 +137,7 @@ module.exports = React.createClass({
     if (this.props.prayer) {
       return <View style={[s.wide, s.justifyRight, s.flex, {position: 'relative'}]}>
         {this.renderWatermark()}
-        <ScrollView style={[s.absolute, {}]} onScroll={this.fadeWatermark}>
+        <ScrollView onScroll={this.fadeWatermark}>
           <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={this.toggleSlider} onLongPress={this.goToParent}>
             <View style={[s.paddingV, s.container, s.justifyLeft, {paddingBottom: 45}]}>
               <View style={[s.container]}>

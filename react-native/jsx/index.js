@@ -7,7 +7,6 @@ import {
   ListView,
   AsyncStorage,
   Text,
-  AppRegistry,
   BackAndroid,
 } from 'react-native'
 
@@ -33,6 +32,7 @@ module.exports = React.createClass({
   },
   componentDidMount() {
     t.getTheme(this)
+    global.toggleMenu = () => this.setState({menuIsOpen: !this.state.menuIsOpen})
 
     BackAndroid.addEventListener('hardwareBackPress', () => {
       if (this.state.menuIsOpen) {
