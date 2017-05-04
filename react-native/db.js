@@ -4,7 +4,6 @@ import {
   AsyncStorage,
 } from 'react-native'
 
-console.log('Loading DB!!!!!!!!!!!!!!')
 var SQLite   = require('react-native-sqlite-storage')
 SQLite.enablePromise(true)
 
