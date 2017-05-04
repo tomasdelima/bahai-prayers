@@ -41,7 +41,8 @@ module.exports = React.createClass({
     }
   },
   goToCategories () {
-    if (global.db.loadFromDB) {
+    // console.log(global.db && global.db.loadFromDB)
+    if (global.db && global.db.loadFromDB) {
       var specialPrayersValues = this.props.specialPrayers ? [true] : ['', false, 'null']
       global.db.loadFromDB('categories', {active: [true], special_category: specialPrayersValues}, 'title').then((categories) => {
         if (categories.length > 0) {
@@ -61,7 +62,7 @@ module.exports = React.createClass({
         })
       }).catch(this.error)
     } else {
-      console.log('ERROR: global.db.loadFromDB is not defined. Trying to load again')
+      // console.log('ERROR: global.db.loadFromDB is not defined. Trying to load again')
       setTimeout(this.goToCategories, 100)
     }
   },

@@ -38,7 +38,7 @@ module.exports = StyleSheet.create({
   white:        { backgroundColor: 'white' },
   high:         { height: windowHeight },
   wide:         { width: windowWidth },
-  noFontFamily: { fontFamily: '' },
+  // noFontFamily: { fontFamily: '' },
   heightForWidth: { width: windowHeight },
   widthForHeight: { height: windowWidth },
 
