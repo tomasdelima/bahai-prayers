@@ -6,7 +6,7 @@ import {StyleSheet, Dimensions} from 'react-native'
 var windowHeight = Dimensions.get('window').height - 25
 var windowWidth  = Dimensions.get('window').width
 
-module.exports = StyleSheet.create({
+module.exports = {
   // General: simple
   empty:        { },
   row:          { flexDirection: 'row' },
@@ -41,6 +41,7 @@ module.exports = StyleSheet.create({
   noFontFamily: { fontFamily: '' },
   heightForWidth: { width: windowHeight },
   widthForHeight: { height: windowWidth },
+  size: (x) => ({fontSize: x}),
 
   // General: complex
   container: {
@@ -125,5 +126,4 @@ module.exports = StyleSheet.create({
     fontFamily: 'ruritania',
     color: 'rgba(128, 128, 128, 0.25)',
   },
-})
-
+}

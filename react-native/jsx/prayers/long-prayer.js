@@ -138,7 +138,7 @@ module.exports = React.createClass({
       return <View style={[s.wide, s.justifyRight, s.flex, {position: 'relative'}]}>
         {this.renderWatermark()}
         <ScrollView style={[s.absolute, {}]} onScroll={this.fadeWatermark}>
-          <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={this.toggleSlider} onLongPress={this.goToParent}>
+          <TouchableHighlight underlayColor='rgba(0,0,0,0)' onPress={this.toggleSlider}>
             <View style={[s.paddingV, s.container, s.justifyLeft, {paddingBottom: 45}]}>
               <View style={[s.container]}>
                 {this.renderPreamble(fontSize)}

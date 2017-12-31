@@ -17,9 +17,12 @@ const t       = require('../themes')
 
 module.exports = React.createClass({
   getInitialState() {
+    var categories = Array.unique(this.props.items.map((i) => i.category_id))
+
     return {
       items: this.props.items,
       type: this.props.type,
+      categoryId: categories.length == 1 ? categories[0] : null,
       keywords: '',
     }
   },
@@ -51,7 +54,21 @@ module.exports = React.createClass({
       this.setState({keywords: text})
     }
   },
+  renderSearch () {
+    return <View style={[s.row, s.marginH]}>
+      <Icon onPress={global.openMenu} name="navicon" size={30} color={t.green} style={[s.static, s.textAlignCenter, {width: 55}]}/>
+      <TextInput style={[s.flex, t[this.props.theme].text, s.searchInput]} onChange={this.updateSearchText} onSubmitEditing={this.searchPrayers} value={this.state.keywords} keyboardType="web-search" underlineColorAndroid={t.green} />
+      <Icon onPress={this.clearSearch} name="close" size={30} color={t.green} style={[s.static, s.textAlignCenter, {width: 55}]}/>
+    </View>
+  },
+  renderTitle () {
+    return <Text style={[s.center, s.paddingV, s.size(25)]}>{this.state.title}</Text>
+  },
   render() {
+    if (!this.state.title && this.props.categoryId) {
+      global.db.loadFromDB('categories', {id: [this.props.categoryId]}).then((i) => this.setState({title: i[0].title}))
+    }
+
     if (this.props.items) {
       if (this.state.searching) {
         var content = <Loading style={[{marginTop: 100}]}/>
@@ -64,10 +81,7 @@ module.exports = React.createClass({
       return <View style={[s.container, s.absolute]}>
         <ScrollView>
           <View>
-            <View style={[s.row, s.marginH]}>
-              <TextInput style={[s.flex, t[this.props.theme].text, s.searchInput]} onChange={this.updateSearchText} onSubmitEditing={this.searchPrayers} value={this.state.keywords} keyboardType="web-search" underlineColorAndroid={t.green} />
-              <Icon onPress={this.clearSearch} name="close" size={30} color={t.green} style={[s.static, s.textAlignCenter, {width: 55}]}/>
-            </View>
+            {this.state.title ? this.renderTitle() : this.renderSearch()}
             {content}
           </View>
         </ScrollView>
@@ -77,3 +91,5 @@ module.exports = React.createClass({
     }
   }
 })
+
+Array.unique = (arr) => arr.reduce((m, i) => {m.indexOf(i) < 0 && m.push(i); return m}, [])

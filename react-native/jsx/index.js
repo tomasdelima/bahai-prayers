@@ -33,6 +33,7 @@ module.exports = React.createClass({
   },
   componentDidMount() {
     t.getTheme(this)
+    global.openMenu = this.openMenu
 
     BackAndroid.addEventListener('hardwareBackPress', () => {
       if (this.state.menuIsOpen) {
@@ -72,6 +73,9 @@ module.exports = React.createClass({
   },
   closeMenu () {
     this.setState({menuIsOpen: false})
+  },
+  openMenu () {
+    this.setState({menuIsOpen: true})
   },
   render () {
     return <View style={[s.high, s.wide, t[this.state.theme].background]}>
