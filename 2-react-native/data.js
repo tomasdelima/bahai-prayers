@@ -3,9 +3,9 @@ export default class Data {
 
   testCategories () {
     return [
-      {id: 1, title: 'Category 1'},
-      {id: 2, title: 'Category 2'},
-      {id: 3, title: 'Category 3'},
+      {id: 1, active: true, title: 'Category 1'},
+      {id: 2, active: true, title: 'Category 2'},
+      {id: 3, active: true, title: 'Category 3'},
     ]
   }
 
@@ -13,12 +13,12 @@ export default class Data {
     var body = ' Some text.'.repeat(200)
 
     return [
-      {id: 1, author: 'Author 1', category_id: 1, preamble: 'Preamble', body: 'Body 1' + body, stared: false},
-      {id: 2, author: 'Author 2', category_id: 2, preamble: 'Preamble', body: 'Body 2' + body, stared: false},
-      {id: 3, author: 'Author 3', category_id: 2, preamble: 'Preamble', body: 'Body 3' + body, stared: false},
-      {id: 4, author: 'Author 4', category_id: 3, preamble: 'Preamble', body: 'Body 4' + body, stared: false},
-      {id: 5, author: 'Author 5', category_id: 3, preamble: 'Preamble', body: 'Body 5' + body, stared: false},
-      {id: 6, author: 'Author 6', category_id: 3, preamble: 'Preamble', body: 'Body 6' + body, stared: false},
+      {id: 1, active: true, author: 'Author 1', category_id: 1, preamble: 'Preamble', body: 'Body 1' + body, stared: false},
+      {id: 2, active: true, author: 'Author 2', category_id: 2, preamble: 'Preamble', body: 'Body 2' + body, stared: false},
+      {id: 3, active: true, author: 'Author 3', category_id: 2, preamble: 'Preamble', body: 'Body 3' + body, stared: false},
+      {id: 4, active: true, author: 'Author 4', category_id: 3, preamble: 'Preamble', body: 'Body 4' + body, stared: false},
+      {id: 5, active: true, author: 'Author 5', category_id: 3, preamble: 'Preamble', body: 'Body 5' + body, stared: false},
+      {id: 6, active: true, author: 'Author 6', category_id: 3, preamble: 'Preamble', body: 'Body 6' + body, stared: false},
     ]
   }
 

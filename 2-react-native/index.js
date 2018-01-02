@@ -11,6 +11,8 @@ import {
   View,
 } from 'react-native'
 
+import {Link} from 'react-router-native'
+
 import Container from './container'
 import List from './components/list'
 import Category from './components/category'
@@ -27,6 +29,8 @@ global.Slider = Slider
 global.Text = Text
 global.TouchableHighlight = TouchableHighlight
 global.View = View
+
+global.Link = Link
 
 global.List = List
 global.Category = Category

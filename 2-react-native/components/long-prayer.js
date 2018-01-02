@@ -54,7 +54,7 @@ export default class LongPrayer extends Component {
     // var height = s.Height / 2 - 35
     // var left   = s.Width * 21 / 52 - 122
 
-    return <View style={[s.flex, s.relative]}>
+    return <View style={[s.relative]}>
       {this.renderWatermark()}
 
       <ScrollView style={[]} onScroll={this.fadeWatermark}>
