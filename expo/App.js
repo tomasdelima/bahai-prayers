@@ -1,15 +1,24 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {observer} from 'mobx-react/native'
+
 require('./Import')
 
+@observer
 export default class App extends React.Component {
-  componentDidMount () {
-    new Data().load()
+  constructor () {
+    super()
+    global.store = new Data()
+    store.load().then(() => {
+      console.log(store.languages)
+    })
   }
 
   render() {
-    return <View>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+    return <ScrollView>
+      {store.languages.map((language) => <View key={language.Id}>
+        <Text>{language.Name}</Text>
+        <Image source={{uri: language.FlagLink}} style={{width: 15, height: 10}}/>
+      </View>)}
+    </ScrollView>
   }
 }
