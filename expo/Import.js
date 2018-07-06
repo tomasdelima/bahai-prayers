@@ -4,3 +4,6 @@ import ReactNative from 'react-native';
 ["StyleSheet", "Text", "View", "ScrollView", "Image"].map(i => global[i] = ReactNative[i])
 
 global.Data = require('./Data').default
+
+global.s = require('./lib/Styles').default
+global.Flex = require('./lib/Flex').default

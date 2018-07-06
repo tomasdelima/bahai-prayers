@@ -14,11 +14,13 @@ export default class App extends React.Component {
   }
 
   render() {
-    return <ScrollView>
-      {store.languages.map((language) => <View key={language.Id}>
-        <Text>{language.Name}</Text>
-        <Image source={{uri: language.FlagLink}} style={{width: 15, height: 10}}/>
-      </View>)}
-    </ScrollView>
+    return <Flex high green center1 marginTop={s.statusBarHeight}>
+      <ScrollView style={[s.center1, s.high, s.blue]}>
+        {store.languages.map((language) => <Flex key={language.Id} row center>
+          <Flex red textAlignCenter center1>{language.Name}</Flex>
+          <Image source={{uri: language.FlagLink}} style={{width: 100, height: 80}}/>
+        </Flex>)}
+      </ScrollView>
+    </Flex>
   }
 }
