@@ -10,13 +10,18 @@ export default class Config extends React.Component {
   }
 
   load () {
-    AsyncStorage.getItem("data")
-      .then((result) => {
-        console.log("Loaded configs")
-        var obj = JSON.parse(result)
+    AsyncStorage.getItem("data").then((result) => {
+      console.log("Loaded configs")
+      var obj = JSON.parse(result)
+
+      if (!obj) {
+        console.log("No configurations detected: loading data from API")
+        new ApiClient().initialLoad()
+      } else {
         Object.keys(obj).map((k) => store[k] = obj[k])
         store.loaded = true
-      })
+      }
+    })
   }
 
   save () {

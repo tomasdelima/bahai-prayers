@@ -9,8 +9,7 @@ export default class App extends React.Component {
   constructor () {
     super()
     global.store = new Data()
-    this.config = new Config()
-    this.config.load()
+    new Config().load()
   }
 
   render() {
