@@ -9,12 +9,12 @@ export default class Config extends React.Component {
     autorun(this.save)
   }
 
-  load () {
+  load (forceInitialLoad) {
     AsyncStorage.getItem("data").then((result) => {
-      console.log("Loaded configs")
       var obj = JSON.parse(result)
+      console.log("Loaded configs: " + Object.keys(obj).map(k => k + (obj[k].length ? " (" + obj[k].length + ")" : "")).join(", "))
 
-      if (!obj) {
+      if (!obj || forceInitialLoad) {
         console.log("No configurations detected: loading data from API")
         new ApiClient().initialLoad()
       } else {

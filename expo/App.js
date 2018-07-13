@@ -14,8 +14,7 @@ export default class App extends React.Component {
 
   render() {
     return store.loaded && <Flex high white center1 marginTop={s.statusBarHeight}>
-      <Flex>{store.language.Name}</Flex>
-      <LanguageSelect/>
+      <Tags/>
     </Flex>
   }
 }

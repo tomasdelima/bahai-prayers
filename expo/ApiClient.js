@@ -1,8 +1,8 @@
 export default class ApiClient {
   url = {
     languages:         () => "https://bahaiprayers.net/api/prayer/Languages",
-    tags:    (languageId) => "https://bahaiprayers.net/api/prayer/prayersystembylanguage?html=true&languageid=" + languageId,
-    prayers: (languageId) => "https://bahaiprayers.net/api/prayer/tags?languageid=" + languageId,
+    tags:    (languageId) => "https://bahaiprayers.net/api/prayer/tags?languageid=" + languageId,
+    prayers: (languageId) => "https://bahaiprayers.net/api/prayer/prayersystembylanguage?languageid=" + languageId,
   }
 
   initialLoad () {
