@@ -1,8 +1,6 @@
 import React from 'react'
 import {observer} from 'mobx-react/native'
 
-require('./Import')
-
 @observer
 export default class LanguageSelect extends React.Component {
   constructor () {

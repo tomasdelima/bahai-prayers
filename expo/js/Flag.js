@@ -1,8 +1,6 @@
 import React from 'react'
 import {observer} from 'mobx-react/native'
 
-require('./Import')
-
 export default class Flag extends React.Component {
   constructor () {
     super()
