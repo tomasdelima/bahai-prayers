@@ -20,30 +20,21 @@ export default class ApiClient {
   load (resource, options) {
     console.log("Loading " + resource)
 
+    var authors = {
+      1: "Bahá'u'lláh",
+      2: "O Báb",
+      3: "'Abdu'l-Bahá",
+    }
+
     return Axios.get(this.url[resource](options)).then(response => {
       console.log("Loaded " + resource)
-      store[resource] = response.data
-    })
-  }
-
-  loadLanguages () {
-    console.log("Loading languages")
-    return Axios.get(this.url.languages()).then(response => {
-      store.languages = response.data
-    })
-  }
-
-  loadTags (languageId) {
-    console.log("Loading tags")
-    return Axios.get(this.url.tags(languageId)).then(response => {
-      store.tags = response.data
-    })
-  }
-
-  loadPrayers (languageId) {
-    console.log("Loading prayers")
-    return Axios.get(this.url.prayers(languageId)).then(response => {
-      store.prayers = response.data
+      if (resource == "prayers") {
+        var prayers = response.data.Prayers
+        prayers.map(p => Object.assign(p, {Author: authors[p.AuthorId]}))
+        store[resource] = prayers
+      } else {
+        store[resource] = response.data
+      }
     })
   }
 }

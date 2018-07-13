@@ -1,6 +1,6 @@
 import React from 'react'
-import {observer} from 'mobx-react/native'
-import {autorun} from 'mobx'
+import { observer } from 'mobx-react/native'
+import { autorun } from 'mobx'
 
 require('./Import')
 
@@ -13,8 +13,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    return store.loaded && <Flex high white center1 marginTop={s.statusBarHeight}>
-      <Tags/>
-    </Flex>
+    return store.loaded && <Navigator/>
   }
 }
