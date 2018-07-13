@@ -4,9 +4,12 @@ export default class Store {
   @observable languages = []
   @observable language = {}
   @observable tags = []
-  @observable kind = "GENERAL"
   @observable prayers = []
   @observable loaded = false
+
+  // Transient observables
+  @observable kind = "GENERAL"
+  @observable prayerId
 
   @computed get all () {
     return {

@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default class Tag extends React.Component {
+export default class Prayer extends React.Component {
   render() {
     return <Flex padding={10} onPress={() => {}}>
-      {this.props.tag.Name}
+      {this.props.prayer.Text}
     </Flex>
   }
 }
