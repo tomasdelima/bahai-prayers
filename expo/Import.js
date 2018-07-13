@@ -6,7 +6,7 @@ import ReactNative from 'react-native';
 global.Config = require('./Config').default
 global.ApiClient = require('./ApiClient').default
 
-global.Data = require('./js/Data').default
+global.Store = require('./js/Store').default
 global.LanguageSelect = require('./js/LanguageSelect').default
 global.Flag = require('./js/Flag').default
 

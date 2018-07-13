@@ -1,6 +1,6 @@
 import {computed, observable} from 'mobx'
 
-export default class Data {
+export default class Store {
   @observable languages = []
   @observable language = {}
   @observable tags = []

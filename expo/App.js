@@ -8,7 +8,7 @@ require('./Import')
 export default class App extends React.Component {
   constructor () {
     super()
-    global.store = new Data()
+    global.store = new Store()
     new Config().load()
   }
 
