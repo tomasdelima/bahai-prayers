@@ -1,10 +1,132 @@
 import {Dimensions, StatusBar} from 'react-native'
 
-var statusBarHeight = StatusBar.currentHeight
-var windowHeight = Dimensions.get('window').height
-var windowWidth  = Dimensions.get('window').width
+global.statusBarHeight = StatusBar.currentHeight
+global.Height = Dimensions.get('window').height
+global.Width  = Dimensions.get('window').width
+global.rgba = (r, g, b, a) => "rgba("+r+","+g+","+b+","+a+")"
+
+global.theme = ["white", "red", "green", "black"]
+
+var or = (a, b, c) => {
+  if (a || a === 0) return a
+  if (b || b === 0) return b
+  return c
+}
 
 export default {
+  // Positioning
+  relative: {position: "relative"},
+  absolute: {position: "absolute"},
+  fixed:    {position: "fixed"},
+
+  // Display
+  block:  {display: "block"},
+  inline: {display: "inline-block"},
+  hidden: {display: "none"},
+  flex:   {display: 1},
+
+  // Flex
+  wrap:          {flexWrap: "wrap"},
+  row:           {flexDirection: "row"},
+  rowReverse:    {flexDirection: "row-reverse"},
+  column:        {flexDirection: "column"},
+  columnReverse: {flexDirection: "column-reverse"},
+  spacedOut:     {justifyContent: "space-around"},
+  spacedIn:      {justifyContent: "space-between"},
+  center1:       {justifyContent: "center"},
+  center2:       {alignItems: "center"},
+  centerSelf:    {alignSelf: "center"},
+  stretch1:      {justifyContent: "stretch"},
+  stretch2:      {alignItems: "stretch"},
+  stretch:       {alignItems: "stretch"},
+  stretchSelf:   {alignSelf: "stretch"},
+  start1:        {justifyContent: "flex-start"},
+  start2:        {alignItems: "flex-start"},
+  startSelf:     {alignSelf: "flex-start"},
+  end1:          {justifyContent: "flex-end"},
+  end2:          {alignItems: "flex-end"},
+  endSelf:       {alignSelf: "flex-end"},
+  shrink:        (x) => ({flexShrink: x || -1}),
+  grow:          (x) => ({flexGrow: x || 1}),
+
+  // Backgrounds
+  opaqueBG: (x) => ({backgroundColor: rgba(0, 0, 0, x)}),
+  transparentBG: {backgroundColor: "transparent"},
+  lightGrayBG:   {backgroundColor: "#E1E1E3"},
+  whiteBG:       {backgroundColor: "white"},
+  red:           {backgroundColor: rgba(255, 0, 0, 0.2)},
+
+  bg0: {backgroundColor: theme[0]},
+  bg1: {backgroundColor: theme[1]},
+  bg2: {backgroundColor: theme[2]},
+  bg3: {backgroundColor: theme[3]},
+
+  // Font colors
+  color0: {color: theme[0]},
+  color1: {color: theme[1]},
+  color2: {color: theme[2]},
+  color3: {color: theme[3]},
+
+  // Text
+  noWrap:        {whiteSpace: "nowrap"},
+  wrapWord:      {wordWrap: "break-word"},
+  noDecoration: {textDecoration: "none"},
+  bold:         {fontWeight: "bold"},
+  underline:    {textDecoration: "underline"},
+  italic:       {fontStyle: "italic"},
+  justify:      {textAlign: "justify"},
+  alignCenter:  {textAlign: "center"},
+  alignRight:   {textAlign: "right"},
+  alignLeft:    {textAlign: "left"},
+  indent:       (x) => ({textIndent: x}),
+  size:         (x) => ({fontSize: x}),
+  lineHeight:   (x) => ({lineHeight: x}),
+
+  // Dimensioning
+  fullscreen: {width: Width, height: Height},
+  wide:       (x=1) => ({width:    x <= 1 ? 100*x+"%" : x}),
+  minWidth:   (x=1) => ({minWidth: x <= 1 ? 100*x+"%" : x}),
+  maxWidth:   (x=1) => ({maxWidth: x <= 1 ? 100*x+"%" : x}),
+  high:       (x=1) => ({height:   x <= 1 ? 100*x+"%" : x}),
+  rect:       (x) => {x = x || {}; return [s.wide(x.w), s.high(x.h)]},
+  top:        (x) => ({top:    x || 0}),
+  bottom:     (x) => ({bottom: x || 0}),
+  left:       (x) => ({left:   x || 0}),
+  right:      (x) => ({right:  x || 0}),
+  square:     (x) => ({width: x, height: x}),
+  circle:     (x) => ({borderRadius: 1000, width: x, height: x}),
+
+  // Distancing
+  padding:       (x, y, w, z) => ({paddingTop: x, paddingRight: or(y, x), paddingBottom: or(w, x), paddingLeft: or(z, y, x)}),
+  paddingH:      (x) => ({paddingLeft: x, paddingRight: x}),
+  paddingV:      (x) => ({paddingTop: x, paddingBottom: x}),
+  paddingTop:    (x) => ({paddingTop: x}),
+  paddingBottom: (x) => ({paddingBottom: x}),
+  paddingRight:  (x) => ({paddingRight: x}),
+  paddingLeft:   (x) => ({paddingLeft: x}),
+
+  margins:       (x) => ({marginTop: x[0], marginRight: or(x[1], x[0]), marginBottom: or(x[2], x[0]), marginLeft: or(x[2], x[1], x[0])}),
+  marginH:       (x) => ({marginLeft: x, marginRight: x}),
+  marginV:       (x) => ({marginTop: x, marginBottom: x}),
+  marginTop:     (x) => ({marginTop: x}),
+  marginBottom:  (x) => ({marginBottom: x}),
+  marginRight:   (x) => ({marginRight: x}),
+  marginLeft:    (x) => ({marginLeft: x}),
+
+  // Others
+  scroll:   {overflow: "auto"},
+  pointer:  {cursor: "pointer"},
+  noBorder: {border: 0},
+  border:   (x, y) => ({borderWidth: x, borderColor: y}),
+  radius:   (x) => ({borderRadius: x}),
+  bgImage:  (x) => ({backgroundImage: "url(" + x + ")"}),
+  zindex:   (x) => ({zIndex: x}),
+  opacity:  (x) => ({opacity: x}),
+
+
+
+
+
   // General: simple
   empty:        { },
   row:          { flexDirection: 'row' },
@@ -34,11 +156,11 @@ export default {
   green:        { backgroundColor: 'rgba(0, 255, 0, 0.2)' },
   gray:         { backgroundColor: 'rgba(128, 128, 128, 0.2)' },
   white:        { backgroundColor: 'white' },
-  high:         { height: windowHeight },
-  wide:         { width: windowWidth },
+  // high:         { height: Height },
+  // wide:         { width: Width },
   noFontFamily: { fontFamily: '' },
-  heightForWidth: { width: windowHeight },
-  widthForHeight: { height: windowWidth },
+  heightForWidth: { width: Height },
+  widthForHeight: { height: Width },
   statusBarHeight,
   color: (c) => ({color: c}),
 
@@ -55,8 +177,8 @@ export default {
   },
   absolute: {
     position: 'absolute',
-    height: windowHeight,
-    width: windowWidth,
+    height: Height,
+    width: Width,
     top: 0,
     left: 0,
   },
@@ -104,7 +226,7 @@ export default {
     height: 50
   },
   letterCount: {
-    width: windowWidth - 200,
+    width: Width - 200,
     backgroundColor: 'red',
   },
   scrollView: {
@@ -121,7 +243,7 @@ export default {
   },
   watermark: {
     position: 'absolute',
-    fontSize: windowWidth*0.4,
+    fontSize: Width*0.4,
     fontFamily: 'ruritania',
     color: 'rgba(128, 128, 128, 0.25)',
   },

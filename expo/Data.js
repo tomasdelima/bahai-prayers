@@ -1,9 +1,11 @@
 import {observable} from 'mobx'
 
 export default class Data {
-  @observable languages = [{Id: 1, Name: "Portugues", FlagLink: "https://BahaiPrayers.net/Content/Images/Flags/Português (BR).png"}]
+  @observable languages = [{Id: 1, Name: "Portugues", English: "Portuguese", FlagLink: "https://BahaiPrayers.net/Content/Images/Flags/Português (BR).png", Culture: "br"}]
+  @observable language = {}
   @observable tags = []
   @observable prayers = []
+  @observable flags = []
 
   url = {
     languages:         () => "https://bahaiprayers.net/api/prayer/Languages",
