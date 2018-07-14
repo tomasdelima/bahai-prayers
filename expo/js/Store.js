@@ -1,4 +1,4 @@
-import {computed, observable} from 'mobx'
+import { computed, observable } from 'mobx'
 
 export default class Store {
   @observable languages = []
@@ -8,6 +8,7 @@ export default class Store {
   @observable loaded = false
 
   // Transient observables
+  @observable route = {}
   @observable kind = "GENERAL"
   @observable prayerId
 

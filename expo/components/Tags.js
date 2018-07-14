@@ -1,10 +1,10 @@
 import React from 'react'
-import {observer} from 'mobx-react/native'
+import { observer } from 'mobx-react/native'
 
 @observer
 export default class Tags extends React.Component {
   navigateToPrayers (tagId) {
-    this.props.navigation.navigate("Prayers", {tagId: tagId})
+    store.route = {screen: "Prayers", params: {tagId: tagId}}
   }
 
   render() {

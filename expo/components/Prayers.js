@@ -1,10 +1,10 @@
 import React from 'react'
-import {observer} from 'mobx-react/native'
+import { observer } from 'mobx-react/native'
 
 @observer
 export default class Prayers extends React.Component {
   navigateToPrayer (prayerId) {
-    this.props.navigation.navigate("Prayer", {prayerId: prayerId})
+    store.route = {screen: "Prayer", params: {prayerId: prayerId}}
   }
 
   render() {
@@ -15,8 +15,9 @@ export default class Prayers extends React.Component {
 
     return <Container>
       {prayers.map(prayer =>
-        <Flex numberOfLines={1} padding={10} onPress={() => this.navigateToPrayer(prayer.Id)} key={prayer.Id}>
-          {prayer.Text.replace("\n", " ")}
+        <Flex key={prayer.Id} onPress={() => this.navigateToPrayer(prayer.Id)}>
+          <Flex numberOfLines={1} padding={10}>{prayer.Text.replace(/[\s\#\*]+/g, " ")}</Flex>
+          <Flex padding={10}>{prayer.Author}</Flex>
         </Flex>
       )}
     </Container>

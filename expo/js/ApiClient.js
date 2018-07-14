@@ -21,8 +21,8 @@ export default class ApiClient {
     console.log("Loading " + resource)
 
     var authors = {
-      1: "Bahá'u'lláh",
-      2: "O Báb",
+      1: "O Báb",
+      2: "Bahá'u'lláh",
       3: "'Abdu'l-Bahá",
     }
 

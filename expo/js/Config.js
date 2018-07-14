@@ -1,6 +1,6 @@
 import React from 'react'
-import {autorun, reaction, when} from 'mobx'
-import {observer} from 'mobx-react/native'
+import { autorun, reaction, when } from 'mobx'
+import { observer } from 'mobx-react/native'
 
 @observer
 export default class Config extends React.Component {

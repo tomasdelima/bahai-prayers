@@ -24,7 +24,7 @@ export default class Flex extends Component {
     )
 
     if (this.props.onPress) {
-      return <TouchableHighlight onPress={this.props.onPress}>{component}</TouchableHighlight>
+      return <TouchableOpacity onPress={this.props.onPress}>{component}</TouchableOpacity>
     } else {
       return component
     }
