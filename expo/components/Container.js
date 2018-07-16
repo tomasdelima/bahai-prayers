@@ -9,7 +9,7 @@ export default class Container extends React.Component {
   }
 
   render () {
-    return <ScrollView containerStyle={[s.high(),s.red]} style={[s.wide(), s.white, s.marginTop(statusBarHeight)]}>
+    return <ScrollView containerStyle={[s.high(),s.red]} style={[s.wide(), s.white, s.marginTop(statusBarHeight), s.paddings(10)]}>
       {this.props.children}
     </ScrollView>
   }

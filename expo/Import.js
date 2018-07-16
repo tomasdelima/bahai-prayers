@@ -1,7 +1,7 @@
 global.Axios = require('axios').default
 
 import ReactNative from 'react-native';
-["BackHandler", "AsyncStorage", "StyleSheet", "Text", "TouchableHighlight", "TouchableOpacity", "View", "ScrollView", "Image"].map(i => global[i] = ReactNative[i])
+["BackHandler", "Image", "AsyncStorage", "StyleSheet", "Text", "TouchableHighlight", "TouchableOpacity", "View", "ScrollView", "Image"].map(i => global[i] = ReactNative[i])
 
 global.Navigator = require('./js/Navigator').default
 global.Config    = require('./js/Config').default

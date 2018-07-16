@@ -9,7 +9,9 @@ export default class Store {
 
   // Transient observables
   @observable route = {}
-  @observable kind = "GENERAL"
+  // @observable kind = "GENERAL"
+  // @observable kind = "OCCASSIONAL"
+  @observable kind = "OBLIGATORY"
   @observable prayerId
 
   @computed get all () {
