@@ -3,8 +3,7 @@ import React, { Component } from 'react'
 
 export default class Flex extends Component {
   render () {
-
-    var style = (this.props.children && this.props.children.constructor.name == "String") ? [] : [s.flex, s.center1, s.center2]
+    var style = (this.props.children && this.props.children.constructor.name == "String") ? [c.text] : [s.flex, s.center1, s.center2]
 
     Object.keys(this.props).map(prop => {
       if (s[prop]) {

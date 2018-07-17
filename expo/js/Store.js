@@ -1,18 +1,20 @@
 import { computed, observable } from 'mobx'
 
 export default class Store {
-  @observable languages = []
-  @observable language = {}
-  @observable tags = []
-  @observable prayers = []
-  @observable loaded = false
+  // Persistent observables
+    @observable languages = []
+    @observable language = {}
+    @observable tags = []
+    @observable prayers = []
+    @observable theme
 
   // Transient observables
-  @observable route = {}
-  // @observable kind = "GENERAL"
-  // @observable kind = "OCCASSIONAL"
-  @observable kind = "OBLIGATORY"
-  @observable prayerId
+    @observable loaded = false
+    @observable route = {}
+    @observable prayerId
+    @observable kind = "GENERAL"
+    // @observable kind = "OCCASSIONAL"
+    // @observable kind = "OBLIGATORY"
 
   @computed get all () {
     return {
@@ -20,6 +22,7 @@ export default class Store {
       language: this.language,
       tags: this.tags,
       prayers: this.prayers,
+      theme: this.theme,
     }
   }
 }

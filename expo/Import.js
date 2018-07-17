@@ -14,5 +14,6 @@ global.Tags           = require('./components/Tags').default
 global.Prayers        = require('./components/Prayers').default
 global.Prayer         = require('./components/Prayer').default
 
-global.s    = require('./lib/Styles').default
-global.Flex = require('./lib/Flex').default
+global.s     = require('./lib/Styles').default
+global.Theme = require('./lib/Theme').default
+global.Flex  = require('./lib/Flex').default
