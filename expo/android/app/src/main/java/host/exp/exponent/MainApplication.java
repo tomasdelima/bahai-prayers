@@ -10,6 +10,7 @@ import expolib_v1.okhttp3.OkHttpClient;
 
 // Needed for `react-native link`
 // import com.facebook.react.ReactApplication;
+import cl.json.RNSharePackage;
 
 public class MainApplication extends ExpoApplication {
 
@@ -21,11 +22,12 @@ public class MainApplication extends ExpoApplication {
   // Needed for `react-native link`
   public List<ReactPackage> getPackages() {
     return Arrays.<ReactPackage>asList(
-        // Add your own packages here!
-        // TODO: add native modules!
+      // Add your own packages here!
+      // TODO: add native modules!
 
-        // Needed for `react-native link`
-        // new MainReactPackage()
+      // Needed for `react-native link`
+      // new MainReactPackage(),
+      new RNSharePackage()
     );
   }
 
