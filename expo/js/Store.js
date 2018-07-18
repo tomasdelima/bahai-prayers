@@ -12,9 +12,19 @@ export default class Store {
     @observable loaded = false
     @observable route = {}
     @observable prayerId
+    @observable searchHistory = []
+    @observable searchResultsHistory = []
     @observable kind = "GENERAL"
     // @observable kind = "OCCASSIONAL"
     // @observable kind = "OBLIGATORY"
+
+  @computed get searchResults () {
+    return this.searchResultsHistory.slice(-1)[0]
+  }
+
+  @computed get searchKeywords () {
+    return this.searchHistory.slice(-1)[0]
+  }
 
   @computed get all () {
     return {

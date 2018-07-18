@@ -11,7 +11,6 @@ export default class App extends React.Component {
 
     global.store = new Store()
 
-
     new Config().load(() => {
       var pallettes = {
         light: {

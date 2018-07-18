@@ -72,6 +72,12 @@ android {
     debug {
       storeFile file('../debug.keystore')
     }
+    release {
+        storeFile file(BAHAI_PRAYERS_RELEASE_STORE_FILE)
+        storePassword BAHAI_PRAYERS_RELEASE_STORE_PASSWORD
+        keyAlias BAHAI_PRAYERS_RELEASE_KEY_ALIAS
+        keyPassword BAHAI_PRAYERS_RELEASE_KEY_PASSWORD
+    }
   }
   lintOptions {
     abortOnError false
@@ -165,12 +171,12 @@ dependencies {
   testCompile 'org.mockito:mockito-core:1.10.19'
   testCompile 'org.robolectric:robolectric:3.8'
 
-  
+
   compile('host.exp.exponent:expoview:28.0.0@aar') {
     transitive = true
   }
-  
-  
+
+
 }
 
 // This has to be down here for some reason

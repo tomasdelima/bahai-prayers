@@ -15,7 +15,8 @@ export default class Config extends React.Component {
       console.log("Loaded configs: " + Object.keys(obj).map(k => k + (obj[k].constructor.name == "Array" ? " (" + obj[k].length + ")" : "")).join(", "))
 
       if (!obj || forceInitialLoad) {
-        console.log((!obj && "No configurations detected: ") + "Loading data from API")
+        console.log((!obj ? "No configurations detected: " : "") + "Loading data from API")
+        callBack && callBack()
         new ApiClient().initialLoad()
       } else {
         Object.keys(obj).map((k) => store[k] = obj[k])

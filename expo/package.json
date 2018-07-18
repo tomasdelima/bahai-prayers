@@ -6,9 +6,10 @@
     "expo": "^28.0.0",
     "mobx": "^4.3.1",
     "mobx-react": "^5.2.3",
-    "react-native-share": "^1.0.17",
+    "normalize-strings": "^1.1.0",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-28.0.0.tar.gz",
+    "react-native-share": "^1.0.17",
     "react-navigation": "^2.6.2"
   },
   "devDependencies": {

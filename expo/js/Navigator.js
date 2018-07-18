@@ -16,6 +16,8 @@ var Navigator = createStackNavigator({
 })
 
 Navigator.prototype.componentDidMount = function () {
+  global.back = this._navigation.pop
+
   autorun(() => {
     if (store.route.goBack) {
       if (this._navigation.state.routes.length == 1) {
