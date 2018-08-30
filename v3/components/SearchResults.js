@@ -5,16 +5,13 @@ class SearchResults extends React.Component {
     return (item.Author ? Prayers : Tags).renderItem(item)
   }
 
-  componentDidMount () {console.log('componentDidMount')}
-  componentDidUpdate () {console.log('componentDidUpdate')}
-  componentWillMount () {console.log('componentWillMount')}
-  componentWillUnmount () {console.log('componentWillUnmount')}
-
   render() {
-    return <Container noTopBar>
-      <Flex>{"Resultado da pesquisa: " + store.searchResults.length}</Flex>
-      {store.searchResults.map(item => this.renderItem(item))}
-    </Container>
+    return <ScrollView style={[s.paddings(10)]}>
+      <View>
+        <Flex>{"Resultado da pesquisa: " + store.searchResults.length}</Flex>
+        {store.searchResults.map(item => this.renderItem(item))}
+      </View>
+    </ScrollView>
   }
 }
 

@@ -41,14 +41,15 @@ class Search extends React.Component {
   }
 
   render() {
-    return <View>
+    return <View style={[s.paddings(10)]}>
       <View>
         <TextInput
           autoFocus={this.props.autoFocus}
-          style={[s.flex, s.size(20), s.high(50)]}
+          style={[s.flex, s.size(15), s.lightGrayBG, s.paddings(10, 15), s.radius(50)]}
           value={store.searchKeywords}
           onChangeText={this.searchPrayers.bind(this)}
           keyboardType="web-search"
+          placeholder="Busca"
         />
       </View>
 

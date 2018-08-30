@@ -40,10 +40,8 @@ class Prayers extends React.Component {
     var tag = store.tags.filter(tag => tag.Id == this.props.navigation.state.params.tagId)[0]
     var prayers = store.prayers.filter((prayer) => prayer.Tags.filter(t => t.Id == tag.Id).length == 1)
 
-    return <Container>
-      <Search autoFocus={false} filterByTag={tag.Id}>
-        {prayers.map(prayer => Prayers.renderItem(prayer, true, tag.Name))}
-      </Search>
+    return <Container tagId={tag.Id}>
+      {prayers.map(prayer => Prayers.renderItem(prayer, true, tag.Name))}
     </Container>
   }
 }

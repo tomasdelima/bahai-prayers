@@ -8,13 +8,22 @@ class Container extends React.Component {
     })
   }
 
-  render () {
-    return <ScrollView containerStyle={[s.high()]} style={[s.wide(), bg.primary, s.marginTop(statusBarHeight)]}>
-      {!this.props.noTopBar && <TopBar />}
+  scrollToBody (event) {
+    !this.didScroll && this.refs.scroller.scrollTo({x: 0, y: event.nativeEvent.layout.y, animated: false})
+    this.didScroll = true
+  }
 
-      <View style={[s.paddings(10)]}>
-        {this.props.children}
-      </View>
+  render () {
+    return <ScrollView ref="scroller" containerStyle={[s.high()]} style={[s.wide(), bg.primary, s.marginTop(statusBarHeight)]}>
+      <Search autoFocus={false} filterByTag={this.props.tagId}>
+        <View onLayout={this.scrollToBody.bind(this)}>
+          {!this.props.noTopBar && <TopBar />}
+
+          <View style={[s.paddings(10)]}>
+            {this.props.children}
+          </View>
+        </View>
+      </Search>
     </ScrollView>
   }
 }

@@ -19,9 +19,7 @@ class Tags extends React.Component {
     var tags = store.tags.filter(t => t.Kind == store.kind).sort((a, b) => a.Name > b.Name ? 1 : -1)
 
     return <Container>
-      <Search autoFocus={false}>
-        {tags.map(tag => Tags.renderItem(tag))}
-      </Search>
+      {tags.map(tag => Tags.renderItem(tag))}
     </Container>
   }
 }
