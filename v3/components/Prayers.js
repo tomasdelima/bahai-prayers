@@ -1,5 +1,4 @@
 import React from 'react'
-// import { FontAwesome } from '@expo/vector-icons'
 
 class Prayers extends React.Component {
   static navigateToPrayer (prayerId) {
@@ -24,7 +23,7 @@ class Prayers extends React.Component {
       <Flex row>
         <Flex wide={100} grow={1} alignRight>{Prayers.wordCount(prayer.Text) + " palavras"}</Flex>
         <Flex square={50} onPress={() => Prayers.toggleFavoritePrayer(prayer)}>
-          {/*<FontAwesome name={"star" + (prayer.Favorite ? "" : "-o")} size={25} color={prayer.Favorite ? "gold" : "black"} />*/}
+          <FontAwesome name={"star" + (prayer.Favorite ? "" : "-o")} size={25} color={prayer.Favorite ? "gold" : "black"} />
         </Flex>
         <Flex wide={100} grow={1}>{prayer.Author}</Flex>
       </Flex>
@@ -38,7 +37,7 @@ class Prayers extends React.Component {
     var prayers = store.prayers.filter((prayer) => prayer.Tags.filter(t => t.Id == tag.Id).length == 1)
 
     return <Container>
-      <Search autoFocus filterByTag={tag.Id}>
+      <Search autoFocus={false} filterByTag={tag.Id}>
         <Flex>{tag.Name}</Flex>
 
         {prayers.map(prayer => Prayers.renderItem(prayer, true))}

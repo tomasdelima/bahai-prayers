@@ -1,6 +1,5 @@
 import React from 'react'
-// import { FontAwesome, SimpleLineIcons } from '@expo/vector-icons'
-// import Share from 'react-native-share'
+import Share from 'react-native-share'
 
 class Prayer extends React.Component {
   constructor () {
@@ -21,12 +20,12 @@ class Prayer extends React.Component {
   }
 
   share () {
-    // Share.open({
-    //   title: "Compartilhando uma oração bahá'í",
-    //   message: '"' + this.prayer.Text.replace(/[\#\*]/g, " ").replace(/ +/g, " ").replace(/(^\s+|\s$)/g, "") + "\"\n\n—" + this.prayer.Author,
-    //   url: "",
-    //   subject: "Compartilhando uma oração bahá'í",
-    // })
+    Share.open({
+      title: "Compartilhando uma oração bahá'í",
+      message: '"' + this.prayer.Text.replace(/[\#\*]/g, " ").replace(/ +/g, " ").replace(/(^\s+|\s$)/g, "") + "\"\n\n—" + this.prayer.Author,
+      url: "",
+      subject: "Compartilhando uma oração bahá'í",
+    })
   }
 
   parseText () {
@@ -59,15 +58,15 @@ class Prayer extends React.Component {
 
         <Flex row margin={20} center2>
           <Flex onPress={this.share}>
-            {/*<SimpleLineIcons style={[s.wide(70), s.textAlignCenter, s.high(70), s.size(30)]} name='share' color={t.text} />*/}
+            <SimpleLineIcons style={[s.wide(70), s.textAlignCenter, s.high(70), s.size(30)]} name='share' color={t.text} />
           </Flex>
 
           <Flex onPress={this.toggleFavorite}>
-            {/*<FontAwesome     style={[s.wide(70), s.textAlignCenter, s.high(70), s.size(30)]} name={'star' + (this.prayer.Favorite ? '' : '-o')} color={this.prayer.Favorite ? "gold" : t.text} />*/}
+            <FontAwesome     style={[s.wide(70), s.textAlignCenter, s.high(70), s.size(30)]} name={'star' + (this.prayer.Favorite ? '' : '-o')} color={this.prayer.Favorite ? "gold" : t.text} />
           </Flex>
 
           <Flex onPress={this.toggleTheme}>
-            {/*<SimpleLineIcons style={[s.wide(70), s.textAlignCenter, s.high(70), s.size(30)]} name='bulb' color={t.text} />*/}
+            <SimpleLineIcons style={[s.wide(70), s.textAlignCenter, s.high(70), s.size(30)]} name='bulb' color={t.text} />
           </Flex>
         </Flex>
       </Flex>

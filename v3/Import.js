@@ -27,3 +27,6 @@ global.Prayer         = require('./components/Prayer').default
 global.s     = require('./lib/Styles').default
 global.Theme = require('./lib/Theme').default
 global.Flex  = require('./lib/Flex').default
+
+global.FontAwesome = require('react-native-vector-icons/FontAwesome').default
+global.SimpleLineIcons = require('react-native-vector-icons/SimpleLineIcons').default

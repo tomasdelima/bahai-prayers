@@ -1,6 +1,4 @@
 import React from 'react'
-// import { FontAwesome, SimpleLineIcons } from '@expo/vector-icons'
-// import Share from 'react-native-share'
 
 class SearchResults extends React.Component {
   renderItem (item) {

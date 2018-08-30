@@ -1,4 +1,4 @@
-import {View} from 'react-native'
+import { View } from 'react-native'
 import React, { Component } from 'react'
 
 export default class Flex extends Component {

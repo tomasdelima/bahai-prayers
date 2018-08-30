@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator, NavigationActions } from 'react-navigation'
-import { autorun, reaction, when, computed, observable } from 'mobx'
+// import { autorun, reaction, when, computed, observable } from 'mobx'
 
 import Tags from '../components/Tags'
 import Prayers from '../components/Prayers'

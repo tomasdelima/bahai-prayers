@@ -1,5 +1,4 @@
 import React from 'react'
-// import { observer } from 'mobx-react/native'
 
 class Tags extends React.Component {
   static navigateToPrayers (tagId) {
@@ -16,7 +15,7 @@ class Tags extends React.Component {
     var tags = store.tags.filter(t => t.Kind == store.kind).sort((a, b) => a.Name > b.Name ? 1 : -1)
 
     return <Container>
-      <Search autoFocus>
+      <Search autoFocus={false}>
         {tags.map(tag => Tags.renderItem(tag))}
       </Search>
     </Container>
