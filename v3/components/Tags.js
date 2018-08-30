@@ -1,12 +1,16 @@
 import React from 'react'
 
 class Tags extends React.Component {
-  static navigateToPrayers (tagId) {
-    store.route = {screen: "Prayers", params: {tagId: tagId}}
+  static navigateToPrayers (tag) {
+    store.route = {
+      screen: "Prayers",
+      name: tag.Name,
+      params: { tagId: tag.Id },
+    }
   }
 
   static renderItem (tag) {
-    return <Flex paddingV={20} onPress={() => Tags.navigateToPrayers(tag.Id)} key={tag.Id}>
+    return <Flex paddingV={20} onPress={() => Tags.navigateToPrayers(tag)} key={tag.Id}>
       {tag.Name}
     </Flex>
   }

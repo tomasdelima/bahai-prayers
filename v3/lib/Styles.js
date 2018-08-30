@@ -55,9 +55,11 @@ export default {
   lightGrayBG:   {backgroundColor: "#E1E1E3"},
   whiteBG:       {backgroundColor: "white"},
   red:           {backgroundColor: rgba(255, 0, 0, 0.2)},
-  red:           {backgroundColor: rgba(255, 0, 0, 0.2)},
   blue:          {backgroundColor: rgba(0, 0, 255, 0.2)},
   green:         {backgroundColor: rgba(0, 255, 0, 0.2)},
+  yellow:        {backgroundColor: rgba(255, 255, 0, 0.2)},
+  magenta:       {backgroundColor: rgba(255, 0, 255, 0.2)},
+  cyan:          {backgroundColor: rgba(0, 255, 255, 0.2)},
   gray:          {backgroundColor: rgba(128, 128, 128, 0.2)},
   white:         {backgroundColor: 'white'},
 

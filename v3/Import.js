@@ -16,13 +16,14 @@ global.Config    = require('./js/Config').default
 global.ApiClient = require('./js/ApiClient').default
 global.Store     = require('./js/Store').default
 
+global.Container      = require('./components/Container').default
 global.LanguageSelect = require('./components/LanguageSelect').default
+global.Prayer         = require('./components/Prayer').default
+global.Prayers        = require('./components/Prayers').default
 global.Search         = require('./components/Search').default
 global.SearchResults  = require('./components/SearchResults').default
-global.Container      = require('./components/Container').default
 global.Tags           = require('./components/Tags').default
-global.Prayers        = require('./components/Prayers').default
-global.Prayer         = require('./components/Prayer').default
+global.TopBar         = require('./components/TopBar').default
 
 global.s     = require('./lib/Styles').default
 global.Theme = require('./lib/Theme').default
@@ -30,3 +31,5 @@ global.Flex  = require('./lib/Flex').default
 
 global.FontAwesome = require('react-native-vector-icons/FontAwesome').default
 global.SimpleLineIcons = require('react-native-vector-icons/SimpleLineIcons').default
+
+log = function () { console.log.apply(console, arguments) }

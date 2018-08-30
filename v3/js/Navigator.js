@@ -1,6 +1,5 @@
 import React from 'react'
 import { createStackNavigator, NavigationActions } from 'react-navigation'
-// import { autorun, reaction, when, computed, observable } from 'mobx'
 
 import Tags from '../components/Tags'
 import Prayers from '../components/Prayers'
@@ -20,6 +19,8 @@ Navigator.prototype.componentDidMount = function () {
 
   autorun(() => {
     if (store.route.goBack) {
+      store.history.pop()
+
       if (this._navigation.state.routes.length == 1) {
         console.log("Goodbye!")
         BackHandler.exitApp()
@@ -28,6 +29,7 @@ Navigator.prototype.componentDidMount = function () {
         this._navigation.pop()
       }
     } else if (store.route.screen) {
+      store.history.push(store.route)
       console.log("Navigating to " + store.route.screen + " with params: " + JSON.stringify(store.route.params))
       this._navigation.navigate(store.route.screen, store.route.params)
     }

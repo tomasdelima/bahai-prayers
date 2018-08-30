@@ -11,7 +11,7 @@ class SearchResults extends React.Component {
   componentWillUnmount () {console.log('componentWillUnmount')}
 
   render() {
-    return <Container>
+    return <Container noTopBar>
       <Flex>{"Resultado da pesquisa: " + store.searchResults.length}</Flex>
       {store.searchResults.map(item => this.renderItem(item))}
     </Container>

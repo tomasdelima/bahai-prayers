@@ -1,8 +1,12 @@
 import React from 'react'
 
 class Prayers extends React.Component {
-  static navigateToPrayer (prayerId) {
-    store.route = {screen: "Prayer", params: {prayerId: prayerId}}
+  static navigateToPrayer (prayerId, tagName) {
+    store.route = {
+      screen: "Prayer",
+      name: "Oração",
+      params: {prayerId: prayerId},
+    }
   }
 
   static wordCount (text) {
@@ -16,8 +20,8 @@ class Prayers extends React.Component {
     })
   }
 
-  static renderItem (prayer, showImage) {
-    return <Flex key={prayer.Id} marginTop={5} onPress={() => Prayers.navigateToPrayer(prayer.Id)}>
+  static renderItem (prayer, showImage, tagName) {
+    return <Flex key={prayer.Id} marginTop={5} onPress={() => Prayers.navigateToPrayer(prayer.Id, tagName)}>
       <Flex numberOfLines={1}>{prayer.Text.replace(/[\s\#\*]+/g, " ")}</Flex>
 
       <Flex row>
@@ -38,9 +42,7 @@ class Prayers extends React.Component {
 
     return <Container>
       <Search autoFocus={false} filterByTag={tag.Id}>
-        <Flex>{tag.Name}</Flex>
-
-        {prayers.map(prayer => Prayers.renderItem(prayer, true))}
+        {prayers.map(prayer => Prayers.renderItem(prayer, true, tag.Name))}
       </Search>
     </Container>
   }
