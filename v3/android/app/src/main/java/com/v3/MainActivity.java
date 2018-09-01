@@ -1,4 +1,4 @@
-package com.v3;
+package com.ionicframework.prayers254063;
 
 import com.facebook.react.ReactActivity;
 

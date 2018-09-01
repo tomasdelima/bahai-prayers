@@ -1,10 +1,11 @@
-package com.v3;
+package com.ionicframework.prayers254063;
 
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
-import cl.json.RNSharePackage;
+// import cl.json.RNSharePackage;
+// import cl.json.ShareApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
+// public class MainApplication extends Application implements ShareApplication, ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -25,8 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new VectorIconsPackage(),
-            new RNSharePackage()
+            new VectorIconsPackage()//,
+            // new RNSharePackage()
       );
     }
 
@@ -46,4 +48,9 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
   }
+
+  // @Override
+  // public String getFileProviderAuthority() {
+  //   return "com.example.yourappidhere.provider";
+  // }
 }

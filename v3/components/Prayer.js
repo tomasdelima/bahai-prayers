@@ -1,5 +1,5 @@
 import React from 'react'
-import Share from 'react-native-share'
+// import Share from 'react-native-share'
 
 class Prayer extends React.Component {
   constructor () {
@@ -20,12 +20,12 @@ class Prayer extends React.Component {
   }
 
   share () {
-    Share.open({
-      title: "Compartilhando uma oração bahá'í",
-      message: '"' + this.prayer.Text.replace(/[\#\*]/g, " ").replace(/ +/g, " ").replace(/(^\s+|\s$)/g, "") + "\"\n\n—" + this.prayer.Author,
-      url: "",
-      subject: "Compartilhando uma oração bahá'í",
-    })
+    // Share.open({
+    //   title: "Compartilhando uma oração bahá'í",
+    //   message: '"' + this.prayer.Text.replace(/[\#\*]/g, " ").replace(/ +/g, " ").replace(/(^\s+|\s$)/g, "") + "\"\n\n—" + this.prayer.Author,
+    //   url: "",
+    //   subject: "Compartilhando uma oração bahá'í",
+    // })
   }
 
   parseText () {
