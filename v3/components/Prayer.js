@@ -31,7 +31,7 @@ class Prayer extends React.Component {
   parseText () {
     var lines = this.prayer.Text.split("\n")
 
-    return <Text style={c.text} selectable>{lines.map(l => {
+    return <Text style={[s.size(18), s.lineHeight(27), c.text]} selectable>{lines.map(l => {
       if (l.match(/##.+/)) return <Flex key={l} bold size={33}>{l.slice(2) + "\n\n"}</Flex>
       if (l.match(/#.+/)) return <Flex key={l} italic>{l.slice(1) + "\n\n"}</Flex>
       if (l.match(/\*.+?/)) return <Flex key={l} italic size={11} color={"gray"}>{l.slice(1) + "\n\n"}</Flex>

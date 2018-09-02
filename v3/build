@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ "$1" == "debug" ]; then
+  cd android && ./gradlew assembleDebug
+else if [ "$1" == "release" ]; then
+  echo "To test release version: react-native run-android --variant=release"
+  cd android && ./gradlew assembleRelease
+else
+  echo "Pass argument debug or release"
+fi
+fi
