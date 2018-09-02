@@ -8,30 +8,16 @@ class App extends React.Component {
 
     global.store = new Store()
 
-    new Config().load(() => {
-      var pallettes = {
-        light: {
-          text: "#222",
-          primary: "white",
-          secondary: "#0F0",
-          terciary: "red",
-        },
-        dark: {
-          text: "white",
-          primary: "black",
-          secondary: "green",
-          terciary: "red",
-        },
-      }
-
-      global.t  = new Theme({pallettes: pallettes, theme: store.theme})
-      global.c  = new Theme({pallettes: pallettes, theme: store.theme, wrapper: "color"})
-      global.bg = new Theme({pallettes: pallettes, theme: store.theme, wrapper: "background"})
+    new Config().load((config) => {
+      global.t  = new Theme({theme: store.theme})
+      global.c  = new Theme({theme: store.theme, wrapper: "color"})
+      global.bg = new Theme({theme: store.theme, wrapper: "background"})
+      require('./ImportAfterStore')
     })
   }
 
   render() {
-    return store.loaded && <Navigator/>
+    return store.loaded && <Menu/>
   }
 }
 export default observer(App, {})

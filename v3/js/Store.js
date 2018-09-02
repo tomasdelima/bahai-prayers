@@ -9,7 +9,7 @@ class Store {
   // Transient observables
     loaded = false
     route = {}
-    history = [{name: "Orações"}]
+    history = [{name: "Categorias"}]
     prayerId
     searchHistory = []
     searchResultsHistory = []

@@ -30,5 +30,4 @@ class TopBar extends React.Component {
   }
 }
 
-// export default observer(TopBar, {})
 export default TopBar

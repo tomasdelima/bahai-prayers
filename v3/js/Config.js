@@ -17,7 +17,7 @@ class Config extends React.Component {
       } else {
         console.log("Loaded configs: " + Object.keys(obj).map(k => k + (obj[k].constructor.name == "Array" ? " (" + obj[k].length + ")" : "")).join(", "))
         Object.keys(obj).map((k) => store[k] = obj[k])
-        callBack && callBack()
+        callBack && callBack(obj)
         store.loaded = true
       }
     })

@@ -14,12 +14,12 @@ class Container extends React.Component {
   }
 
   render () {
-    return <ScrollView ref="scroller" containerStyle={[s.high()]} style={[s.wide(), bg.primary, s.marginTop(statusBarHeight)]}>
+    return store.loaded && <ScrollView ref="scroller" containerStyle={[s.high()]} style={[s.wide(), bg.primary, s.marginTop(statusBarHeight)]}>
       <Search autoFocus={false} filterByTag={this.props.tagId}>
         <View onLayout={this.scrollToBody.bind(this)}>
           {!this.props.noTopBar && <TopBar />}
 
-          <View style={[s.paddings(10)]}>
+          <View style={[s.paddings(0, 10)]}>
             {this.props.children}
           </View>
         </View>
