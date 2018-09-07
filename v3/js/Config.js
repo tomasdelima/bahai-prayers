@@ -1,35 +1,29 @@
-import React from 'react'
-
-class Config extends React.Component {
+export default class Config {
   constructor () {
-    super()
     autorun(this.save)
   }
 
-  load (callBack, forceInitialLoad) {
+  load (callBack, reload) {
     return AsyncStorage.getItem("data").then((result) => {
       var obj = JSON.parse(result)
 
-      if (!obj || forceInitialLoad) {
+      if (!obj || reload) {
         console.log((!obj ? "No configurations detected: " : "") + "Loading data from API")
         callBack && callBack()
-        new ApiClient().initialLoad()
+        new ApiClient().loadAll()
       } else {
         console.log("Loaded configs: " + Object.keys(obj).map(k => k + (obj[k].constructor.name == "Array" ? " (" + obj[k].length + ")" : "")).join(", "))
         Object.keys(obj).map((k) => store[k] = obj[k])
         callBack && callBack(obj)
-        store.loaded = true
+        store.loading = false
       }
     })
   }
 
   save () {
-    if (store.loaded) {
+    if (!store.loading) {
       AsyncStorage.setItem("data", JSON.stringify(store.all))
         .then(() => console.log("Saved configs"))
     }
   }
 }
-
-export default decorate(Config, {
-})

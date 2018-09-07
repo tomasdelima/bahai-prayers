@@ -7,9 +7,9 @@ class Store {
     theme
 
   // Transient observables
-    loaded = false
+    loading = true
     route = {}
-    history = [{name: "Categorias"}]
+    history = [{}]
     prayerId
     searchHistory = []
     searchResultsHistory = []
@@ -43,7 +43,7 @@ export default decorate(Store, {
   prayers: observable,
   theme: observable,
   observables: observable,
-  loaded: observable,
+  loading: observable,
   route: observable,
   prayerId: observable,
   searchHistory: observable,

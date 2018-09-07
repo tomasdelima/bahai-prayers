@@ -37,8 +37,13 @@ class Prayers extends React.Component {
   }
 
   render() {
-    var tag = store.tags.filter(tag => tag.Id == this.props.navigation.state.params.tagId)[0]
-    var prayers = store.prayers.filter((prayer) => prayer.Tags.filter(t => t.Id == tag.Id).length == 1)
+    try {
+      var tag = store.tags.filter(tag => tag.Id == this.props.navigation.state.params.tagId)[0]
+      var prayers = store.prayers.filter((prayer) => prayer.Tags.filter(t => t.Id == tag.Id).length == 1)
+    } catch (e) {
+      var tag = {}
+      var prayers = []
+    }
 
     return <Container tagId={tag.Id}>
       {prayers.map(prayer => Prayers.renderItem(prayer, true, tag.Name))}

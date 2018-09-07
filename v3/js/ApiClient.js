@@ -5,16 +5,24 @@ export default class ApiClient {
     prayers: (languageId) => "https://bahaiprayers.net/api/prayer/prayersystembylanguage?languageid=" + languageId,
   }
 
-  initialLoad () {
+  loadAll () {
+    store.loading = true
+
     this.load('languages')
       .then(() => this.setDefaultLanguage())
       .then(() => this.load('tags', store.language.Id))
       .then(() => this.load('prayers', store.language.Id))
-      .then(() => store.loaded = true)
+      .then(() => {
+        store.history = observable([])
+        store.searchHistory = observable([])
+        store.searchResultsHistory = observable([])
+        store.route = {screen: "Tags"}
+        store.loading = false
+      })
   }
 
   setDefaultLanguage () {
-    store.language = store.languages.filter(l => l.Culture == "pt")[0]
+    store.language = store.language || store.languages.filter(l => l.Culture == "pt")[0]
   }
 
   load (resource, options) {
@@ -27,7 +35,6 @@ export default class ApiClient {
     }
 
     return Axios.get(this.url[resource](options)).then(response => {
-      console.log("Loaded " + resource)
       if (resource == "prayers") {
         var prayers = response.data.Prayers
         prayers.map(p => Object.assign(p, {Author: authors[p.AuthorId]}))

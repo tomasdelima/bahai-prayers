@@ -1,11 +1,7 @@
-class Theme {
-  text
-  primary
-  secondary
-  tertiary
-  quartenary
+import React from 'react'
 
-  pallettes = observable({
+class Theme {
+  themes = {
     default: {
       text: "black",
       primary: "white",
@@ -27,33 +23,31 @@ class Theme {
       tertiary: "red",
       quartenary: "yellow",
     },
-  })
-
-  constructor (options={}) {
-    this.pallettes = Object.assign({}, this.pallettes, options.pallettes)
-    this.wrapper = options.wrapper
-    this.setTheme(options.theme)
-    this.setTheme = this.setTheme.bind(this)
   }
 
-  setTheme (theme) {
-    if (theme && !this.pallettes[theme]) console.warn(theme,"WARNING: pallette not fount. Using default")
-    this.pallette = this.pallettes[theme] || this.pallettes["default"]
-
-    this.text      = this.wrap(this.pallette.text)
-    this.primary   = this.wrap(this.pallette.primary)
-    this.secondary = this.wrap(this.pallette.secondary)
-    this.tertiary  = this.wrap(this.pallette.tertiary)
-    this.quartenary  = this.wrap(this.pallette.quartenary)
+  get colors () {
+    return this.themes[store.theme]
   }
 
-  wrap (color) {
-    if (this.wrapper == "background") return {backgroundColor: color}
-    if (this.wrapper == "color") return {color: color}
-    return color
+  get text () {
+    return {color: this.themes[store.theme].text}
+  }
+
+  get bg1 () {
+    return {backgroundColor: this.themes[store.theme].primary}
+  }
+
+  get bg2 () {
+    return {backgroundColor: this.themes[store.theme].secondary}
+  }
+
+  get bg3 () {
+    return {backgroundColor: this.themes[store.theme].tertiary}
+  }
+
+  get bg4 () {
+    return {backgroundColor: this.themes[store.theme].quartenary}
   }
 }
 
-export default decorate(Theme, {
-  pallettes: observable,
-})
+export default decorate(Theme, {})

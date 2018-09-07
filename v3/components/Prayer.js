@@ -31,8 +31,8 @@ class Prayer extends React.Component {
   parseText () {
     var lines = this.prayer.Text.split("\n")
 
-    return <Text style={[s.size(18), s.lineHeight(27), c.text]} selectable>{lines.map(l => {
-      if (l.match(/##.+/)) return <Flex key={l} bold size={33}>{l.slice(2) + "\n\n"}</Flex>
+    return <Text style={[s.size(18), s.lineHeight(27), t.text]} selectable>{lines.map(l => {
+      if (l.match(/##.+/)) return <Flex key={l} bold size={20}>{l.slice(2) + "\n\n"}</Flex>
       if (l.match(/#.+/)) return <Flex key={l} italic>{l.slice(1) + "\n\n"}</Flex>
       if (l.match(/\*.+?/)) return <Flex key={l} italic size={11} color={"gray"}>{l.slice(1) + "\n\n"}</Flex>
       return l + "\n\n"
@@ -40,16 +40,16 @@ class Prayer extends React.Component {
   }
 
   toggleTheme () {
-    store.theme = store.theme == "dark" ? "light" : "dark"
-    bg.setTheme(store.theme)
-    c.setTheme(store.theme)
-    t.setTheme(store.theme)
+    // store.theme = store.theme == "dark" ? "light" : "dark"
+    // bg.setTheme(store.theme)
+    // c.setTheme(store.theme)
+    // t.setTheme(store.theme)
   }
 
   render() {
     this.prayer = store.prayers.filter(prayer => prayer.Id == this.props.navigation.state.params.prayerId)[0]
 
-    return <Container>
+    return <Container noSearch>
       <Flex column>
         {this.parseText()}
         <Flex selectable paddingV={10} size={17} style={{alignSelf: "flex-end"}}>{"— " + this.prayer.Author}</Flex>
