@@ -29,7 +29,7 @@ class Loading extends React.Component {
   }
 
   render () {
-    return store.loading && <View style={[s.high(), s.center1, s.center2]}>
+    return store.loading && <View style={[s.high(), s.center1, s.center2, t.bg1]}>
       <Animated.Image source={require("../assets/nine-pointed-star-light.png")} style={[s.square(80), this.rotation()]}/>
     </View>
   }

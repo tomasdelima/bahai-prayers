@@ -40,10 +40,7 @@ class Prayer extends React.Component {
   }
 
   toggleTheme () {
-    // store.theme = store.theme == "dark" ? "light" : "dark"
-    // bg.setTheme(store.theme)
-    // c.setTheme(store.theme)
-    // t.setTheme(store.theme)
+    goToTab("Settings")
   }
 
   render() {
@@ -58,15 +55,15 @@ class Prayer extends React.Component {
 
         <Flex row margin={20} center2>
           <Flex onPress={this.share}>
-            <SimpleLineIcons style={[s.wide(70), s.textAlignCenter, s.high(70), s.size(30)]} name='share' color={t.text} />
+            <SimpleLineIcons style={[s.wide(70), s.textAlignCenter, s.high(70), s.size(30)]} name='share' color={t.colors.text} />
           </Flex>
 
           <Flex onPress={this.toggleFavorite}>
-            <FontAwesome     style={[s.wide(70), s.textAlignCenter, s.high(70), s.size(30)]} name={'star' + (this.prayer.Favorite ? '' : '-o')} color={this.prayer.Favorite ? "gold" : t.text} />
+            <FontAwesome     style={[s.wide(70), s.textAlignCenter, s.high(70), s.size(30)]} name={'star' + (this.prayer.Favorite ? '' : '-o')} color={this.prayer.Favorite ? "gold" : t.colors.text} />
           </Flex>
 
           <Flex onPress={this.toggleTheme}>
-            <SimpleLineIcons style={[s.wide(70), s.textAlignCenter, s.high(70), s.size(30)]} name='bulb' color={t.text} />
+            <SimpleLineIcons style={[s.wide(70), s.textAlignCenter, s.high(70), s.size(30)]} name='bulb' color={t.colors.text} />
           </Flex>
         </Flex>
       </Flex>

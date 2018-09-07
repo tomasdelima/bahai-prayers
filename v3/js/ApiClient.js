@@ -10,8 +10,8 @@ export default class ApiClient {
 
     this.load('languages')
       .then(() => this.setDefaultLanguage())
-      .then(() => this.load('tags', store.language.Id))
-      .then(() => this.load('prayers', store.language.Id))
+      .then(() => this.load('tags', store.language.Id || 8))
+      .then(() => this.load('prayers', store.language.Id || 8))
       .then(() => {
         store.history = observable([])
         store.searchHistory = observable([])
@@ -26,7 +26,7 @@ export default class ApiClient {
   }
 
   load (resource, options) {
-    console.log("Loading " + resource)
+    console.log("Loading " + resource, this.url[resource](options))
 
     var authors = {
       1: "O Báb",

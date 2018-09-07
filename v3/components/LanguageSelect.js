@@ -7,8 +7,10 @@ class LanguageSelect extends React.Component {
   }
 
   render() {
-    return <Flex>
-      <Picker selectedValue={store.language.Id} style={[s.wide()]} onValueChange={this.setLanguage.bind(this)}>
+    return <Flex row>
+      <FontAwesome style={[s.wide(70), s.textAlignCenter, s.size(30)]} name='language' color={t.colors.text} />
+
+      <Picker selectedValue={store.language.Id} style={[s.grow()]} onValueChange={this.setLanguage.bind(this)}>
         {store.languages.sort((a,b) => a.Name < b.Name ? -1 : 1).map((language) =>
           <Picker.Item key={language.Id} label={language.Name} value={language.Id} />
         )}

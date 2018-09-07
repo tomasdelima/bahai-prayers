@@ -6,13 +6,13 @@ import PrayersMenu from './PrayersMenu'
 class Menu extends React.Component {
   render () {
     const MenuNavigator = createBottomTabNavigator({
-      "Orações": PrayersMenu,
-      "Configurações": Settings,
+      "Prayers": PrayersMenu,
+      "Settings": Settings,
     }, {
       navigationOptions: ({ navigation }) => {
         var icon =  {
-          "Orações": [FontAwesome5, "hands"],
-          "Configurações": [MaterialIcons, "settings"],
+          "Prayers": [FontAwesome5, "hands"],
+          "Settings": [MaterialIcons, "settings"],
         }[navigation.state.key]
 
         return {
@@ -20,6 +20,7 @@ class Menu extends React.Component {
         }
       },
       tabBarOptions: {
+        showLabel: false,
         activeTintColor: t.colors.text,
         inactiveTintColor: t.colors.quartenary,
         style: [t.bg1, s.noBorder, {borderTopColor: "transparent"}],
@@ -27,8 +28,12 @@ class Menu extends React.Component {
         tabStyle: [{}],
       },
       headerMode: 'none',
-      initialRouteName: "Configurações",
+      initialRouteName: "Prayers",
     })
+
+    MenuNavigator.prototype.componentDidMount = function (a) {
+      global.goToTab = this._navigation.navigate
+    }
 
     return <MenuNavigator/>
   }

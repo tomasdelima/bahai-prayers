@@ -4,7 +4,7 @@ class Store {
     language = {}
     tags = []
     prayers = []
-    theme
+    theme = 'default'
 
   // Transient observables
     loading = true

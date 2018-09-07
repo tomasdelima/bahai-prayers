@@ -33,5 +33,6 @@ global.FontAwesome     = require('react-native-vector-icons/FontAwesome').defaul
 global.FontAwesome5    = require('react-native-vector-icons/FontAwesome5').default
 global.SimpleLineIcons = require('react-native-vector-icons/SimpleLineIcons').default
 global.MaterialIcons   = require('react-native-vector-icons/MaterialIcons').default
+global.Ionicons        = require('react-native-vector-icons/Ionicons').default
 
 log = console.log.bind( console )

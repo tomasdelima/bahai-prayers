@@ -15,7 +15,7 @@ class App extends React.Component {
   }
 
   render() {
-    return store.loading ? <Loading/> : <Menu store={store}/>
+    return store.loading ? <Loading/> : <Menu/>
   }
 }
 
