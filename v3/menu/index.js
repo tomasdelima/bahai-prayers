@@ -7,11 +7,13 @@ class Menu extends React.Component {
   render () {
     const MenuNavigator = createBottomTabNavigator({
       "Prayers": PrayersMenu,
+      "Favorites": Favorites,
       "Settings": Settings,
     }, {
       navigationOptions: ({ navigation }) => {
         var icon =  {
           "Prayers": [FontAwesome5, "hands"],
+          "Favorites": [MaterialIcons, "star"],
           "Settings": [MaterialIcons, "settings"],
         }[navigation.state.key]
 

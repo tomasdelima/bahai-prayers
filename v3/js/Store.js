@@ -22,7 +22,7 @@ class Store {
   }
 
   get searchKeywords () {
-    return this.searchHistory.slice(-1)[0]
+    return this.searchHistory.slice(-1)[0] || ""
   }
 
   get all () {

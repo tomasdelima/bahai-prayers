@@ -28,7 +28,7 @@ class Container extends React.Component {
   }
 
   render () {
-    return !store.loading && <ScrollView ref="scroller" containerStyle={[s.high()]} style={[s.wide(), t.bg1, s.marginTop(statusBarHeight)]}>
+    return !store.loading && <ScrollView ref="scroller" keyboardShouldPersistTaps="always" containerStyle={[s.high()]} style={[s.wide(), t.bg1, s.marginTop(statusBarHeight)]}>
       {this.props.noSearch ? this.renderBody() : this.renderSearchAndBody()}
     </ScrollView>
   }

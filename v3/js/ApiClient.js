@@ -35,6 +35,7 @@ export default class ApiClient {
     }
 
     return Axios.get(this.url[resource](options)).then(response => {
+      console.log("Done loading " + resource, this.url[resource](options))
       if (resource == "prayers") {
         var prayers = response.data.Prayers
         prayers.map(p => Object.assign(p, {Author: authors[p.AuthorId]}))

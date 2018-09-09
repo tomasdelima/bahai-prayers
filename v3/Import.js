@@ -13,9 +13,10 @@ global.Config    = require('./js/Config').default
 global.ApiClient = require('./js/ApiClient').default
 global.Store     = require('./js/Store').default
 
-global.Settings       = require('./components/Settings').default
 global.Container      = require('./components/Container').default
+global.Favorites      = require('./components/Favorites').default
 global.LanguageSelect = require('./components/LanguageSelect').default
+global.Settings       = require('./components/Settings').default
 global.Loading        = require('./components/Loading').default
 global.Prayer         = require('./components/Prayer').default
 global.Prayers        = require('./components/Prayers').default

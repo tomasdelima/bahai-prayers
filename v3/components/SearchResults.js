@@ -6,10 +6,11 @@ class SearchResults extends React.Component {
   }
 
   render() {
-    return <ScrollView style={[s.paddings(10)]}>
+    var items = this.props.items || store.searchResults
+
+    return <ScrollView style={[s.paddings(10), t.bg1]}>
       <View>
-        <Flex>{"Resultado da pesquisa: " + store.searchResults.length}</Flex>
-        {store.searchResults.map(item => this.renderItem(item))}
+        {items.map(item => this.renderItem(item))}
       </View>
     </ScrollView>
   }

@@ -1,6 +1,6 @@
 import {Dimensions, StatusBar} from 'react-native'
 
-global.statusBarHeight = StatusBar.currentHeight || 20
+global.statusBarHeight = StatusBar.currentHeight ? 0 : 20
 global.Height = Dimensions.get('window').height
 global.Width  = Dimensions.get('window').width
 global.rgba = (r, g, b, a) => "rgba("+r+","+g+","+b+","+a+")"

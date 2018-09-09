@@ -4,7 +4,6 @@ class Prayers extends React.Component {
   static navigateToPrayer (prayerId, tagName) {
     store.route = {
       screen: "Prayer",
-      name: "Oração",
       params: {prayerId: prayerId},
     }
   }

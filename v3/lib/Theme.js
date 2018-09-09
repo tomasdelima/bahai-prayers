@@ -13,7 +13,7 @@ class Theme {
       text: "#262626",
       primary: "#f9fafc",
       secondary: "#ebeef3",
-      tertiary: "#e1e8ef",
+      tertiary: "#d1d8df",
       quartenary: "#b7c2ce",
     },
     debug: {
