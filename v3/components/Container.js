@@ -17,7 +17,7 @@ class Container extends React.Component {
     return <View onLayout={this.scrollToBody.bind(this)}>
       {!this.props.noTopBar && <TopBar />}
 
-      <View style={[s.paddings(0, 10)]}>
+      <View style={[s.paddings(0, 20)]}>
         {this.props.children}
       </View>
     </View>

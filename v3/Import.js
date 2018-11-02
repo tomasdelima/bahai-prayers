@@ -7,7 +7,7 @@ global.observer = require('mobx-react/native').observer
 global.dynamicObject = require('mobx').dynamicObject
 
 import ReactNative from 'react-native';
-["Animated", "Easing", "TextInput", "Picker", "BackHandler", "Image", "AsyncStorage", "StyleSheet", "Text", "TouchableHighlight", "TouchableOpacity", "View", "ScrollView", "Image"].map(i => global[i] = ReactNative[i])
+["Platform", "NativeModules", "ListView", "Animated", "Easing", "TextInput", "Picker", "BackHandler", "Image", "AsyncStorage", "StyleSheet", "Text", "TouchableHighlight", "TouchableOpacity", "View", "ScrollView", "Image"].map(i => global[i] = ReactNative[i])
 
 global.Config    = require('./js/Config').default
 global.ApiClient = require('./js/ApiClient').default
@@ -36,4 +36,4 @@ global.SimpleLineIcons = require('react-native-vector-icons/SimpleLineIcons').de
 global.MaterialIcons   = require('react-native-vector-icons/MaterialIcons').default
 global.Ionicons        = require('react-native-vector-icons/Ionicons').default
 
-log = console.log.bind( console )
+log = console.log.bind(console)

@@ -46,7 +46,7 @@ class Search extends React.Component {
         <Flex row spacedIn>
           <TextInput
             autoFocus={this.props.autoFocus}
-            style={[s.flex, s.size(15), t.bg2, s.border(1, t.colors.tertiary), t.text, s.paddings(0, 15), s.radius(50)]}
+            style={[s.flex, s.size(15), t.bg1, t.text, s.paddings(5, 5), s.borderBottom(1, t.colors.tertiary)]}
             value={store.searchKeywords}
             onChangeText={this.searchPrayers.bind(this)}
             keyboardType="web-search"

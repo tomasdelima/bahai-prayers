@@ -1,17 +1,20 @@
 import React from 'react'
 
 class SearchResults extends React.Component {
+  constructor () {
+    super()
+    this.dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+  }
+
   renderItem (item) {
     return (item.Author ? Prayers : Tags).renderItem(item)
   }
 
   render() {
-    var items = this.props.items || store.searchResults
+    var items = this.dataSource.cloneWithRows((this.props.items || store.searchResults).map(i=>i))
 
     return <ScrollView style={[s.paddings(10), t.bg1]}>
-      <View>
-        {items.map(item => this.renderItem(item))}
-      </View>
+      <ListView dataSource={items} renderRow={this.renderItem.bind(this)} />
     </ScrollView>
   }
 }

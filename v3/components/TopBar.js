@@ -23,7 +23,7 @@ class TopBar extends React.Component {
         </Text>}
       </TouchableOpacity>
 
-      <Flex paddings={10} size={20}>{currentRoute && currentRoute.name}</Flex>
+      <Flex paddings={20} size={20}>{currentRoute && currentRoute.name}</Flex>
 
       <View style={s.wide(this.state.backWidth)} />
     </Flex>

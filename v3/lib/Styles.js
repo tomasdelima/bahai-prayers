@@ -1,6 +1,7 @@
 import {Dimensions, StatusBar} from 'react-native'
 
-global.statusBarHeight = StatusBar.currentHeight ? 0 : 20
+global.statusBarHeight = Platform.OS === 'ios' ? 20 : NativeModules.StatusBarManager.HEIGHT
+
 global.Height = Dimensions.get('window').height
 global.Width  = Dimensions.get('window').width
 global.rgba = (r, g, b, a) => "rgba("+r+","+g+","+b+","+a+")"
@@ -125,6 +126,7 @@ export default {
   pointer:  {cursor: "pointer"},
   noBorder: {border: 0},
   border:   (x, y) => ({borderWidth: x, borderColor: y}),
+  borderBottom: (x, y) => ({borderBottomWidth: x, borderBottomColor: y}),
   radius:   (x) => ({borderRadius: x}),
   bgImage:  (x) => ({backgroundImage: "url(" + x + ")"}),
   zindex:   (x) => ({zIndex: x}),

@@ -42,7 +42,7 @@ export default decorate(Store, {
   tags: observable,
   prayers: observable,
   theme: observable,
-  observables: observable,
+
   loading: observable,
   route: observable,
   prayerId: observable,

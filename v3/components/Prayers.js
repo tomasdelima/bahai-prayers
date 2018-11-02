@@ -35,6 +35,11 @@ class Prayers extends React.Component {
     </Flex>
   }
 
+  constructor () {
+    super()
+    this.dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+  }
+
   render() {
     try {
       var tag = store.tags.filter(tag => tag.Id == this.props.navigation.state.params.tagId)[0]
@@ -44,8 +49,10 @@ class Prayers extends React.Component {
       var prayers = []
     }
 
+    prayers = this.dataSource.cloneWithRows(prayers)
+
     return <Container tagId={tag.Id}>
-      {prayers.map(prayer => Prayers.renderItem(prayer, true, tag.Name))}
+      <ListView dataSource={prayers} renderRow={prayer => Prayers.renderItem(prayer, true, tag.Name)} />
     </Container>
   }
 }
