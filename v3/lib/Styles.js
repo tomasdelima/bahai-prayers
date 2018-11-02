@@ -1,6 +1,6 @@
 import {Dimensions, StatusBar} from 'react-native'
 
-global.statusBarHeight = Platform.OS === 'ios' ? 20 : NativeModules.StatusBarManager.HEIGHT
+global.statusBarHeight = Platform.OS === 'ios' ? 20 : 0// NativeModules.StatusBarManager.HEIGHT
 
 global.Height = Dimensions.get('window').height
 global.Width  = Dimensions.get('window').width

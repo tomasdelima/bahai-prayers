@@ -9,8 +9,8 @@ class Container extends React.Component {
   }
 
   scrollToBody (event) {
-    !this.didScroll && this.refs.scroller.scrollTo({x: 0, y: event.nativeEvent.layout.y, animated: false})
-    this.didScroll = true
+    // !this.didScroll && this.refs.scroller.scrollTo({x: 0, y: event.nativeEvent.layout.y, animated: false})
+    // this.didScroll = true
   }
 
   renderBody () {

@@ -45,6 +45,7 @@ export default decorate(Store, {
 
   loading: observable,
   route: observable,
+  history: observable,
   prayerId: observable,
   searchHistory: observable,
   searchResultsHistory: observable,

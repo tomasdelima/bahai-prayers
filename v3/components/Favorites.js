@@ -11,8 +11,7 @@ class Favorites extends React.Component {
   }
 
   render() {
-    return <Container>
-      <Text>{store.prayers.filter(p => p.Favorite).length}</Text>
+    return <Container noTopBar>
       <SearchResults items={store.prayers.filter(p => p.Favorite)}/>
     </Container>
   }
