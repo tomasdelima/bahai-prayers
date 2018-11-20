@@ -24,7 +24,7 @@ class Prayers extends React.Component {
       <Flex numberOfLines={1}>{prayer.Text.replace(/[\s\#\*]+/g, " ")}</Flex>
 
       <Flex row>
-        <Flex wide={100} grow={1} alignRight>{Prayers.wordCount(prayer.Text) + " palavras"}</Flex>
+        <Flex wide={100} grow={1} alignRight>{Prayers.wordCount(prayer.Text) + " " + tr.words}</Flex>
         <Flex square={50} onPress={() => Prayers.toggleFavoritePrayer(prayer)}>
           <FontAwesome name={"star" + (prayer.Favorite ? "" : "-o")} size={25} color={prayer.Favorite ? "gold" : "black"} />
         </Flex>

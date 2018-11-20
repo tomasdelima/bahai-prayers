@@ -10,6 +10,7 @@ class App extends React.Component {
     super()
 
     new Config().load((config) => {
+      global.tr = Translation[store.language.Culture] || Translation.empty
       require('./ImportAfterStore')
     })
   }

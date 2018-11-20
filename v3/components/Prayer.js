@@ -31,12 +31,12 @@ class Prayer extends React.Component {
   parseText () {
     var lines = this.prayer.Text.split("\n")
 
-    return <Text style={[s.size(18), s.lineHeight(27), t.text]} selectable>{lines.map(l => {
+    return <View style={[s.size(18), s.lineHeight(27), t.text]} selectable>{lines.map(l => {
       if (l.match(/##.+/)) return <Flex key={l} bold size={20}>{l.slice(2) + "\n\n"}</Flex>
       if (l.match(/#.+/)) return <Flex key={l} italic>{l.slice(1) + "\n\n"}</Flex>
       if (l.match(/\*.+?/)) return <Flex key={l} italic size={11} color={"gray"}>{l.slice(1) + "\n\n"}</Flex>
-      return l + "\n\n"
-    })}</Text>
+      return <Text key={l}>{l + "\n\n"}</Text>
+    })}</View>
   }
 
   toggleTheme () {
@@ -54,9 +54,9 @@ class Prayer extends React.Component {
 
 
         <Flex row margin={20} center2>
-          <Flex onPress={this.share}>
+          {/*<Flex onPress={this.share}>
             <SimpleLineIcons style={[s.wide(70), s.textAlignCenter, s.high(70), s.size(30)]} name='share' color={t.colors.text} />
-          </Flex>
+          </Flex>*/}
 
           <Flex onPress={this.toggleFavorite}>
             <FontAwesome     style={[s.wide(70), s.textAlignCenter, s.high(70), s.size(30)]} name={'star' + (this.prayer.Favorite ? '' : '-o')} color={this.prayer.Favorite ? "gold" : t.colors.text} />

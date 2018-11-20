@@ -2,27 +2,34 @@ import React from 'react'
 
 class Theme {
   themes = {
-    default: {
-      text: "black",
-      primary: "white",
-      secondary: "green",
-      tertiary: "red",
-      quartenary: "yellow",
-    },
-    snow: {
+    Default: {
+    //   text: "black",
+    //   primary: "white",
+    //   secondary: "green",
+    //   tertiary: "green",
+    //   quartenary: "#ddd",
+    // },
+    // snow: {
       text: "#262626",
       primary: "#f9fafc",
       secondary: "#ebeef3",
       tertiary: "#d1d8df",
       quartenary: "#b7c2ce",
     },
-    debug: {
-      text: "purple",
-      primary: "green",
-      secondary: "blue",
-      tertiary: "red",
-      quartenary: "yellow",
+    Dark: {
+      text: "#99a",
+      primary: "#111",
+      secondary: "#eee",
+      tertiary: "#eee",
+      quartenary: "#224",
     },
+    // debug: {
+    //   text: "purple",
+    //   primary: "green",
+    //   secondary: "blue",
+    //   tertiary: "red",
+    //   quartenary: "yellow",
+    // },
   }
 
   get colors () {

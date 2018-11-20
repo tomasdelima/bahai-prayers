@@ -26,9 +26,10 @@ global.Tags           = require('./components/Tags').default
 global.ThemeSelect    = require('./components/ThemeSelect').default
 global.TopBar         = require('./components/TopBar').default
 
-global.s     = require('./lib/Styles').default
-global.Theme = require('./lib/Theme').default
-global.Flex  = require('./lib/Flex').default
+global.s           = require('./lib/Styles').default
+global.Theme       = require('./lib/Theme').default
+global.Flex        = require('./lib/Flex').default
+global.Translation = require('./lib/Translation').default
 
 global.FontAwesome     = require('react-native-vector-icons/FontAwesome').default
 global.FontAwesome5    = require('react-native-vector-icons/FontAwesome5').default

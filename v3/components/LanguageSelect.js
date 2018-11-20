@@ -9,6 +9,7 @@ class LanguageSelect extends React.Component {
 
   setLanguage (languageId) {
     store.language = store.languages.filter(i => i.Id == languageId)[0]
+    global.tr = Translation[store.language.Culture] || Translation.empty
     new Config().load(null, true)
   }
 
@@ -18,7 +19,7 @@ class LanguageSelect extends React.Component {
 
       <Picker enabled={store.languages.length > 1} selectedValue={store.language.Id} style={[s.grow()]} onValueChange={this.setLanguage.bind(this)}>
         {store.languages.filter(l => l.Id).sort((a,b) => a.Name < b.Name ? -1 : 1).map((language) =>
-          <Picker.Item key={language.Id} label={language.Name} value={language.Id} />
+          <Picker.Item key={language.Id} label={language.Name} value={language.Id} color={t.colors.text} />
         )}
       </Picker>
     </Flex>

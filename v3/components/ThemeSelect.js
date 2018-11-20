@@ -11,7 +11,7 @@ class ThemeSelect extends React.Component {
 
       <Picker selectedValue={store.theme} style={[s.grow()]} onValueChange={this.setTheme.bind(this)}>
         {Object.keys(t.themes).sort((a,b) => a.Name < b.Name ? -1 : 1).map((theme) =>
-          <Picker.Item key={theme} label={theme} value={theme} />
+          <Picker.Item key={theme} label={theme} value={theme} color={t.colors.text} />
         )}
       </Picker>
     </Flex>
