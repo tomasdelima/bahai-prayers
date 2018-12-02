@@ -17,7 +17,7 @@ class Container extends React.Component {
     return <View onLayout={this.scrollToBody.bind(this)}>
       {!this.props.noTopBar && <TopBar />}
 
-      <View>
+      <View style={this.props.containerStyle}>
         {this.props.children}
       </View>
     </View>
@@ -28,7 +28,7 @@ class Container extends React.Component {
   }
 
   render () {
-    return !store.loading && <ScrollView ref="scroller" keyboardShouldPersistTaps="always" containerStyle={[s.high()]} style={[s.wide(), t.bg1, s.marginTop(statusBarHeight), s.paddings(10)]}>
+    return !store.loading && <ScrollView ref="scroller" keyboardShouldPersistTaps="always" containerStyle={[s.high()]} style={[s.wide(), t.bg1, s.paddings(10), s.paddingTop(statusBarHeight + 10)]}>
       {this.props.noSearch ? this.renderBody() : this.renderSearchAndBody()}
     </ScrollView>
   }

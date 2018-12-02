@@ -3,16 +3,20 @@ export default class ApiClient {
     languages:         () => "https://bahaiprayers.net/api/prayer/Languages",
     tags:    (languageId) => "https://bahaiprayers.net/api/prayer/tags?languageid=" + languageId,
     prayers: (languageId) => "https://bahaiprayers.net/api/prayer/prayersystembylanguage?languageid=" + languageId,
+    holidays:          () => "https://badi-calendar.herokuapp.com/holidays",
   }
 
   loadAll () {
     store.loading = true
+    var start = new Date()
 
     this.load('languages')
       .then(() => this.setDefaultLanguage())
       .then(() => this.load('tags', store.language.Id || 8))
       .then(() => this.load('prayers', store.language.Id || 8))
+      .then(() => this.load('holidays'))
       .then(() => {
+        console.log("Finished loading all resources in " + (new Date() - start)/1000 + " seconds")
         store.history = observable([])
         store.searchHistory = observable([])
         store.searchResultsHistory = observable([])
@@ -26,6 +30,7 @@ export default class ApiClient {
   }
 
   load (resource, options) {
+    var start = new Date()
     console.log("Loading " + resource, this.url[resource](options))
 
     var authors = {
@@ -35,7 +40,7 @@ export default class ApiClient {
     }
 
     return Axios.get(this.url[resource](options)).then(response => {
-      console.log("Done loading " + resource, this.url[resource](options))
+      console.log("Finished loading " + resource + " in " + (new Date() - start)/1000 + " seconds")
       if (resource == "prayers") {
         var prayers = response.data.Prayers
         prayers.map(p => Object.assign(p, {Author: authors[p.AuthorId]}))
@@ -43,6 +48,8 @@ export default class ApiClient {
       } else {
         store[resource] = response.data
       }
-    })
+
+      return response.data
+    }).catch((e) => log("Error loading " + resource, e))
   }
 }

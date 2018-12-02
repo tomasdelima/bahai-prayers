@@ -26,6 +26,21 @@ global.Tags           = require('./components/Tags').default
 global.ThemeSelect    = require('./components/ThemeSelect').default
 global.TopBar         = require('./components/TopBar').default
 
+
+global.BadiDate  = require('./components/calendar/BadiDate').default
+global.Data      = require('./components/calendar/Data').default
+global.Grid      = require('./components/calendar/Grid').default
+
+global.Calendar  = require('./components/calendar/Calendar').default
+global.Year      = require('./components/calendar/Year').default
+global.MonthItem = require('./components/calendar/MonthItem').default
+global.Month     = require('./components/calendar/Month').default
+global.DayItem   = require('./components/calendar/DayItem').default
+global.Day       = require('./components/calendar/Day').default
+global.Badge     = require('./components/calendar/Badge').default
+// global.Fact     = require('./components/calendar/Fact').default
+
+
 global.s           = require('./lib/Styles').default
 global.Theme       = require('./lib/Theme').default
 global.Flex        = require('./lib/Flex').default

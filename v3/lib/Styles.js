@@ -48,7 +48,7 @@ export default {
   end2:          {alignItems: "flex-end"},
   endSelf:       {alignSelf: "flex-end"},
   shrink:        (x) => ({flexShrink: x || -1}),
-  grow:          (x) => ({flexGrow: x || 1}),
+  grow:          (x) => ({flexGrow: x == true ? 1 : x || 1}),
 
   // Backgrounds
   opaqueBG: (x) => ({backgroundColor: rgba(0, 0, 0, x)}),

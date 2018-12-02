@@ -4,6 +4,7 @@ class Store {
     language = {}
     tags = []
     prayers = []
+    holidays = []
     theme = 'Default'
 
   // Transient observables
@@ -31,6 +32,7 @@ class Store {
       language: this.language,
       tags: this.tags,
       prayers: this.prayers,
+      holidays: this.holidays,
       theme: this.theme,
     }
   }
@@ -41,6 +43,7 @@ export default decorate(Store, {
   language: observable,
   tags: observable,
   prayers: observable,
+  holidays: observable,
   theme: observable,
 
   loading: observable,
