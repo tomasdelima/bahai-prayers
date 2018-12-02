@@ -10,14 +10,14 @@ class Menu extends React.Component {
       "Prayers": PrayersMenu,
       "Favorites": Favorites,
       "Calendar": CalendarMenu,
-      "Settings": Settings,
+      // "Settings": Settings,
     }, {
       navigationOptions: ({ navigation }) => {
         var icon =  {
           "Prayers": [FontAwesome5, "hands"],
           "Favorites": [MaterialIcons, "star"],
           "Calendar": [MaterialIcons, "date-range"],
-          "Settings": [MaterialIcons, "settings"],
+          // "Settings": [MaterialIcons, "settings"],
         }[navigation.state.key]
 
         return {

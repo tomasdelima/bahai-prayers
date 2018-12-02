@@ -17,7 +17,7 @@ class TopBar extends React.Component {
 
     return <Flex row spacedIn>
       <TouchableOpacity onPress={this.back} onLayout={e => this.setState({backWidth: e.nativeEvent.layout.width})} style={[s.paddings(10)]}>
-        {lastRoute && <Text>
+        {lastRoute && <Text style={t.text}>
           <FontAwesome name="chevron-left" />
           <Text> {lastRoute.name}</Text>
         </Text>}

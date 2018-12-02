@@ -32,15 +32,17 @@ class Prayer extends React.Component {
     var lines = this.prayer.Text.split("\n")
 
     return <View style={[s.size(18), s.lineHeight(27), t.text]} selectable>{lines.map(l => {
-      if (l.match(/##.+/)) return <Flex key={l} bold size={20}>{l.slice(2) + "\n\n"}</Flex>
-      if (l.match(/#.+/)) return <Flex key={l} italic>{l.slice(1) + "\n\n"}</Flex>
-      if (l.match(/\*.+?/)) return <Flex key={l} italic size={11} color={"gray"}>{l.slice(1) + "\n\n"}</Flex>
-      return <Text key={l}>{l + "\n\n"}</Text>
+      if (l.match(/##.+/))  return <Flex key={l} style={t.text} bold size={20}>{l.slice(2) + "\n\n"}</Flex>
+      if (l.match(/#.+/))   return <Flex key={l} style={t.text} italic>{l.slice(1) + "\n\n"}</Flex>
+      if (l.match(/\*.+?/)) return <Flex key={l} style={t.text} italic size={11} color={"gray"}>{l.slice(1) + "\n\n"}</Flex>
+      return <Text key={l} style={t.text}>{l + "\n\n"}</Text>
     })}</View>
   }
 
   toggleTheme () {
-    goToTab("Settings")
+    // goToTab("Settings")
+    var newTheme = store.theme == "Default" ? "Dark" : "Default"
+    store.theme = Object.keys(t.themes).filter(i => i == newTheme)[0]
   }
 
   render() {
@@ -59,7 +61,7 @@ class Prayer extends React.Component {
           </Flex>*/}
 
           <Flex onPress={this.toggleFavorite}>
-            <FontAwesome     style={[s.wide(70), s.textAlignCenter, s.high(70), s.size(30)]} name={'star' + (this.prayer.Favorite ? '' : '-o')} color={this.prayer.Favorite ? "gold" : t.colors.text} />
+            <FontAwesome style={[s.wide(70), s.textAlignCenter, s.high(70), s.size(30)]} name={'star' + (this.prayer.Favorite ? '' : '-o')} color={this.prayer.Favorite ? "gold" : t.colors.text} />
           </Flex>
 
           <Flex onPress={this.toggleTheme}>
