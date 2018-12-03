@@ -18,8 +18,9 @@ CalendarMenu.prototype.componentDidMount = function (a) {
       store.history.pop()
 
       if (this.props.navigation.state.routes.length == 1) {
-        console.log("Goodbye!")
-        BackHandler.exitApp()
+        // console.log("Goodbye!")
+        // BackHandler.exitApp()
+        store.route = {screen: "Tags"}
       } else {
         console.log("Going back")
         this.props.navigation.pop()

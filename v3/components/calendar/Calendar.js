@@ -17,14 +17,18 @@ class Calendar extends React.Component {
   //   })
   // }
 
-  render () {
+  static currentBadiYear () {
     var year = new Date().getFullYear() - 1844
 
     if (new Date() >= new BadiDate(year + 1, 1, 1).toGregorian()) {
       year += 1
     }
 
-    return <Year year={year}/>
+    return year
+  }
+
+  render () {
+    return <Year year={Calendar.currentBadiYear()}/>
   }
 }
 

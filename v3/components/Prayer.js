@@ -31,11 +31,11 @@ class Prayer extends React.Component {
   parseText () {
     var lines = this.prayer.Text.split("\n")
 
-    return <View style={[s.size(18), s.lineHeight(27), t.text]} selectable>{lines.map(l => {
-      if (l.match(/##.+/))  return <Flex key={l} style={t.text} bold size={20}>{l.slice(2) + "\n\n"}</Flex>
-      if (l.match(/#.+/))   return <Flex key={l} style={t.text} italic>{l.slice(1) + "\n\n"}</Flex>
-      if (l.match(/\*.+?/)) return <Flex key={l} style={t.text} italic size={11} color={"gray"}>{l.slice(1) + "\n\n"}</Flex>
-      return <Text key={l} style={t.text}>{l + "\n\n"}</Text>
+    return <View style={[s.size(store.fontSize), s.lineHeight(27), t.text]} selectable>{lines.map(l => {
+      if (l.match(/##.+/))  return <Flex key={l} style={t.text} bold size={store.fontSize * 1.2}>{l.slice(2) + "\n\n"}</Flex>
+      if (l.match(/#.+/))   return <Flex key={l} style={t.text} size={store.fontSize * 1.1} italic>{l.slice(1) + "\n\n"}</Flex>
+      if (l.match(/\*.+?/)) return <Flex key={l} style={t.text} size={store.fontSize} italic color={"gray"}>{l.slice(1) + "\n\n"}</Flex>
+      return <Text key={l} style={[t.text, s.size(store.fontSize)]}>{l + "\n\n"}</Text>
     })}</View>
   }
 
@@ -49,9 +49,9 @@ class Prayer extends React.Component {
     this.prayer = store.prayers.filter(prayer => prayer.Id == this.props.navigation.state.params.prayerId)[0]
 
     return <Container noSearch>
-      <Flex column>
+      <Flex column padding={10}>
         {this.parseText()}
-        <Flex selectable paddingV={10} size={17} style={{alignSelf: "flex-end"}}>{"— " + this.prayer.Author}</Flex>
+        <Flex selectable paddingV={10} size={store.fontSize} style={{alignSelf: "flex-end"}}>{"— " + this.prayer.Author}</Flex>
         <Image source={this.images[store.theme]} style={[s.center, s.translucid, {width: 640/4, height: 366/4}]}/>
 
 

@@ -7,7 +7,7 @@ global.observer = require('mobx-react/native').observer
 global.dynamicObject = require('mobx').dynamicObject
 
 import ReactNative from 'react-native';
-["Platform", "NativeModules", "ListView", "Animated", "Easing", "TextInput", "Picker", "BackHandler", "Image", "AsyncStorage", "StyleSheet", "Text", "TouchableHighlight", "TouchableOpacity", "View", "ScrollView", "Image"].map(i => global[i] = ReactNative[i])
+["Modal", "Platform", "NativeModules", "ListView", "Animated", "Easing", "TextInput", "Picker", "BackHandler", "Image", "AsyncStorage", "StyleSheet", "Text", "TouchableHighlight", "TouchableOpacity", "View", "ScrollView", "Image"].map(i => global[i] = ReactNative[i])
 
 global.Config    = require('./js/Config').default
 global.ApiClient = require('./js/ApiClient').default
@@ -25,7 +25,7 @@ global.SearchResults  = require('./components/SearchResults').default
 global.Tags           = require('./components/Tags').default
 global.ThemeSelect    = require('./components/ThemeSelect').default
 global.TopBar         = require('./components/TopBar').default
-
+global.FontSize       = require('./components/FontSize').default
 
 global.BadiDate  = require('./components/calendar/BadiDate').default
 global.Data      = require('./components/calendar/Data').default
@@ -40,10 +40,10 @@ global.Day       = require('./components/calendar/Day').default
 global.Badge     = require('./components/calendar/Badge').default
 // global.Fact     = require('./components/calendar/Fact').default
 
-
 global.s           = require('./lib/Styles').default
 global.Theme       = require('./lib/Theme').default
 global.Flex        = require('./lib/Flex').default
+global.Write       = require('./lib/Write').default
 global.Translation = require('./lib/Translation').default
 
 global.FontAwesome     = require('react-native-vector-icons/FontAwesome').default

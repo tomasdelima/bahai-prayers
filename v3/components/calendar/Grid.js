@@ -39,7 +39,7 @@ export default class Grid extends React.Component {
   }
 
   render () {
-    return <Flex high wide paddings={10} paddingTop={statusBarHeight + 10} style={[t.bg1]} stretch>
+    return <Flex high wide padding={10} paddingTop={statusBarHeight + 10} style={[t.bg1]} stretch>
       {this.renderGrid()}
     </Flex>
   }

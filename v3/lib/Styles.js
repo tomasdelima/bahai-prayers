@@ -6,7 +6,7 @@ global.Height = Dimensions.get('window').height
 global.Width  = Dimensions.get('window').width
 global.rgba = (r, g, b, a) => "rgba("+r+","+g+","+b+","+a+")"
 
-global.theme = ["white", "red", "green", "black"]
+global.theme = ["white", "red", "green", "black", "#DDF"]
 
 var or = (a, b, c) => {
   if (a || a === 0) return a
@@ -68,12 +68,14 @@ export default {
   bg1: {backgroundColor: theme[1]},
   bg2: {backgroundColor: theme[2]},
   bg3: {backgroundColor: theme[3]},
+  bg4: {backgroundColor: theme[4]},
 
   // Font colors
   color0: {color: theme[0]},
   color1: {color: theme[1]},
   color2: {color: theme[2]},
   color3: {color: theme[3]},
+  color4: {color: theme[4]},
 
   // Text
   noWrap:        {whiteSpace: "nowrap"},
@@ -105,7 +107,8 @@ export default {
   circle:     (x) => ({borderRadius: 1000, width: x, height: x}),
 
   // Distancing
-  paddings:       (x, y, w, z) => ({paddingTop: x, paddingRight: or(y, x), paddingBottom: or(w, x), paddingLeft: or(z, y, x)}),
+  padding:       (x) => ({padding: x}),
+  paddings:      (x) => ({paddingTop: x[0], paddingRight: or(x[1], x[0]), paddingBottom: or(x[2], x[0]), paddingLeft: or(x[3], x[1], x[0])}),
   paddingH:      (x) => ({paddingLeft: x, paddingRight: x}),
   paddingV:      (x) => ({paddingTop: x, paddingBottom: x}),
   paddingTop:    (x) => ({paddingTop: x}),
@@ -190,16 +193,17 @@ export default {
   },
   indicator: {
     borderRadius: 24,
-    width: 24,
-    height: 24,
+    width: 15,
+    height: 15,
     right: 1,
     top: 0,
-    borderWidth: 1,
+    // borderWidth: 1,
+    backgroundColor: 'red',
     position: 'absolute'
   },
   gregorianMonthBar: {
     marginBottom: 3,
-    height: 10,
+    height: 5,
   },
   inlineCategory: {
     color: 'rgba(128, 128, 128, 128)',

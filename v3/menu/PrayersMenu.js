@@ -19,17 +19,18 @@ PrayersMenu.prototype.componentDidMount = function (a) {
   autorun(() => {
     if (store.route.goBack) {
       store.history.pop()
+      store.route.goBack = false
 
       if (this.props.navigation.state.routes.length == 1) {
-        console.log("Goodbye!")
+        log("Goodbye!")
         BackHandler.exitApp()
       } else {
-        console.log("Going back")
+        log("Going back")
         this.props.navigation.pop()
       }
     } else if (store.route.screen) {
       store.history.push(store.route)
-      console.log("Navigating to " + store.route.screen + " with params: " + JSON.stringify(store.route.params))
+      log("Navigating to " + store.route.screen + " with params: " + JSON.stringify(store.route.params))
       this.props.navigation.navigate(store.route.screen, store.route.params)
     }
   })

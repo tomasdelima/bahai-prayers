@@ -21,10 +21,10 @@ export default class MonthItem extends React.Component {
 
       return <Flex grow onPress={() => this.goToMonth(this.props.year, month.id)}>
         <Flex grow relative>
-          <Flex grow>
-            <Flex grow alignCenter style={t.text}>{month.arabicName}</Flex>
-            <Flex grow alignCenter style={t.text}>{month.portugueseName}</Flex>
-            <Flex grow alignCenter style={t.text}>{range}</Flex>
+          <Flex grow stretchSelf style={{margin: 3, marginBottom: 0, borderTopLeftRadius: 7, borderTopRightRadius: 7, borderWidth: 2, borderBottomWidth: 0, borderColor: theme[4]}}>
+            <Flex style={textStyle} bold size={16}>{month.arabicName}</Flex>
+            <Flex style={textStyle} size={14}>{month.portugueseName}</Flex>
+            <Flex style={textStyle} size={11}>{range}</Flex>
           </Flex>
 
           <View style={[s.gregorianMonthBar, s.static, s.row]}>

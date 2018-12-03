@@ -102,8 +102,7 @@ var groupedMonth = (year, month) => {
       var index = 3 * i + j
       var date = new BadiDate(year, month, index).toGregorian()
 
-      if (month == 19 && !date.getDay()) {
-
+      if (month == 19 && !date.getDate()) {
       } else if (days[i][j].id != 'month') {
         days[i][j].gregorian = date
         days[i][j].monthName = monthsNames.filter((m) => m.id == month)[0].arabicName

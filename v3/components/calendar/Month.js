@@ -5,6 +5,13 @@ class Month extends React.Component {
     store.route = { goBack: true }
   }
 
+  componentDidMount () {
+    BackHandler.addEventListener('hardwareBackPress', function() {
+      // store.route = { goBack: true }
+      return true
+    })
+  }
+
   render () {
     var params = this.props.navigation.state.params
     var items = Data.groupedMonth(params.year, params.month)

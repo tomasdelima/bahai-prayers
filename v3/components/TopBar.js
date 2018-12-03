@@ -16,16 +16,17 @@ class TopBar extends React.Component {
     var lastRoute = history[history.length - 2]
 
     return <Flex row spacedIn>
-      <TouchableOpacity onPress={this.back} onLayout={e => this.setState({backWidth: e.nativeEvent.layout.width})} style={[s.paddings(10)]}>
+      <TouchableOpacity onPress={this.back} onLayout={e => this.setState({backWidth: e.nativeEvent.layout.width})} style={[s.padding(10)]}>
         {lastRoute && <Text style={t.text}>
-          <FontAwesome name="chevron-left" />
-          <Text> {lastRoute.name}</Text>
+          <FontAwesome name="chevron-left" size={store.fontSize} />
         </Text>}
       </TouchableOpacity>
 
-      <Flex paddings={20} size={20}>{currentRoute && currentRoute.name}</Flex>
+      <Flex padding={20} size={store.fontSize}>{currentRoute && currentRoute.name}</Flex>
 
-      <View style={s.wide(this.state.backWidth)} />
+      <View>
+        {lastRoute && lastRoute.name && <FontSize/>}
+      </View>
     </Flex>
   }
 }

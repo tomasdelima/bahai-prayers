@@ -13,7 +13,7 @@ class SearchResults extends React.Component {
   render() {
     var items = this.dataSource.cloneWithRows((this.props.items || store.searchResults).map(i=>i))
 
-    return <ScrollView style={[s.paddings(10), t.bg1]}>
+    return <ScrollView style={[s.padding(10), t.bg1]}>
       <ListView dataSource={items} renderRow={this.renderItem.bind(this)} />
     </ScrollView>
   }

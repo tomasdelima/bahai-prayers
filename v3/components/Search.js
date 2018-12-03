@@ -41,18 +41,20 @@ class Search extends React.Component {
   }
 
   render() {
-    return <View style={[s.paddings(10)]}>
+    return <View style={[s.padding(10)]}>
       <View>
         <Flex row spacedIn>
+          <FontSize/>
+
           <TextInput
             autoFocus={this.props.autoFocus}
-            style={[s.flex, s.size(15), t.bg1, t.text, s.paddings(5, 5), s.borderBottom(1, t.colors.tertiary)]}
+            style={[s.flex, s.size(store.fontSize), t.bg1, t.text, s.padding(5, 5), s.borderBottom(1, t.colors.tertiary)]}
             value={store.searchKeywords}
             onChangeText={this.searchPrayers.bind(this)}
             keyboardType="web-search"
           />
 
-          <MaterialIcons onPress={() => store.searchHistory = ['']} style={[s.paddings(10), s.size(15)]} name={store.searchKeywords ? 'close' : 'search'} color={t.colors.text} />
+          <MaterialIcons onPress={() => store.searchHistory = ['']} style={s.padding(10)} size={store.fontSize} name={store.searchKeywords ? 'close' : 'search'} color={t.colors.text} />
         </Flex>
       </View>
 

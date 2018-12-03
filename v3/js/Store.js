@@ -6,6 +6,7 @@ class Store {
     prayers = []
     holidays = []
     theme = 'Default'
+    fontSize = 15
 
   // Transient observables
     loading = true
@@ -34,6 +35,7 @@ class Store {
       prayers: this.prayers,
       holidays: this.holidays,
       theme: this.theme,
+      fontSize: this.fontSize,
     }
   }
 }
@@ -45,6 +47,7 @@ export default decorate(Store, {
   prayers: observable,
   holidays: observable,
   theme: observable,
+  fontSize: observable,
 
   loading: observable,
   route: observable,

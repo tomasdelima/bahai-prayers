@@ -12,12 +12,20 @@ export default class DayItem extends React.Component {
     }
   }
 
+  goToyear (year) {
+    store.route = {
+      screen: "Year",
+      params: {year},
+    }
+  }
+
+
   render () {
     var day = this.props.day
     var textStyle = [s.textAlignCenter]
 
     if (day.id == 'month') {
-      return <Flex onPress={this.props.back}>
+      return <Flex onPress={() => this.goToyear(Calendar.currentBadiYear())}>
         <Flex size={30}>{day.year}</Flex>
         <Flex size={16}>{day.month.arabicName}</Flex>
         <Flex size={16}>{day.month.portugueseName}</Flex>

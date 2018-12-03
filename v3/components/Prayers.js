@@ -21,14 +21,16 @@ class Prayers extends React.Component {
 
   static renderItem (prayer, showImage, tagName) {
     return <Flex key={prayer.Id} marginTop={5} onPress={() => Prayers.navigateToPrayer(prayer.Id, tagName)}>
-      <Flex numberOfLines={1}>{prayer.Text.replace(/[\s\#\*]+/g, " ")}</Flex>
+      <Flex numberOfLines={1} size={store.fontSize}>{prayer.Text.replace(/[\s\#\*]+/g, " ")}</Flex>
 
-      <Flex row>
-        <Flex wide={100} grow={1} alignRight>{Prayers.wordCount(prayer.Text) + " " + tr.words}</Flex>
+      <Flex row center1 style={{justifyItems: "space-between"}}>
+        <Flex wide={Width/2 - 95} size={store.fontSize} grow={1} alignRight>{Prayers.wordCount(prayer.Text) + " " + tr.words}</Flex>
+
         <Flex square={50} onPress={() => Prayers.toggleFavoritePrayer(prayer)}>
           <FontAwesome name={"star" + (prayer.Favorite ? "" : "-o")} size={25} color={prayer.Favorite ? "gold" : t.text.color} />
         </Flex>
-        <Flex wide={100} grow={1}>{prayer.Author}</Flex>
+
+        <Flex wide={Width/2 - 95} size={store.fontSize} grow={1}>{prayer.Author}</Flex>
       </Flex>
 
       <Image source={require("../assets/arabesco-2-light.png")} style={[s.square(40)]}/>
@@ -50,6 +52,7 @@ class Prayers extends React.Component {
     }
 
     prayers = this.dataSource.cloneWithRows(prayers)
+    store.fontSize
 
     return <Container tagId={tag.Id}>
       <ListView dataSource={prayers} renderRow={prayer => Prayers.renderItem(prayer, true, tag.Name)} />
