@@ -9,6 +9,7 @@
     "make-import": "node ./node_modules/dynamic-import-js"
   },
   "dependencies": {
+    "axios": "^0.19.1",
     "dynamic-import-js": "^1.0.3",
     "expo": "~36.0.0",
     "mobx": "^5.15.2",

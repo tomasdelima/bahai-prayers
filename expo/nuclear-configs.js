@@ -10,7 +10,7 @@ export default {
     '#fff',               // 7: white
     'rgb( 52, 127, 136)', // 8: 529da6 medium blue
   ],
-  defaultWriteStyle: () => [s.size(18), s.color1],
+  defaultWriteStyle: () => [s.size(18), s.color0],
   // locale: 'pt-BR',
   // defaultLocale: 'pt-BR',
   // translations: {

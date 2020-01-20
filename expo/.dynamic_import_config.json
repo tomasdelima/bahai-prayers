@@ -8,6 +8,7 @@
     "nuclear-configs.js"
   ],
   "prefixlessFolders": [
+    "Components"
   ],
   "root": "./"
 }

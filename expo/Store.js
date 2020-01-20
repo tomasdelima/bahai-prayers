@@ -1,3 +1,14 @@
 export default class Store {
-  @observable categories = [1,2,3]
+  @observable languages = []
+  @observable language = {}
+  @observable tags = []
+  @observable prayers = []
+  @observable kind = "GENERAL"
+  // @observable kind = "OCCASSIONAL"
+  // @observable kind = "OBLIGATORY"
+  // @observable kind = "TABLETS"
+
+  @computed get language () {
+    return {Id: 1}
+  }
 }
