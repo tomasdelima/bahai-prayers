@@ -3,23 +3,11 @@ export default class ApiClient {
   static uris = {
     languages:         () => `${this.domain}/api/prayer/languages`,
     tags:    (languageId) => `${this.domain}/api/prayer/tags?languageid=${languageId}`,
-    prayers: (languageId) => `${this.domain}/api/prayer/prayersystembylanguage?languageid=${languageId}`,
-  }
-
-  static initialLoad () {
-    this.load('languages')
-      .then(() => this.setDefaultLanguage())
-      .then(() => this.load('tags', store.language.Id))
-      .then(() => this.load('prayers', store.language.Id))
-      .then(() => store.loaded = true)
-  }
-
-  static setDefaultLanguage () {
-    store.language = store.languages.filter(language => language.Culture == 'pt')[0]
+    prayers: (languageId) => `${this.domain}/api/prayer/prayersystembylanguage?languageid=${languageId}&html=true`,
   }
 
   static load (resource, options) {
-    console.log(`Loading ${resource}`)
+    console.log(`Loading ${resource}: ${this.uris[resource](options)}`)
 
     var authors = {
       1: "O Báb",
@@ -31,7 +19,7 @@ export default class ApiClient {
       console.log(`Loaded ${resource}`)
 
       if (resource == 'prayers') {
-        store[resource] = response.data.Prayers.map(prayer => prayer.Author = authors[prayer.AuthorId])
+        store[resource] = response.data.Prayers.map(prayer => ({...prayer, Author: authors[prayer.AuthorId]}))
       } else {
         store[resource] = response.data
       }

@@ -1,4 +1,6 @@
-export default ({ language }) => <GenericItem
-  to={`/${language.Id}/tags`}
-  label={language.Name}
+var Item = ({ item }) => <GenericItem
+  to={`/language/${item.Id}/tags`}
+  label={item.Name}
 />
+
+export default withRouter(Item)
