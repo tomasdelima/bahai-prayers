@@ -1,0 +1,13 @@
+{
+  "exceptions": [
+    "App.js",
+    "babel.config.js",
+    "Import.js",
+    "local-modules.js",
+    "node_modules",
+    "nuclear-configs.js"
+  ],
+  "prefixlessFolders": [
+  ],
+  "root": "./"
+}
