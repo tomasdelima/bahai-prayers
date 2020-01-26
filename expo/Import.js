@@ -7,9 +7,9 @@ global.Nuclear = require('react-native-nuclear').default
 new Nuclear(require('./nuclear-configs').default)
 
 makeGlobal(require('himalaya'), ['parse'])
-makeGlobal(require('mobx'), ['observable', 'decorate', 'computed', 'action', 'observe'])
+makeGlobal(require('mobx'), ['observable', 'decorate', 'computed', 'action', 'observe', 'autorun'])
 makeGlobal(require('mobx-react'), ['observer'])
-makeGlobal(require('react-native'), ['FlatList'])
+makeGlobal(require('react-native'), ['FlatList', 'StatusBar'])
 makeGlobal(require('react-router-native'), ['BackButton'])
 
 require('./local-modules')

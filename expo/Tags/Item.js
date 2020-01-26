@@ -1,6 +1,5 @@
-var Item = ({ item, match }) => <GenericItem
-  to={`/language/${match.params.languageId}/tags/${item.Id}/prayers`}
-  label={item.Name}
+export default ({ item }) => <GenericItem {...item}
+  to='/prayers'
+  field='tagId'
+  label={item.name}
 />
-
-export default withRouter(Item)

@@ -8,17 +8,34 @@ export default () => <NativeRouter>
   constructor (props) {
     super()
     global.store = new Store()
+    global.history = props.history
+
+    var disposer = observe(store, 'languageId', change => {
+      if (store.languageId + 1) {
+        history.replace('/tags')
+        // history.replace('/prayer')
+      } else {
+        history.replace('/languages')
+      }
+
+      disposer()
+    })
   }
 
   render () {
     return <BackButton>
+      <StatusBar hidden={true} />
+      <TopBar />
+
       <Flex stretch2>
         {/*<Write padding={10} red>{this.props.history.location.pathname}</Write>*/}
+        {/*<Write padding={10} red>{JSON.stringify(store)}</Write>*/}
 
-        <Route exact path={'/'} component={LanguagesList} />
-        <Route exact path={'/language/:languageId/tags'} component={TagsList} />
-        <Route exact path={'/language/:languageId/tags/:tagId/prayers'} component={PrayersList} />
-        <Route exact path={'/prayers/:prayerId'} component={PrayersShow} />
+        <Route exact path={'/'} component={null} />
+        <Route exact path={'/tags'} component={TagsList} />
+        <Route exact path={'/prayers'} component={PrayersList} />
+        <Route exact path={'/prayer'} component={PrayersShow} />
+        <Route exact path={'/languages'} component={LanguagesList} />
       </Flex>
     </BackButton>
   }
