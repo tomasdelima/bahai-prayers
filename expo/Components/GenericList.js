@@ -1,8 +1,10 @@
 @observer
 export default class GenericList extends React.Component {
   componentDidMount () {
-    store[this.props.resource] = null
-    ApiClient.load(this.props.resource, this.props.filter, this.props.sort)
+    if (!this.props.noRemoteLoading) {
+      store[this.props.resource] = null
+      ApiClient.load(this.props.resource, this.props.filter, this.props.sort)
+    }
   }
 
   data () {

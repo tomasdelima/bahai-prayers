@@ -28,14 +28,17 @@ export default () => <NativeRouter>
       <TopBar />
 
       <Flex stretch2>
-        {/*<Write padding={10} red>{this.props.history.location.pathname}</Write>*/}
-        {/*<Write padding={10} red>{JSON.stringify(store)}</Write>*/}
+        {/*<Flex scroll stretch2>
+          <Write padding={10} red>{this.props.history.location.pathname}</Write>
+          <Write padding={10} red>{JSON.stringify(store)}</Write>
+        </Flex>*/}
 
         <Route exact path={'/'} component={null} />
         <Route exact path={'/tags'} component={TagsList} />
         <Route exact path={'/prayers'} component={PrayersList} />
         <Route exact path={'/prayer'} component={PrayersShow} />
         <Route exact path={'/languages'} component={LanguagesList} />
+        <Route exact path={'/starred'} component={StarredPrayersList} />
       </Flex>
     </BackButton>
   }

@@ -1,6 +1,6 @@
 export default ({ item }) => {
   let formattexText = item.text.replace(/<.+?>/g, ' ').replace(/\s+/g, ' ')
-  let wordCount = formattexText.split(' ').length
+  let wordCount = formattexText.split(/\s+/).length
 
   return <GenericItem {...item}
     to='/prayer'

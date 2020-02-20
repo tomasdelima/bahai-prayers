@@ -9,7 +9,6 @@ class PrayersShow extends React.Component {
     //   text: '<h1>This is an element of type H1</h1><h2>This is an element of type H2</h2><i>This is an element of type I</i><p></p><p>This is another element of type P. This is another element of type P. This is another element of type P. </p>',
     //   author: 'Author',
     // }
-    store.starred = store.starred || []
   }
 
   tagsToStyles = {
@@ -42,6 +41,7 @@ class PrayersShow extends React.Component {
       store.starred = store.starred.filter(prayer => prayer.id != this.prayer.id)
     } else {
       store.starred.push(this.prayer)
+      store.starred = [...new Set(store.starred)]
     }
   }
 

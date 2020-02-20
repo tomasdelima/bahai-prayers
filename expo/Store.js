@@ -7,7 +7,7 @@ export default class Store {
   @observable tags
   @observable prayers
   @observable prayer
-  @observable starred
+  @observable starred = []
 
   @observable topBarLabels = []
   @computed get topBarLabel () {
@@ -19,10 +19,15 @@ export default class Store {
   persistentKeys = ['languageId', 'starred']
 
   constructor () {
+    // AsyncStorage.clear()
+
     this.persistentKeys.map((key) => {
       AsyncStorage.getItem(key).then(value => {
-        this[key] = JSON.parse(value)
-        observe(this, key, (change) => AsyncStorage.setItem(key, JSON.stringify(change.newValue)))
+        if (!this[key] || value) {
+          this[key] = JSON.parse(value)
+        }
+
+        observe(this, key, (change) => AsyncStorage.setItem(key, JSON.stringify(change.object)))
       })
     })
   }
