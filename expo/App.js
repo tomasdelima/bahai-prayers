@@ -11,7 +11,7 @@ export default () => <NativeRouter>
     global.history = props.history
 
     var disposer = observe(store, 'languageId', change => {
-      if (store.languageId + 1) {
+      if (Number.isFinite(store.languageId)) {
         history.replace('/tags')
         // history.replace('/prayer')
       } else {

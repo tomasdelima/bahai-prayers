@@ -1,10 +1,15 @@
 export default class GenericItem extends React.Component {
   onPress = () => {
-    let { to, field, id, label } = this.props
+    let { to, field, id, label, historyMethod } = this.props
+    historyMethod = historyMethod || 'push'
     store[field] = id
-    store.topBarLabels.push(store.label || store.topBarLabel)
     store.label = label
-    history.push(to)
+
+    if (historyMethod == 'push') {
+      store.topBarLabels.push(store.label || store.topBarLabel)
+    }
+
+    history[historyMethod](to)
   }
 
   renderRegularItem () {

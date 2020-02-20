@@ -7,21 +7,22 @@ export default class Store {
   @observable tags
   @observable prayers
   @observable prayer
+  @observable starred
 
   @observable topBarLabels = []
   @computed get topBarLabel () {
     return this.topBarLabels.slice().reverse()[0]
   }
 
-  @observable fontSize = 28
+  @observable fontSize = 22
 
-  persistentKeys = ['languageId']
+  persistentKeys = ['languageId', 'starred']
 
   constructor () {
     this.persistentKeys.map((key) => {
       AsyncStorage.getItem(key).then(value => {
-        this[key] = value
-        observe(this, key, (change) => AsyncStorage.setItem(key, '' + change.newValue))
+        this[key] = JSON.parse(value)
+        observe(this, key, (change) => AsyncStorage.setItem(key, JSON.stringify(change.newValue)))
       })
     })
   }

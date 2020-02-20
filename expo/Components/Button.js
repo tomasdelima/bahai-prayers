@@ -1,6 +1,6 @@
-export default () => <Flex
+export default ({ onPress, children }) => <Flex
   margin={20}
-  onPress={this.props.onPress}
+  onPress={onPress}
 >
-  {this.props.children}
+  {children}
 </Flex>

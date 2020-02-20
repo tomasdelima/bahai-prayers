@@ -28,8 +28,8 @@ class TopBar extends React.Component {
   render () {
     return <Flex stretch2 bg3 shrink>
       <Flex high={60} row shrink spacedIn>
-        <Flex shrink>
-          {!!store.topBarLabels.length && <Flex shrink padding={20} onPress={this.goBack} row start1>
+        <Flex start2>
+          {!!store.topBarLabels.length && <Flex paddingLeft={20} onPress={this.goBack} row start1>
             <FontAwesome5 color={theme[2]} size={20} name='chevron-left' />
             <Write color2 paddingLeft={10}>{store.topBarLabel}</Write>
           </Flex>}
@@ -43,8 +43,8 @@ class TopBar extends React.Component {
       </Flex>
 
       <Flex row shrink spacedOut end2>
-        {this.renderIcon(FontAwesome5, 'hands', ['/tags', '/prayers', '/prayer'])}
-        {this.renderIcon(MaterialIcons, 'star', ['/starred'])}
+        {this.renderIcon(FontAwesome5, 'praying-hands', ['/tags', '/prayers', '/prayer'])}
+        {this.renderIcon(FontAwesome, 'star', ['/starred'])}
         {this.renderIcon(MaterialIcons, 'date-range', ['/calendar'])}
       </Flex>
     </Flex>

@@ -1,10 +1,15 @@
+@observer
 class PrayersShow extends React.Component {
   constructor (props) {
     super()
-    // store.fontSize = 18
     this.prayer = store.prayers.filter(prayer => prayer.id == store.prayerId)[0]
-    // this.prayer = {text: '<h1>This is an element of type H1</h1><h2>This is an element of type H2</h2><i>This is an element of type I</i><p></p><p>This is another element of type P. This is another element of type P. This is another element of type P. </p>', author: 'Author'}
-    // this.prayer = {text: '<h1>Sedratu-l Muntahá</h1><p>Perguntaram para Bahaullah como poderiam ficar firmes a fé, mesmo depois de tsntos mártires? Ele disse que apenas os bahais deveriam conhecer ao manifestsnte, Bahaullah.</p><p>Uma vez, quando bahaullah escreveu que, apesar de ter 6 anos de idade, Ele estava ligado ao Sedratul Muntaha.</p><p><i>Pérolas de Sabedoria pag. 204</i></p><h2>Tudo começa com o Ponto Primordial.</h2><p>"depois de conhecimento da revelacao de bahaullah, e ficar firme no convenio de deus, nenhum dever é mais importante do que o ensino da fe. bem aventurado quem fazer esses tres deveres."</p>'}
+    this.prayer.type = 'prayer'
+    // this.prayer = {
+    //   id: 12,
+    //   text: '<h1>This is an element of type H1</h1><h2>This is an element of type H2</h2><i>This is an element of type I</i><p></p><p>This is another element of type P. This is another element of type P. This is another element of type P. </p>',
+    //   author: 'Author',
+    // }
+    store.starred = store.starred || []
   }
 
   tagsToStyles = {
@@ -30,6 +35,35 @@ class PrayersShow extends React.Component {
     }
   }
 
+  isStarred = () => store.starred.filter(prayer => prayer.id == this.prayer.id).length > 0
+
+  star = () => {
+    if (this.isStarred()) {
+      store.starred = store.starred.filter(prayer => prayer.id != this.prayer.id)
+    } else {
+      store.starred.push(this.prayer)
+    }
+  }
+
+  renderStar (color, solid=false) {
+    return <FontAwesome5
+      solid={solid}
+      name='star'
+      color={color}
+      size={30}
+      style={[s.absolute, s.zindex(-100)]}
+    />
+  }
+
+  renderButtons () {
+    return <Flex marginV={30}>
+      <Button containerStyle={s.red} marginV={30} onPress={this.star}>
+        {this.isStarred() && this.renderStar('gold', true)}
+        {this.renderStar()}
+      </Button>
+    </Flex>
+  }
+
   render () {
     return <Flex stretch2 start1 shrink1 margin={20} scroll>
       {this.parsedPrayer()}
@@ -38,6 +72,8 @@ class PrayersShow extends React.Component {
         marginTop={40}
         style={{textAlign: 'right'}}
       >— {this.prayer.author}</Write>
+
+      {this.renderButtons()}
     </Flex>
   }
 }
