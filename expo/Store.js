@@ -8,6 +8,7 @@ export default class Store {
   @observable prayers
   @observable prayer
   @observable starred = []
+  @observable holidays = []
 
   @observable topBarLabels = []
   @computed get topBarLabel () {

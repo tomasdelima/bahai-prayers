@@ -20,7 +20,7 @@ class TopBar extends React.Component {
   renderIcon (element, name, routes) {
     let self = { element }
 
-    return <Flex shrink padding={10} onPress={() => history.push(routes[0])} style={s.borders([0, 0, 3], routes.indexOf(this.props.location.pathname) >= 0 ? theme[5] : theme[3])}>
+    return <Flex shrink padding={10} onPress={() => history.push(routes[0])} style={s.borders([0, 0, 3], routes.filter(route => this.props.location.pathname.indexOf(route) >= 0).length ? theme[5] : theme[3])}>
       <self.element color={theme[2]} size={20} name={name} />
     </Flex>
   }

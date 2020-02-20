@@ -2,7 +2,7 @@
 class PrayersShow extends React.Component {
   constructor (props) {
     super()
-    this.prayer = store.prayers.filter(prayer => prayer.id == store.prayerId)[0]
+    this.prayer = (store.prayers || store.starred).filter(prayer => prayer.id == store.prayerId)[0]
     this.prayer.type = 'prayer'
     // this.prayer = {
     //   id: 12,

@@ -14,6 +14,7 @@ export default () => <NativeRouter>
       if (Number.isFinite(store.languageId)) {
         history.replace('/tags')
         // history.replace('/prayer')
+        // history.replace('/calendar/175')
       } else {
         history.replace('/languages')
       }
@@ -39,6 +40,10 @@ export default () => <NativeRouter>
         <Route exact path={'/prayer'} component={PrayersShow} />
         <Route exact path={'/languages'} component={LanguagesList} />
         <Route exact path={'/starred'} component={StarredPrayersList} />
+        <Route exact path={'/calendar'} component={CalendarCalendar} />
+        <Route exact path={'/calendar/:year'} component={CalendarCalendar} />
+        <Route exact path={'/calendar/:year/:month'} component={CalendarMonth} />
+        <Route exact path={'/calendar/:year/:month/:day'} component={CalendarDay} />
       </Flex>
     </BackButton>
   }

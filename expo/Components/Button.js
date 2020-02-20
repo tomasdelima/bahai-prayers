@@ -1,5 +1,5 @@
-export default ({ onPress, children }) => <Flex
-  margin={20}
+export default ({ onPress, children, margin }) => <Flex
+  margin={margin || 20}
   onPress={onPress}
 >
   {children}
