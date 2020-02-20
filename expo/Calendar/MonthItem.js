@@ -1,6 +1,13 @@
 export default class MonthItem extends React.Component {
-  goToMonth = () => history.push(`/calendar/${this.props.year}/${this.props.month.id}`)
-  goToYear = (year) => history.push(`/calendar/${year}`)
+  goToMonth = () => {
+    store.topBarLabels.push(this.props.year)
+    history.push(`/calendar/${this.props.year}/${this.props.month.id}`)
+  }
+
+  goToYear = (year) => {
+    store.topBarLabels.push(this.props.year)
+    history.push(`/calendar/${year}`)
+  }
 
   renderButton (direction, year, disabled) {
     return <Button margin={10} onPress={() => !disabled && this.goToYear(year)}>
@@ -17,8 +24,8 @@ export default class MonthItem extends React.Component {
         <Write size={30}>{month.year}</Write>
 
         <Flex row>
-          {this.renderButton('left', month.year - 1, month.year == 172)}
-          {this.renderButton('right', month.year + 1)}
+          {this.renderButton('left', month.year - 1, month.year <= 172)}
+          {this.renderButton('right', month.year + 1, month.year >= 221)}
         </Flex>
       </Flex>
     } else {
@@ -26,9 +33,8 @@ export default class MonthItem extends React.Component {
 
       return <Flex grow onPress={this.goToMonth}>
         <Flex grow relative>
-          <Flex grow stretchSelf margins={[3, 3, 0]} style={{borderTopLeftRadius: 7, borderTopRightRadius: 7, borderWidth: 1.5, borderBottomWidth: 0, borderColor: theme[4]}}>
-            <Write style={textStyle} bold size={16}>{month.arabicName}</Write>
-            <Write style={textStyle} size={14}>{month.portugueseName}</Write>
+          <Flex grow stretchSelf spacedOut1 margins={[3, 3, 0]} style={{borderTopLeftRadius: 7, borderTopRightRadius: 7, borderWidth: 1.5, borderBottomWidth: 0, borderColor: theme[4]}}>
+            <Write style={textStyle} bold size={16}>{month.name}</Write>
             <Write style={textStyle} size={11}>{range}</Write>
           </Flex>
 

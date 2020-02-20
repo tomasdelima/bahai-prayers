@@ -14,26 +14,26 @@ var colors = {
 }
 
 var monthsNames = [
-  {id: 1,  slug: "baha",       arabicName: "Bahá",       portugueseName: "Esplendor"},
-  {id: 2,  slug: "jalal",      arabicName: "Jalál",      portugueseName: "Glória"},
-  {id: 3,  slug: "jamal",      arabicName: "Jamál",      portugueseName: "Beleza"},
-  {id: 4,  slug: "azamat",     arabicName: "‘Aẓamat",    portugueseName: "Grandeza"},
-  {id: 5,  slug: "nur",        arabicName: "Núr",        portugueseName: "Luz"},
-  {id: 6,  slug: "rahmat",     arabicName: "Raḥmat",     portugueseName: "Miséricórdia"},
-  {id: 7,  slug: "kalimat",    arabicName: "Kalimát",    portugueseName: "Palavras"},
-  {id: 8,  slug: "kamal",      arabicName: "Kamál",      portugueseName: "Perfeição"},
-  {id: 9,  slug: "asma",       arabicName: "Asmá’",      portugueseName: "Nomes"},
-  {id: 10, slug: "izzat",      arabicName: "‘Izzat",     portugueseName: "Potência"},
-  {id: 11, slug: "mashiyyat",  arabicName: "Mashíyyat",  portugueseName: "Vontade"},
-  {id: 12, slug: "ilm",        arabicName: "‘Ilm",       portugueseName: "Conhecimento"},
-  {id: 13, slug: "qudrat",     arabicName: "Qudrat",     portugueseName: "Poder"},
-  {id: 14, slug: "qawl",       arabicName: "Qawl",       portugueseName: "Discurso"},
-  {id: 15, slug: "masa-il",    arabicName: "Masá’il",    portugueseName: "Perguntas"},
-  {id: 16, slug: "sharaf",     arabicName: "Sharaf",     portugueseName: "Honra"},
-  {id: 17, slug: "sultan",     arabicName: "Sulṭán",     portugueseName: "Soberania"},
-  {id: 18, slug: "mulk",       arabicName: "Mulk",       portugueseName: "Domínio"},
-  {id: 19, slug: "ayyam-i-ha", arabicName: "Ayyám-i-Há", portugueseName: " ",},
-  {id: 20, slug: "ala",        arabicName: "‘Alá’",      portugueseName: "Sublimidade"},
+  {id: 1,  slug: "baha",       name: "Bahá"},
+  {id: 2,  slug: "jalal",      name: "Jalál"},
+  {id: 3,  slug: "jamal",      name: "Jamál"},
+  {id: 4,  slug: "azamat",     name: "‘Aẓamat"},
+  {id: 5,  slug: "nur",        name: "Núr"},
+  {id: 6,  slug: "rahmat",     name: "Raḥmat"},
+  {id: 7,  slug: "kalimat",    name: "Kalimát"},
+  {id: 8,  slug: "kamal",      name: "Kamál"},
+  {id: 9,  slug: "asma",       name: "Asmá’"},
+  {id: 10, slug: "izzat",      name: "‘Izzat"},
+  {id: 11, slug: "mashiyyat",  name: "Mashíyyat"},
+  {id: 12, slug: "ilm",        name: "‘Ilm"},
+  {id: 13, slug: "qudrat",     name: "Qudrat"},
+  {id: 14, slug: "qawl",       name: "Qawl"},
+  {id: 15, slug: "masa-il",    name: "Masá’il"},
+  {id: 16, slug: "sharaf",     name: "Sharaf"},
+  {id: 17, slug: "sultan",     name: "Sulṭán"},
+  {id: 18, slug: "mulk",       name: "Mulk"},
+  {id: 19, slug: "ayyam-i-ha", name: "Ayyám-i-Há"},
+  {id: 20, slug: "ala",        name: "‘Alá’"},
 ]
 
 var loadHolidays = function (year, month, day) {
@@ -72,8 +72,7 @@ var groupedYear = (year) => {
       } else {
         months[i][j].gregorianStart = new CalendarBadiDate(year, index,  1).toGregorian()
         months[i][j].gregorianEnd   = new CalendarBadiDate(year, index, 19).toGregorian()
-        months[i][j].arabicName     = monthsNames.filter((m) => m.id == index)[0].arabicName
-        months[i][j].portugueseName = monthsNames.filter((m) => m.id == index)[0].portugueseName
+        months[i][j].name           = monthsNames.filter((m) => m.id == index)[0].name
         if (months[i][j].gregorianStart.getMonth() != months[i][j].gregorianEnd.getMonth()) {
           months[i][j].gregorianNewMonth = 20 - months[i][j].gregorianEnd.getDate()
         }
@@ -105,7 +104,7 @@ var groupedMonth = (year, month) => {
       if (month == 19 && !date.getDate()) {
       } else if (days[i][j].id != 'month') {
         days[i][j].gregorian = date
-        days[i][j].monthName = monthsNames.filter((m) => m.id == month)[0].arabicName
+        days[i][j].monthName = monthsNames.filter((m) => m.id == month)[0].name
       }
     }
   }

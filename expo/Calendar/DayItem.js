@@ -1,6 +1,15 @@
 export default class DayItem extends React.Component {
-  goToYear = () => history.push(`/calendar/${this.props.year}`)
-  goToDay = () => history.push(`/calendar/${this.props.year}/${this.props.month}/${this.props.day.id}`)
+  arabicMonth = () => ['Bahá', 'Jalál', 'Jamál', '‘Aẓamat', 'Núr', 'Raḥmat', 'Kalimát', 'Kamál', 'Asmá’', '‘Izzat', 'Mashíyyat', '‘Ilm', 'Qudrat', 'Qawl', 'Masá’il', 'Sharaf', 'Sulṭán', 'Mulk', 'Ayyám-i-Há', '‘Alá’'][this.props.month]
+
+  goToYear = () => {
+    store.topBarLabels.push(`${this.arabicMonth()} - ${this.props.year}`)
+    history.push(`/calendar/${this.props.year}`)
+  }
+
+  goToDay = () => {
+    store.topBarLabels.push(`${this.arabicMonth()} - ${this.props.year}`)
+    history.push(`/calendar/${this.props.year}/${this.props.month}/${this.props.day.id}`)
+  }
 
   render () {
     var day = this.props.day
@@ -9,8 +18,7 @@ export default class DayItem extends React.Component {
     if (day.id == 'month') {
       return <Flex onPress={this.goToYear}>
         <Flex size={30}>{day.year}</Flex>
-        <Flex size={16}>{day.month.arabicName}</Flex>
-        <Flex size={16}>{day.month.portugueseName}</Flex>
+        <Flex size={16}>{day.month.name}</Flex>
       </Flex>
     } else if (!day.id || !day.gregorian) {
       return <Flex />

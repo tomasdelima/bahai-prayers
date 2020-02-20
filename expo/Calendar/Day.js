@@ -5,7 +5,7 @@ export default class Day extends React.Component {
     var gregorian = badi.toGregorian()
 
     return <Flex row>
-      {this.renderDate(badi.year, badi.monthName().arabicName, badi.day)}
+      {this.renderDate(badi.year, badi.monthName().name, badi.day)}
       {/*<View style={[s.bg4, s.high(), {width: 1}]}/>*/}
       {this.renderDate(gregorian.getFullYear(), gregorian.getMonthName(), gregorian.getDate())}
     </Flex>

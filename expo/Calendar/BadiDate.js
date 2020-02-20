@@ -35,33 +35,33 @@ export default class BadiDate {
   }
 
   static monthsNames = [
-    {slug: 'baha',       arabicName: 'Bahá',       portugueseName: 'Esplendor'},
-    {slug: 'jalal',      arabicName: 'Jalál',      portugueseName: 'Glória'},
-    {slug: 'jamal',      arabicName: 'Jamál',      portugueseName: 'Beleza'},
-    {slug: 'azamat',     arabicName: '‘Aẓamat',    portugueseName: 'Grandeza'},
-    {slug: 'nur',        arabicName: 'Núr',        portugueseName: 'Luz'},
-    {slug: 'rahmat',     arabicName: 'Raḥmat',     portugueseName: 'Miséricórdia'},
-    {slug: 'kalimat',    arabicName: 'Kalimát',    portugueseName: 'Palavras'},
-    {slug: 'kamal',      arabicName: 'Kamál',      portugueseName: 'Perfeição'},
-    {slug: 'asma',       arabicName: 'Asmá’',      portugueseName: 'Nomes'},
-    {slug: 'izzat',      arabicName: '‘Izzat',     portugueseName: 'Potência'},
-    {slug: 'mashiyyat',  arabicName: 'Mashíyyat',  portugueseName: 'Vontade'},
-    {slug: 'ilm',        arabicName: '‘Ilm',       portugueseName: 'Conhecimento'},
-    {slug: 'qudrat',     arabicName: 'Qudrat',     portugueseName: 'Poder'},
-    {slug: 'qawl',       arabicName: 'Qawl',       portugueseName: 'Discurso'},
-    {slug: 'masa-il',    arabicName: 'Masá’il',    portugueseName: 'Perguntas'},
-    {slug: 'sharaf',     arabicName: 'Sharaf',     portugueseName: 'Honra'},
-    {slug: 'sultan',     arabicName: 'Sulṭán',     portugueseName: 'Soberania'},
-    {slug: 'mulk',       arabicName: 'Mulk',       portugueseName: 'Domínio'},
-    {slug: 'ayyam-i-ha', arabicName: 'Ayyám-i-Há', portugueseName: ' ',},
-    {slug: 'ala',        arabicName: '‘Alá’',      portugueseName: 'Sublimidade'},
+    {slug: 'baha',       name: 'Bahá'},
+    {slug: 'jalal',      name: 'Jalál'},
+    {slug: 'jamal',      name: 'Jamál'},
+    {slug: 'azamat',     name: '‘Aẓamat'},
+    {slug: 'nur',        name: 'Núr'},
+    {slug: 'rahmat',     name: 'Raḥmat'},
+    {slug: 'kalimat',    name: 'Kalimát'},
+    {slug: 'kamal',      name: 'Kamál'},
+    {slug: 'asma',       name: 'Asmá’'},
+    {slug: 'izzat',      name: '‘Izzat'},
+    {slug: 'mashiyyat',  name: 'Mashíyyat'},
+    {slug: 'ilm',        name: '‘Ilm'},
+    {slug: 'qudrat',     name: 'Qudrat'},
+    {slug: 'qawl',       name: 'Qawl'},
+    {slug: 'masa-il',    name: 'Masá’il'},
+    {slug: 'sharaf',     name: 'Sharaf'},
+    {slug: 'sultan',     name: 'Sulṭán'},
+    {slug: 'mulk',       name: 'Mulk'},
+    {slug: 'ayyam-i-ha', name: 'Ayyám-i-Há'},
+    {slug: 'ala',        name: '‘Alá’'},
   ]
 
   monthName = () => CalendarBadiDate.monthsNames[this.month]
 }
 
 Date.prototype.getMonthName = function () {
-  return ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'][this.getMonth()]
+  return ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][this.getMonth()]
 }
 
 Date.prototype.addDays = function (days) {
@@ -73,17 +73,17 @@ Date.prototype.addDays = function (days) {
 Date.prototype.toString = function () {
   var month = {
     0: 'Jan',
-    1: 'Fev',
+    1: 'Feb',
     2: 'Mar',
-    3: 'Abr',
-    4: 'Mai',
+    3: 'Apr',
+    4: 'May',
     5: 'Jun',
     6: 'Jul',
-    7: 'Ago',
-    8: 'Set',
-    9: 'Out',
+    7: 'Aug',
+    8: 'Sep',
+    9: 'Oct',
     10: 'Nov',
-    11: 'Dez',
+    11: 'Dec',
   }[this.getMonth()]
   return this.getDate() + ' ' + month
 }
