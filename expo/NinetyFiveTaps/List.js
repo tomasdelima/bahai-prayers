@@ -3,7 +3,7 @@ const finishSound = require('../Sounds/finish.wav')
 
 @observer
 export default class NinetyFiveTaps extends React.Component {
-  state = {counter: 9}
+  state = {counter: 95}
 
   constructor () {
     super()
