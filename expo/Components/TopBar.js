@@ -46,6 +46,7 @@ class TopBar extends React.Component {
         {this.renderIcon(FontAwesome5, 'praying-hands', ['/tags', '/prayers', '/prayer'])}
         {this.renderIcon(FontAwesome, 'star', ['/starred'])}
         {this.renderIcon(MaterialIcons, 'date-range', ['/calendar'])}
+        {this.renderIcon(MaterialCommunityIcons, 'gesture-double-tap', ['/95-taps'])}
       </Flex>
     </Flex>
   }

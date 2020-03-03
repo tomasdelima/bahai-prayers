@@ -44,6 +44,7 @@ export default () => <NativeRouter>
         <Route exact path={'/calendar/:year'} component={CalendarCalendar} />
         <Route exact path={'/calendar/:year/:month'} component={CalendarMonth} />
         <Route exact path={'/calendar/:year/:month/:day'} component={CalendarDay} />
+        <Route exact path={'/95-taps'} component={NinetyFiveTapsList} />
       </Flex>
     </BackButton>
   }

@@ -10,6 +10,9 @@ export default class Store {
   @observable starred = []
   @observable holidays = []
 
+  @observable muteTapSound = true
+  @observable stopTapVibration = false
+
   @observable topBarLabels = []
   @computed get topBarLabel () {
     return this.topBarLabels.slice().reverse()[0]
@@ -17,7 +20,7 @@ export default class Store {
 
   @observable fontSize = 22
 
-  persistentKeys = ['languageId', 'starred']
+  persistentKeys = ['languageId', 'starred', 'muteTapSound', 'stopTapVibration']
 
   constructor () {
     // AsyncStorage.clear()
