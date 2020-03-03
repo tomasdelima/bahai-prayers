@@ -1,3 +1,4 @@
+@observer
 export default class GenericItem extends React.Component {
   onPress = () => {
     let { to, field, id, label, historyMethod } = this.props
@@ -25,13 +26,13 @@ export default class GenericItem extends React.Component {
 
   renderAggregator () {
     return <Flex stretch2 row spacedIn
-      onPress={() => {}}
-      style={s.bg6}
+      onPress={() => store.collapsedAggregators[this.props.id] = !store.collapsedAggregators[this.props.id]}
+      style={s.bg2}
     >
       <Write padding={20}>{this.props.id}</Write>
 
       <Flex padding={20} shrink>
-        <FontAwesome5 name='chevron-down' size={18} />
+        <FontAwesome5 name={`chevron-${store.collapsedAggregators[this.props.id] ? 'up' : 'down'}`} size={18} />
       </Flex>
     </Flex>
   }

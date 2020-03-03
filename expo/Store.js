@@ -9,6 +9,7 @@ export default class Store {
   @observable prayer
   @observable starred = []
   @observable holidays = []
+  @observable collapsedAggregators = {}
 
   @observable muteTapSound = true
   @observable stopTapVibration = false

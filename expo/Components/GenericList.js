@@ -22,7 +22,10 @@ export default class GenericList extends React.Component {
 
       data = Object.keys(data).reduce((memo, key) => {
         memo.push({id: key, type: 'aggregator'})
-        memo.push(...data[key])
+
+        if (!store.collapsedAggregators[key]) {
+          memo.push(...data[key])
+        }
         return memo
       }, [])
     }
