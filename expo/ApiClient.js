@@ -11,7 +11,7 @@ export default class ApiClient {
     // console.warn(`Loading: ${this.key(resource)}`)
 
     return AsyncStorage.getItem(this.key(resource))
-      .then((data,a,b) => {
+      .then((data) => {
         if (data) {
           data = JSON.parse(data)
           store[resource] = filter ? data.filter(filter) : data

@@ -23,8 +23,26 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "package": "com.tomasdelima.bahaiprayers",
+      "versionCode": 1
+    },
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+      "bundleIdentifier": "com.tomasdelima.bahaiprayers",
+      "buildNumber": "1.0.0"
+    },
+    "web": {
+      "build": {
+        "babel": {
+          "include": [
+            "react-native",
+            "react-native-nuclear",
+            "react-router-native"
+          ]
+        }
+      }
+    },
+    "description": ""
   }
 }
